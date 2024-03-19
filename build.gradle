@@ -57,6 +57,8 @@ dependencies {
     //swagger ui
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 
+    //Gson 라이브러리
+    implementation 'com.google.code.gson:gson:2.8.9'
 
 }
 
