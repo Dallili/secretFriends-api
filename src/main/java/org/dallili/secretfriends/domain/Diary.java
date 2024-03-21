@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 public class Diary{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "diaryID", length = 20)
     private String diaryID;
 
@@ -28,13 +27,13 @@ public class Diary{
     @JoinColumn(name = "partnerID", referencedColumnName = "userID", insertable = false, updatable = false)
     private User partner;
 
-    @Column(name = "isActivated")
+    @Column(name = "isActivated",columnDefinition = "TINYINT")
     private boolean isActivated;
 
     @Column(name = "updatedBy", length = 20)
     private String updatedBy;
 
-    @Column(name = "updatedAt")
+    @Column(name = "updatedAt",columnDefinition = "TIMESTAMP")
     private LocalDateTime updatedAt;
 
     @Column(name = "color", length = 7)
