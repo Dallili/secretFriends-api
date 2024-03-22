@@ -20,24 +20,27 @@ import java.time.LocalDateTime;
 public class Page {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pageID", length = 20)
     private String pageID;
 
+    @JoinColumn(name = "diaryID", referencedColumnName = "diaryID", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.LAZY) // 여러 개의 페이지가 하나의 다이어리에 속할 수 있음.
     private Diary diary;
 
     @Column(name = "userID")
     private String userID;
 
-    @Column(name = "date")
-    private LocalDateTime date;
+    @Column(name = "date", columnDefinition = "DATE")
+    private LocalDate date;
 
     @Column(name = "text", columnDefinition = "TEXT")
     private String text;
 
-    @Column(name = "sendAt")
+    @Column(name = "sendAt", columnDefinition = "TIMESTAMP")
     private LocalDateTime sendAt;
+
+    @Column(name = "state")
+    private char state;
 
 
 

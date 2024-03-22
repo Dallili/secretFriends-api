@@ -16,25 +16,24 @@ import java.time.LocalDateTime;
 public class Diary{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "diaryID", length = 20)
     private String diaryID;
 
     @ManyToOne(fetch = FetchType.LAZY) //여러 개의 diary가 하나의 user에 속할 수 있음
-    @JoinColumn(name = "userID", referencedColumnName = "userID", insertable = false, updatable = false)
+    @JoinColumn(name = "userID", referencedColumnName = "userID", insertable = true, updatable = false)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY) //여러 개의 diary가 하나의 user에 속할 수 있음
-    @JoinColumn(name = "partnerID", referencedColumnName = "userID", insertable = false, updatable = false)
+    @JoinColumn(name = "partnerID", referencedColumnName = "userID", insertable = true, updatable = false)
     private User partner;
 
-    @Column(name = "isActivated")
+    @Column(name = "isActivated",columnDefinition = "TINYINT")
     private boolean isActivated;
 
     @Column(name = "updatedBy", length = 20)
     private String updatedBy;
 
-    @Column(name = "updatedAt")
+    @Column(name = "updatedAt",columnDefinition = "TIMESTAMP")
     private LocalDateTime updatedAt;
 
     @Column(name = "color", length = 7)
