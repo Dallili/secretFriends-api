@@ -39,6 +39,17 @@ public class Diary{
     @Column(name = "color", length = 7)
     private String color;
 
+    public void decidePartner(User partner){
+        this.partner = partner;
+    }
+    public void changeState(boolean isActivated){
+        this.isActivated = isActivated;
+    }
+
+    public void updateDiary(String updatedBy, LocalDateTime updatedAt){
+        this.updatedBy = updatedBy;
+        this.updatedAt = updatedAt;
+    }
 
 
 
