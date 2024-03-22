@@ -4,6 +4,7 @@ package org.dallili.secretfriends.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -17,7 +18,6 @@ import java.util.Date;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userID", length = 20)
     private String userID;
 
@@ -27,16 +27,16 @@ public class User {
     @Column(name = "nickname", length = 20)
     private String nickname;
 
-    @Column(name = "birthday")
-    private Date birthday;
+    @Column(name = "birthday", columnDefinition = "DATE")
+    private LocalDate birthday;
 
-    @Column(name = "phoneNum", length = 20)
-    private String phoneNum;
+    @Column(name = "email", length = 255)
+    private String email;
 
     @Column(name = "gender")
     private char gender;
 
-    @Column(name = "useFiltering")
+    @Column(name = "useFiltering",columnDefinition = "TINYINT")
     private boolean useFiltering;
 
 }
