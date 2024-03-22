@@ -37,5 +37,4 @@ public class DiaryDTO {
     private String color; //get
 
 
-
 }
