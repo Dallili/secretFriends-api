@@ -23,9 +23,9 @@ public class DiaryDTO {
     private String diaryID; //get
 
     @NotEmpty
-    private String userID; //get, set
+    private User user; //get, set
 
-    private String partnerID; //get, set
+    private User partner; //get, set
 
     private boolean isActivated; //get, set
 

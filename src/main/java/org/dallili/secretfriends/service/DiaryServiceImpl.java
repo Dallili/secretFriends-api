@@ -20,7 +20,8 @@ import java.util.Optional;
 @Transactional
 public class DiaryServiceImpl implements DiaryService {
 
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
+
 
     private final DiaryRepository diaryRepository;
 
@@ -79,7 +80,7 @@ public class DiaryServiceImpl implements DiaryService {
 
         Diary diary = result.orElseThrow();
 
-        Optional<User> partnerResult = userRepository.findById(diaryDTO.getPartnerID());
+        Optional<User> partnerResult = userRepository.findById(diaryDTO.getPartner().getUserID());
 
         User partner = partnerResult.orElseThrow();
 
