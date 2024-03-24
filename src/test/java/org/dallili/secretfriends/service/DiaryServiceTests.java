@@ -1,5 +1,6 @@
 package org.dallili.secretfriends.service;
 
+import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
 import org.dallili.secretfriends.domain.User;
 import org.dallili.secretfriends.dto.DiaryDTO;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+@Transactional
 @SpringBootTest
 @Log4j2
 public class DiaryServiceTests {
@@ -37,5 +39,13 @@ public class DiaryServiceTests {
                         .build();
 
         log.info(diaryService.register(diaryDTO));
+    }
+
+    @Test
+    public void testReadOne() {
+
+        DiaryDTO diaryDTO = diaryService.readOne("diary4");
+
+        log.info(diaryDTO);
     }
 }
