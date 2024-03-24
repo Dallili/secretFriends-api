@@ -15,5 +15,5 @@ public interface DiaryService {
 
     void modifyPartner(DiaryDTO diaryDTO); // 일기장 파트너 결정
 
-    void modifyState(DiaryDTO diaryDTO); // 일기장 활성화 상태 변경
+    void modifyState(DiaryDTO diaryDTO); // 일기장 활성화 상태 변경 (비활성화)
 }

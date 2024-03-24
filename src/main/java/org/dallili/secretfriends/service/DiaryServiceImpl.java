@@ -4,8 +4,11 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.dallili.secretfriends.domain.Diary;
+import org.dallili.secretfriends.domain.User;
 import org.dallili.secretfriends.dto.DiaryDTO;
+import org.dallili.secretfriends.dto.UserDTO;
 import org.dallili.secretfriends.repository.DiaryRepository;
+import org.dallili.secretfriends.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +23,8 @@ public class DiaryServiceImpl implements DiaryService {
     private ModelMapper modelMapper;
 
     private final DiaryRepository diaryRepository;
+
+    private final UserRepository userRepository;
 
     @Override
     public String register(DiaryDTO diaryDTO) {
@@ -74,10 +79,13 @@ public class DiaryServiceImpl implements DiaryService {
 
         Diary diary = result.orElseThrow();
 
-        diary.decidePartner(diaryDTO.getPartner());
+        Optional<User> partnerResult = userRepository.findById(diaryDTO.getPartnerID());
+
+        User partner = partnerResult.orElseThrow();
+
+        diary.decidePartner(partner);
 
         diaryRepository.save(diary);
-
     }
 
     @Override
