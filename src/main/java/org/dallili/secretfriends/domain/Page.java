@@ -1,8 +1,11 @@
 package org.dallili.secretfriends.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -18,6 +21,7 @@ import java.time.LocalDateTime;
         @Index(name="idx_page_diary_diaryID", columnList = "diary_diaryID")
 })
 @EntityListeners(value = {AuditingEntityListener.class})
+@DynamicInsert
 public class Page {
 
     @Id
@@ -44,6 +48,14 @@ public class Page {
 
     @Column(name = "state", length = 1)
     @Pattern(regexp = "[YN]", message = "state는 Y 혹은 N 값 중 하나여야 한다.")
-    private String state;
+    @Builder.Default
+    private String state = "N";
+
+    @PrePersist
+    public void defaultState(){
+        if(this.state == null) {
+            this.state = "N";
+        }
+    }
 
 }

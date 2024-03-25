@@ -18,7 +18,6 @@ public class PageServiceImpl implements PageService{
 
     @Override
     public Long addPage(PageDTO pageDTO) {
-        pageDTO.setState("N");
         Page page = modelMapper.map(pageDTO,Page.class);
         Long pid = pageRepository.save(page).getPageID();
         return pid;

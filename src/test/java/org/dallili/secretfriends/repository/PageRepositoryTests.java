@@ -27,10 +27,7 @@ public class PageRepositoryTests {
             Page page = Page.builder()
                     .diary(diary)
                     .writer(diary.getUser().getUserID())
-                    .date(LocalDateTime.now())
                     .text("일기 텍스트...")
-                    .sendAt(null)
-                    .state("N")
                     .build();
 
             pageRepository.save(page);
