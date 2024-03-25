@@ -1,11 +1,14 @@
 package org.dallili.secretfriends.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
-import org.springframework.cglib.core.Local;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,21 +20,25 @@ import java.time.LocalDateTime;
 @Table(name = "page", indexes = {
         @Index(name="idx_page_diary_diaryID", columnList = "diary_diaryID")
 })
+@EntityListeners(value = {AuditingEntityListener.class})
+@DynamicInsert
 public class Page {
 
     @Id
-    @Column(name = "pageID", length = 20)
-    private String pageID;
+    @Column(name = "pageID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long pageID;
 
-    @JoinColumn(name = "diaryID", referencedColumnName = "diaryID", insertable = false, updatable = false)
+    @JoinColumn(name = "diaryID", referencedColumnName = "diaryID", insertable = true, updatable = false)
     @ManyToOne(fetch = FetchType.LAZY) // 여러 개의 페이지가 하나의 다이어리에 속할 수 있음.
     private Diary diary;
 
-    @Column(name = "userID")
-    private String userID;
+    @Column(name = "writer")
+    private String writer;
 
-    @Column(name = "date", columnDefinition = "DATE")
-    private LocalDate date;
+    @Column(name = "date", columnDefinition = "TIMESTAMP")
+    @LastModifiedDate
+    private LocalDateTime date;
 
     @Column(name = "text", columnDefinition = "TEXT")
     private String text;
@@ -39,11 +46,16 @@ public class Page {
     @Column(name = "sendAt", columnDefinition = "TIMESTAMP")
     private LocalDateTime sendAt;
 
-    @Column(name = "state")
-    private char state;
+    @Column(name = "state", length = 1)
+    @Pattern(regexp = "[YN]", message = "state는 Y 혹은 N 값 중 하나여야 한다.")
+    @Builder.Default
+    private String state = "N";
 
-
-
-
+    @PrePersist
+    public void defaultState(){
+        if(this.state == null) {
+            this.state = "N";
+        }
+    }
 
 }
