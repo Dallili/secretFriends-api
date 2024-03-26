@@ -28,7 +28,7 @@ public class DiaryServiceTests {
         //Optional<User> partner = userRepository.findById("user10");
 
         DiaryDTO diaryDTO = DiaryDTO.builder()
-                .diaryID("diary777")
+                .diaryID("diary107")
                 .color("#123456")
                 .isActivated(true)
                 .userID("user1")
@@ -73,7 +73,7 @@ public class DiaryServiceTests {
     @Test
     public void testModifyPartner() {
 
-        diaryService.modifyPartner("diary103", "user77");
+        diaryService.modifyPartner("diary1", "user7");
 
     }
 

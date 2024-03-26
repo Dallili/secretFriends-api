@@ -92,7 +92,7 @@ public class DiaryServiceImpl implements DiaryService {
 
         User partner = partnerResult.orElseThrow();
 
-        diary.setPartner(partner);
+        diary.decidePartner(partner);
 
         diaryRepository.save(diary);
     }
@@ -104,7 +104,7 @@ public class DiaryServiceImpl implements DiaryService {
 
         Diary diary = result.orElseThrow();
 
-        diary.setActivated(false);
+        diary.changeState(false);
 
         diaryRepository.save(diary);
 

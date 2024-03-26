@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 //엔티티 객체를 위한 엔티티 클래스는 반드시 @Entity를 적용해야하고 @Id가 필요하다
 @Entity
 @Getter
-@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -43,6 +42,25 @@ public class Diary{
     public void updateDiary(String updatedBy, LocalDateTime updatedAt){
         this.updatedBy = updatedBy;
         this.updatedAt = updatedAt;
+    }
+
+    public void decidePartner(User partner){
+        this.partner = partner;
+    }
+
+    public void changeState(Boolean state){
+        this.isActivated = state;
+    }
+
+
+    //modelmapper 매핑 규칙 정의를 위한 setter
+    //일반 코드 작성 시에는 사용 지양
+    public void setUser(User user){
+        this.user = user;
+    }
+
+    public void setPartner(User partner){
+        this.partner = partner;
     }
 
 
