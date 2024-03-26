@@ -35,7 +35,7 @@ public class DiaryServiceImpl implements DiaryService {
         return diaryID;
     }
 
-    /*
+
     @Override
     public DiaryDTO readOne(String diaryID){
 
@@ -58,13 +58,13 @@ public class DiaryServiceImpl implements DiaryService {
 
         Diary diary = result.orElseThrow();
 
-        log.info("업데이트 전: " + diary);
+        //log.info("업데이트 전: " + diary);
 
         diary.updateDiary(diaryDTO.getUpdatedBy(), diaryDTO.getUpdatedAt());
 
         diaryRepository.save(diary);
 
-        log.info("업데이트 후: " + diary);
+        //log.info("업데이트 후: " + diary);
 
 
     }
@@ -77,33 +77,35 @@ public class DiaryServiceImpl implements DiaryService {
 
     }
 
-    @Override
-    public void modifyPartner(DiaryDTO diaryDTO){
 
-        Optional<Diary> result = diaryRepository.findById(diaryDTO.getDiaryID());
+
+    @Override
+    public void modifyPartner(String diaryID, String partnerID){
+
+        Optional<Diary> result = diaryRepository.findById(diaryID);
 
         Diary diary = result.orElseThrow();
 
-        Optional<User> partnerResult = userRepository.findById(diaryDTO.getPartner().getUserID());
+        Optional<User> partnerResult = userRepository.findById(partnerID);
 
         User partner = partnerResult.orElseThrow();
 
-        diary.decidePartner(partner);
+        diary.setPartner(partner);
 
         diaryRepository.save(diary);
     }
 
     @Override
-    public void modifyState(DiaryDTO diaryDTO){
+    public void modifyState(String diaryID) {
 
-        Optional<Diary> result = diaryRepository.findById(diaryDTO.getDiaryID());
+        Optional<Diary> result = diaryRepository.findById(diaryID);
 
         Diary diary = result.orElseThrow();
 
-        diary.changeState(diaryDTO.isActivated());
+        diary.setActivated(false);
 
         diaryRepository.save(diary);
 
-    }*/
+    }
 
 }

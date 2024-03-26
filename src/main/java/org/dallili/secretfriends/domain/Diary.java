@@ -25,7 +25,7 @@ public class Diary{
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY) //여러 개의 diary가 하나의 user에 속할 수 있음
-    @JoinColumn(name = "partnerID", referencedColumnName = "userID", insertable = true, updatable = false)
+    @JoinColumn(name = "partnerID", referencedColumnName = "userID", insertable = true, updatable = true)
     private User partner;
 
     @Column(name = "isActivated",columnDefinition = "TINYINT")
@@ -39,13 +39,6 @@ public class Diary{
 
     @Column(name = "color", length = 7)
     private String color;
-
-    public void decidePartner(User partner){
-        this.partner = partner;
-    }
-    public void changeState(boolean isActivated){
-        this.isActivated = isActivated;
-    }
 
     public void updateDiary(String updatedBy, LocalDateTime updatedAt){
         this.updatedBy = updatedBy;

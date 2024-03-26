@@ -27,26 +27,21 @@ public class DiaryServiceTests {
         //Optional<User> user = userRepository.findById("user1");
         //Optional<User> partner = userRepository.findById("user10");
 
-        /*DiaryDTO diaryDTO = DiaryDTO.builder()
-                .diaryID("diary103")
+        DiaryDTO diaryDTO = DiaryDTO.builder()
+                .diaryID("diary777")
                 .color("#123456")
                 .isActivated(true)
                 .userID("user1")
                 .partnerID("user10")
                 .updatedBy("user10")
                 .updatedAt(LocalDateTime.now())
-                .build();*/
-
-        DiaryDTO diaryDTO = DiaryDTO.builder()
-                .diaryID("diary103")
-                .userID("user1")
                 .build();
 
 
         log.info(diaryService.register(diaryDTO));
     }
 
-    /*
+
     @Test
     public void testReadOne() {
 
@@ -67,5 +62,25 @@ public class DiaryServiceTests {
         log.info("업데이트 할 것 : "+ diaryDTO);
 
         diaryService.update(diaryDTO);
-    }*/
+    }
+
+    @Test
+    public void testRemove() {
+
+        diaryService.remove("diary1");
+
+    }
+
+    @Test
+    public void testModifyPartner() {
+
+        diaryService.modifyPartner("diary103", "user77");
+
+    }
+
+    @Test
+    public void testModifyState() {
+
+        diaryService.modifyState("diary10");
+    }
 }
