@@ -31,8 +31,9 @@ public class PageServiceTests {
 
     @Test
     public void testModifyState(){
-        Long pid = 54L;
-        pageService.modifyState(pid);
+        Long pid = 40L;
+        Boolean result = pageService.modifyState(pid);
+        log.info(result);
     }
 
 }
