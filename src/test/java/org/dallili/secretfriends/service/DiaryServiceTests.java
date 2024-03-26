@@ -83,4 +83,11 @@ public class DiaryServiceTests {
 
         diaryService.modifyState("diary10");
     }
+
+    @Test
+    public void testFindAllDiaries() {
+
+        log.info(diaryService.findAllDiaries());
+
+    }
 }

@@ -3,6 +3,7 @@ package org.dallili.secretfriends.service;
 import org.dallili.secretfriends.domain.Diary;
 import org.dallili.secretfriends.dto.DiaryDTO;
 
+import java.util.List;
 public interface DiaryService {
 
     String register(DiaryDTO diaryDTO); // 일기장 등록
@@ -13,6 +14,7 @@ public interface DiaryService {
 
     void remove(String diaryID); // 일기장 삭제
 
+    List<DiaryDTO> findAllDiaries();
 
     void modifyPartner(String diaryID, String partnerID); // 일기장 파트너 결정
 

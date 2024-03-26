@@ -12,7 +12,9 @@ import org.dallili.secretfriends.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Log4j2
@@ -105,6 +107,17 @@ public class DiaryServiceImpl implements DiaryService {
         diary.setActivated(false);
 
         diaryRepository.save(diary);
+
+    }
+
+    @Override
+    public List<DiaryDTO> findAllDiaries() {
+
+        List<Diary> diaries = diaryRepository.findAll();
+
+        return diaries.stream()
+                .map(diary -> modelMapper.map(diary, DiaryDTO.class) )
+                .collect(Collectors.toList());
 
     }
 
