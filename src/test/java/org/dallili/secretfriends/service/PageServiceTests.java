@@ -29,4 +29,11 @@ public class PageServiceTests {
         log.info(pid);
     }
 
+    @Test
+    public void testModifyState(){
+        Long pid = 40L;
+        Boolean result = pageService.modifyState(pid);
+        log.info(result);
+    }
+
 }

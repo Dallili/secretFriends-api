@@ -9,10 +9,7 @@ import org.dallili.secretfriends.service.PageService;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,6 +37,19 @@ public class PageController {
         result.put("pageID",pageId);
 
         return result;
+
+    }
+
+    @Operation(summary = "일기 전달", description = "저장된 일기의 state, sendAt 필드 값 업데이트")
+    @PatchMapping(value = "/{pageID}")
+    public Map<String,String> stateModify(@PathVariable("pageID") Long pageID){
+        Boolean result = pageService.modifyState(pageID);
+        if(result){
+            return Map.of("pageID",Long.toString(pageID),
+                    "result","일기 전달 성공");
+        } else 
+            return Map.of("pageID",Long.toString(pageID),
+                    "result","이미 전달된 일기");
 
     }
 }
