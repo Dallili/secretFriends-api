@@ -12,6 +12,7 @@ import org.dallili.secretfriends.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,7 +29,7 @@ public class DiaryServiceImpl implements DiaryService {
     private final UserRepository userRepository;
 
     @Override
-    public String register(DiaryDTO diaryDTO) {
+    public String addDiary(DiaryDTO diaryDTO) {
 
         Diary diary = modelMapper.map(diaryDTO, Diary.class);
 
@@ -39,7 +40,7 @@ public class DiaryServiceImpl implements DiaryService {
 
 
     @Override
-    public DiaryDTO readOne(String diaryID){
+    public DiaryDTO findOne(String diaryID){
 
         Optional<Diary> result = diaryRepository.findById(diaryID);
 
@@ -47,13 +48,12 @@ public class DiaryServiceImpl implements DiaryService {
 
         DiaryDTO diaryDTO = modelMapper.map(diary, DiaryDTO.class);
 
-        //좀 더 개발 후에 pageDTO도 함께 다뤄야 함
         return diaryDTO;
 
     }
 
     @Override
-    public void update(DiaryDTO diaryDTO) { //일기 전송 후 작동해야하는 메소드.
+    public void modifyUpdate(DiaryDTO diaryDTO) { //일기 전송 후 작동해야하는 메소드.
         // 마지막 작성자와 마지막 작성일을 수정한다.
 
         Optional<Diary> result = diaryRepository.findById(diaryDTO.getDiaryID());
@@ -62,7 +62,7 @@ public class DiaryServiceImpl implements DiaryService {
 
         //log.info("업데이트 전: " + diary);
 
-        diary.updateDiary(diaryDTO.getUpdatedBy(), diaryDTO.getUpdatedAt());
+        diary.updateDiary(diaryDTO.getUpdatedBy(), LocalDateTime.now());
 
         diaryRepository.save(diary);
 
@@ -73,7 +73,7 @@ public class DiaryServiceImpl implements DiaryService {
 
 
     @Override
-    public void remove(String diaryID) {
+    public void removeDiary(String diaryID) {
 
         diaryRepository.deleteById(diaryID);
 

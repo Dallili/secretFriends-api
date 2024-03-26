@@ -32,7 +32,6 @@ public class DiaryController {
                 .filter(diaryDTO -> diaryDTO.isActivated() == state)
                 .filter(diaryDTO -> userID.equals(diaryDTO.getUserID()) || userID.equals(diaryDTO.getPartnerID()))
                 .collect(Collectors.toList());
-
         log.info(state+ "상태인 일기장 목록: " + diaries);
         return diaries;
     }

@@ -6,13 +6,13 @@ import org.dallili.secretfriends.dto.DiaryDTO;
 import java.util.List;
 public interface DiaryService {
 
-    String register(DiaryDTO diaryDTO); // 일기장 등록
+    String addDiary(DiaryDTO diaryDTO); // 일기장 등록
 
-    DiaryDTO readOne(String diaryID); // 일기장 조회
+    DiaryDTO findOne(String diaryID); // 일기장 조회
 
-    void update(DiaryDTO diaryDTO); // 일기장 업데이트 (새로운 답장)
+    void modifyUpdate(DiaryDTO diaryDTO); // 일기장 업데이트 (새로운 답장)
 
-    void remove(String diaryID); // 일기장 삭제
+    void removeDiary(String diaryID); // 일기장 삭제
 
     List<DiaryDTO> findAllDiaries();
 

@@ -38,14 +38,14 @@ public class DiaryServiceTests {
                 .build();
 
 
-        log.info(diaryService.register(diaryDTO));
+        log.info(diaryService.addDiary(diaryDTO));
     }
 
 
     @Test
     public void testReadOne() {
 
-        DiaryDTO diaryDTO = diaryService.readOne("diary4");
+        DiaryDTO diaryDTO = diaryService.findOne("diary4");
 
         log.info(diaryDTO);
     }
@@ -55,19 +55,18 @@ public class DiaryServiceTests {
 
         DiaryDTO diaryDTO = DiaryDTO.builder()
                 .diaryID("diary10")
-                .updatedAt(LocalDateTime.now())
                 .updatedBy("new user")
                 .build();
 
         log.info("업데이트 할 것 : "+ diaryDTO);
 
-        diaryService.update(diaryDTO);
+        diaryService.modifyUpdate(diaryDTO);
     }
 
     @Test
     public void testRemove() {
 
-        diaryService.remove("diary1");
+        diaryService.removeDiary("diary1");
 
     }
 
