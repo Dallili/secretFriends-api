@@ -39,4 +39,11 @@ public class User {
     @Column(name = "useFiltering",columnDefinition = "TINYINT")
     private boolean useFiltering;
 
+    //modelmapper 매핑 규칙 정의를 위한 setter
+    //일반 코드 작성 시에는 사용 지양
+
+    public void setUserID(String userID){
+        this.userID = userID;
+    }
+
 }
