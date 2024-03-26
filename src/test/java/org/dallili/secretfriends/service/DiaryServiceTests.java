@@ -12,7 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-@Transactional
 @SpringBootTest
 @Log4j2
 public class DiaryServiceTests {
@@ -25,22 +24,29 @@ public class DiaryServiceTests {
     @Test
     public void testRegister() {
 
-        Optional<User> user = userRepository.findById("user1");
-        Optional<User> partner = userRepository.findById("user10");
+        //Optional<User> user = userRepository.findById("user1");
+        //Optional<User> partner = userRepository.findById("user10");
 
-               DiaryDTO diaryDTO = DiaryDTO.builder()
-                .diaryID("diary101")
+        /*DiaryDTO diaryDTO = DiaryDTO.builder()
+                .diaryID("diary103")
                 .color("#123456")
                 .isActivated(true)
-                .user(user.orElseThrow())
-                .partner(partner.orElseThrow())
+                .userID("user1")
+                .partnerID("user10")
                 .updatedBy("user10")
                 .updatedAt(LocalDateTime.now())
-                        .build();
+                .build();*/
+
+        DiaryDTO diaryDTO = DiaryDTO.builder()
+                .diaryID("diary103")
+                .userID("user1")
+                .build();
+
 
         log.info(diaryService.register(diaryDTO));
     }
 
+    /*
     @Test
     public void testReadOne() {
 
@@ -48,4 +54,18 @@ public class DiaryServiceTests {
 
         log.info(diaryDTO);
     }
+
+    @Test
+    public void testUpdate() {
+
+        DiaryDTO diaryDTO = DiaryDTO.builder()
+                .diaryID("diary10")
+                .updatedAt(LocalDateTime.now())
+                .updatedBy("new user")
+                .build();
+
+        log.info("업데이트 할 것 : "+ diaryDTO);
+
+        diaryService.update(diaryDTO);
+    }*/
 }

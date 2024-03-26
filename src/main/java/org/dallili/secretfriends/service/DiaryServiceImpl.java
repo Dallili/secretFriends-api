@@ -17,11 +17,9 @@ import java.util.Optional;
 @Service
 @Log4j2
 @RequiredArgsConstructor
-@Transactional
 public class DiaryServiceImpl implements DiaryService {
 
     private final ModelMapper modelMapper;
-
 
     private final DiaryRepository diaryRepository;
 
@@ -37,6 +35,7 @@ public class DiaryServiceImpl implements DiaryService {
         return diaryID;
     }
 
+    /*
     @Override
     public DiaryDTO readOne(String diaryID){
 
@@ -52,15 +51,20 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public void update(DiaryDTO diaryDTO) {
+    public void update(DiaryDTO diaryDTO) { //일기 전송 후 작동해야하는 메소드.
+        // 마지막 작성자와 마지막 작성일을 수정한다.
 
         Optional<Diary> result = diaryRepository.findById(diaryDTO.getDiaryID());
 
         Diary diary = result.orElseThrow();
 
+        log.info("업데이트 전: " + diary);
+
         diary.updateDiary(diaryDTO.getUpdatedBy(), diaryDTO.getUpdatedAt());
 
         diaryRepository.save(diary);
+
+        log.info("업데이트 후: " + diary);
 
 
     }
@@ -100,6 +104,6 @@ public class DiaryServiceImpl implements DiaryService {
 
         diaryRepository.save(diary);
 
-    }
+    }*/
 
 }
