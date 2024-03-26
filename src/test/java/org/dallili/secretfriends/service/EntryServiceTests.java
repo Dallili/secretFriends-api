@@ -1,38 +1,36 @@
 package org.dallili.secretfriends.service;
 
 import lombok.extern.log4j.Log4j2;
-import org.dallili.secretfriends.dto.PageDTO;
+import org.dallili.secretfriends.dto.EntryDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDateTime;
-
 @SpringBootTest
 @Log4j2
-public class PageServiceTests {
+public class EntryServiceTests {
 
     @Autowired
-    private PageService pageService;
+    private EntryService entryService;
 
     @Test
-    public void testAddPage(){
+    public void testAddEntry(){
 
-        PageDTO pageDTO = PageDTO.builder()
+        EntryDTO entryDTO = EntryDTO.builder()
                 .diaryID("diary1")
                 .writer("user1")
                 .text("일기")
                 .build();
 
-        Long pid = pageService.addPage(pageDTO);
+        Long eid = entryService.addEntry(entryDTO);
 
-        log.info(pid);
+        log.info(eid);
     }
 
     @Test
     public void testModifyState(){
-        Long pid = 40L;
-        Boolean result = pageService.modifyState(pid);
+        Long eid = 1L;
+        Boolean result = entryService.modifyState(eid);
         log.info(result);
     }
 
