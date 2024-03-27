@@ -25,7 +25,7 @@ public class EntryRepositoryTests {
             Entry entry = Entry.builder()
                     .diary(diary)
                     .writer(diary.getUser().getUserID())
-                    .text("일기 텍스트...")
+                    .content("일기 텍스트...")
                     .build();
 
             entryRepository.save(entry);

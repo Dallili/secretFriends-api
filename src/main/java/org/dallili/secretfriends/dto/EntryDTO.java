@@ -25,7 +25,7 @@ public class EntryDTO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime date;
     @Size(min = 1, message = "일기 내용은 1자 이상 작성해야 한다.")
-    private String text;
+    private String content;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime sendAt;
     @Pattern(regexp = "[YN]", message = "state는 Y 혹은 N 값 중 하나여야 한다.")

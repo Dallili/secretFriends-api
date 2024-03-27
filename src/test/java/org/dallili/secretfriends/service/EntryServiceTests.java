@@ -19,7 +19,7 @@ public class EntryServiceTests {
         EntryDTO entryDTO = EntryDTO.builder()
                 .diaryID("diary1")
                 .writer("user1")
-                .text("일기")
+                .content("일기")
                 .build();
 
         Long eid = entryService.addEntry(entryDTO);

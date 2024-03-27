@@ -38,8 +38,8 @@ public class Entry {
     @LastModifiedDate
     private LocalDateTime date;
 
-    @Column(name = "text", columnDefinition = "TEXT")
-    private String text;
+    @Column(name = "content", columnDefinition = "TEXT")
+    private String content;
 
     @Column(name = "sendAt", columnDefinition = "TIMESTAMP")
     private LocalDateTime sendAt;
