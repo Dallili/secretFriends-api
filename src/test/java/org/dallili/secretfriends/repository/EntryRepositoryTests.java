@@ -2,35 +2,33 @@ package org.dallili.secretfriends.repository;
 
 import lombok.extern.log4j.Log4j2;
 import org.dallili.secretfriends.domain.Diary;
-import org.dallili.secretfriends.domain.Page;
+import org.dallili.secretfriends.domain.Entry;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.stream.IntStream;
 
 @SpringBootTest
 @Log4j2
-public class PageRepositoryTests {
+public class EntryRepositoryTests {
     @Autowired
-    private PageRepository pageRepository;
+    private EntryRepository entryRepository;
     @Autowired
     private DiaryRepository diaryRepository;
 
     @Test
-    public void testInsertPage(){
+    public void testInsertEntry(){
         Diary diary = diaryRepository.findById("diary1").orElseThrow();
 
         IntStream.rangeClosed(1,10).forEach(i->{
-            Page page = Page.builder()
+            Entry entry = Entry.builder()
                     .diary(diary)
                     .writer(diary.getUser().getUserID())
                     .text("일기 텍스트...")
                     .build();
 
-            pageRepository.save(page);
+            entryRepository.save(entry);
         });
     }
 }

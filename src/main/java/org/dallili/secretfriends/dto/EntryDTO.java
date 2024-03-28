@@ -15,9 +15,9 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PageDTO {
+public class EntryDTO {
 
-    private Long pageID;
+    private Long entryID;
     @NotBlank
     private String diaryID;
     @NotBlank
