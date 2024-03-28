@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
@@ -88,5 +89,21 @@ public class DiaryServiceTests {
 
         log.info(diaryService.findAllDiaries());
 
+    }
+
+    @Test
+    public void testFindStateDiaries(){
+
+        List<DiaryDTO> diaries = diaryService.findStateDiaries("user100", true);
+
+        log.info(diaries);
+    }
+
+    @Test
+    public void testFindRepliedDiaries() {
+
+        List<DiaryDTO> diaries = diaryService.findRepliedDiaries("user10");
+
+        log.info(diaries);
     }
 }

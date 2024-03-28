@@ -8,9 +8,7 @@ import org.dallili.secretfriends.dto.DiaryDTO;
 import org.dallili.secretfriends.repository.DiaryRepository;
 import org.dallili.secretfriends.service.DiaryService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,18 +23,36 @@ public class DiaryController {
     private final DiaryService diaryService;
 
     @Operation(summary = "Diary List GET", description = "활성/비활성 일기장 목록 조회")
-    @GetMapping(value = "/{state}")
-    public List<DiaryDTO> diaryDTOList (@PathVariable("state") Boolean state, String userID) {
-        List<DiaryDTO> diaries = diaryService.findAllDiaries()
-                .stream()
-                .filter(diaryDTO -> diaryDTO.isActivated() == state)
-                .filter(diaryDTO -> userID.equals(diaryDTO.getUserID()) || userID.equals(diaryDTO.getPartnerID()))
-                .collect(Collectors.toList());
-        log.info(state+ "상태인 일기장 목록: " + diaries);
+    @GetMapping(value = "/")
+    public List<DiaryDTO> diaryDTOList (@RequestParam("state") Boolean state, String userID) {
+
+        List<DiaryDTO> diaries = diaryService.findStateDiaries(userID, state);
+
+        log.info(state+ " 상태인 일기장 목록: " + diaries);
+
         return diaries;
     }
 
+    @Operation(summary = "Diary Deactivate PATCH", description = "일기장 비활성화")
+    @PatchMapping(value = "/{diaryID}/isActivated")
+    public void diaryStateModify (@PathVariable("diaryID") String diaryID){
 
+        diaryService.modifyState(diaryID);
+
+        log.info(diaryService.findOne(diaryID));
+
+    }
+
+
+    @Operation(summary = "Replied Diary GET", description = "답장 온 일기장 조회")
+    @GetMapping(value = "/replied")
+    public List<DiaryDTO> repliedDiaryList(String loginUserID){
+
+        log.info(loginUserID+ "의 답장 온 일기장:  " + diaryService.findRepliedDiaries(loginUserID));
+
+        return diaryService.findRepliedDiaries(loginUserID);
+
+    }
 
 
 }
