@@ -16,6 +16,8 @@ public interface DiaryService {
 
     List<DiaryDTO> findAllDiaries();
 
+    List<DiaryDTO> findStateDiaries(String userID, Boolean state);
+
     void modifyPartner(String diaryID, String partnerID); // 일기장 파트너 결정
 
     void modifyState(String diaryID); // 일기장 비활성화
