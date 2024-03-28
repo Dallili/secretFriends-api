@@ -134,4 +134,21 @@ public class DiaryServiceImpl implements DiaryService {
 
     }
 
+    @Override
+    public List<DiaryDTO> findRepliedDiaries(String loginUserID){
+
+        List<Diary> diaries = diaryRepository.findAll();
+
+        return diaries.stream()
+                .filter(diary -> diary.isActivated() == true)
+                .filter(diary -> loginUserID.equals(diary.getUser().getUserID()) || loginUserID.equals(diary.getPartner().getUserID()))
+                .filter(diary -> !loginUserID.equals(diary.getUpdatedBy()))
+                .map(diary -> modelMapper.map(diary, DiaryDTO.class))
+                .collect(Collectors.toList());
+
+
+
+
+    }
+
 }

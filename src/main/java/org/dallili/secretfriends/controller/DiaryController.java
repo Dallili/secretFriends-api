@@ -43,4 +43,16 @@ public class DiaryController {
 
     }
 
+
+    @Operation(summary = "Replied Diary GET", description = "답장 온 일기장 조회")
+    @GetMapping(value = "/replied")
+    public List<DiaryDTO> repliedDiaryList(String loginUserID){
+
+        log.info(loginUserID+ "의 답장 온 일기장:  " + diaryService.findRepliedDiaries(loginUserID));
+
+        return diaryService.findRepliedDiaries(loginUserID);
+
+    }
+
+
 }

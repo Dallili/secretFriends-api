@@ -98,4 +98,12 @@ public class DiaryServiceTests {
 
         log.info(diaries);
     }
+
+    @Test
+    public void testFindRepliedDiaries() {
+
+        List<DiaryDTO> diaries = diaryService.findRepliedDiaries("user10");
+
+        log.info(diaries);
+    }
 }
