@@ -8,10 +8,7 @@ import org.dallili.secretfriends.dto.DiaryDTO;
 import org.dallili.secretfriends.repository.DiaryRepository;
 import org.dallili.secretfriends.service.DiaryService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,7 +33,14 @@ public class DiaryController {
         return diaries;
     }
 
+    @Operation(summary = "Diary Deactivate PATCH", description = "일기장 비활성화")
+    @PatchMapping(value = "/{diaryID}/isActivated")
+    public void diaryStateModify (@PathVariable("diaryID") String diaryID){
 
+        diaryService.modifyState(diaryID);
 
+        log.info(diaryService.findOne(diaryID));
+
+    }
 
 }
