@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString(exclude = "diary")
 @Table(name = "entry", indexes = {
-        @Index(name="idx_entry_diary_diaryID", columnList = "diary_diaryID")
+        @Index(name="idx_entry_diary_diaryID", columnList = "diaryID")
 })
 @EntityListeners(value = {AuditingEntityListener.class})
 @DynamicInsert
@@ -38,8 +38,8 @@ public class Entry {
     @LastModifiedDate
     private LocalDateTime date;
 
-    @Column(name = "text", columnDefinition = "TEXT")
-    private String text;
+    @Column(name = "content", columnDefinition = "TEXT")
+    private String content;
 
     @Column(name = "sendAt", columnDefinition = "TIMESTAMP")
     private LocalDateTime sendAt;

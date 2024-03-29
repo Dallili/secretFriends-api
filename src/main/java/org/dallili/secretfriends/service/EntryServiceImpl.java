@@ -10,7 +10,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -38,5 +40,15 @@ public class EntryServiceImpl implements EntryService {
             return true;
         } else
             return false;
+    }
+
+    @Override
+    public List<EntryDTO.Response> findEntry(String diaryID) {
+        List<Entry> entries = entryRepository.selectEntry(diaryID);
+
+        List<EntryDTO.Response> dto = entries.stream().map(entry -> modelMapper.map(entry,EntryDTO.Response.class)).collect(Collectors.toList());
+        dto.stream().forEach(entry->log.info(entry));
+
+        return dto;
     }
 }
