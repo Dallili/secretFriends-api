@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -51,5 +52,17 @@ public class EntryController {
             return Map.of("entryID",Long.toString(entryID),
                     "result","이미 전달된 일기");
 
+    }
+
+    @Operation(summary = "일기 조회", description = "특정 다이어리의 일기 목록 조회")
+    @GetMapping(value = "/list/{diaryID}")
+    public Map<String,Object> entryList(@PathVariable("diaryID") String diaryID){
+        List<EntryDTO.Response> entryDTO = entryService.findEntry(diaryID);
+
+        Map<String,Object> result = new HashMap<>();
+        result.put("total",entryDTO.size());
+        result.put("entries",entryDTO);
+
+        return result;
     }
 }

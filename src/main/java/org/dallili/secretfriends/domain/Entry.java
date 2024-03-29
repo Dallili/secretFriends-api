@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString(exclude = "diary")
 @Table(name = "entry", indexes = {
-        @Index(name="idx_entry_diary_diaryID", columnList = "diary_diaryID")
+        @Index(name="idx_entry_diary_diaryID", columnList = "diaryID")
 })
 @EntityListeners(value = {AuditingEntityListener.class})
 @DynamicInsert
