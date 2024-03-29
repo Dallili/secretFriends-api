@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 @SpringBootTest
 @Log4j2
 public class EntryServiceTests {
@@ -19,7 +21,7 @@ public class EntryServiceTests {
         EntryDTO entryDTO = EntryDTO.builder()
                 .diaryID("diary1")
                 .writer("user1")
-                .text("일기")
+                .content("일기")
                 .build();
 
         Long eid = entryService.addEntry(entryDTO);
@@ -34,4 +36,10 @@ public class EntryServiceTests {
         log.info(result);
     }
 
+    @Test
+    public void testFindEntry(){
+        String diaryID = "diary1";
+        List<EntryDTO.Response> dto = entryService.findEntry(diaryID);
+        dto.stream().forEach(i -> log.info(i));
+    }
 }
