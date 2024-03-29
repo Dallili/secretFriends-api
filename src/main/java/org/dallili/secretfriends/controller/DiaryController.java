@@ -2,18 +2,20 @@ package org.dallili.secretfriends.controller;
 
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.dallili.secretfriends.dto.DiaryDTO;
 import org.dallili.secretfriends.repository.DiaryRepository;
 import org.dallili.secretfriends.service.DiaryService;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Controller
+@RestController
 @Log4j2
 @RequiredArgsConstructor
 @RequestMapping("/diaries")
@@ -45,7 +47,7 @@ public class DiaryController {
 
 
     @Operation(summary = "Replied Diary GET", description = "답장 온 일기장 조회")
-    @GetMapping(value = "/replied")
+    @GetMapping(value = "/replied", consumes = MediaType.APPLICATION_JSON_VALUE)
     public List<DiaryDTO> repliedDiaryList(String loginUserID){
 
         log.info(loginUserID+ "의 답장 온 일기장:  " + diaryService.findRepliedDiaries(loginUserID));
