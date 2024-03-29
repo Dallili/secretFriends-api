@@ -12,7 +12,9 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -26,13 +28,17 @@ public class DiaryController {
 
     @Operation(summary = "Diary List GET", description = "활성/비활성 일기장 목록 조회")
     @GetMapping(value = "/")
-    public List<DiaryDTO> diaryDTOList (@RequestParam("state") Boolean state, String userID) {
+    public Map<String, Object> diaryDTOList (@RequestParam("state") Boolean state, String userID) {
+
 
         List<DiaryDTO> diaries = diaryService.findStateDiaries(userID, state);
 
-        log.info(state+ " 상태인 일기장 목록: " + diaries);
+        Map<String, Object> result = new HashMap<>();
+        result.put("total", diaries.size());
+        result.put("diaries", diaries);
 
-        return diaries;
+
+        return result;
     }
 
     @Operation(summary = "Diary Deactivate PATCH", description = "일기장 비활성화")
@@ -47,12 +53,14 @@ public class DiaryController {
 
 
     @Operation(summary = "Replied Diary GET", description = "답장 온 일기장 조회")
-    @GetMapping(value = "/replied", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public List<DiaryDTO> repliedDiaryList(String loginUserID){
+    @GetMapping(value = "/replied")
+    public Map<String, Object> repliedDiaryList(String loginUserID){
 
-        log.info(loginUserID+ "의 답장 온 일기장:  " + diaryService.findRepliedDiaries(loginUserID));
+        List<DiaryDTO> diaries =  diaryService.findRepliedDiaries(loginUserID);
+        Map<String, Object> result = new HashMap<>();
+        result.put("diaries",diaries);
 
-        return diaryService.findRepliedDiaries(loginUserID);
+        return result;
 
     }
 
