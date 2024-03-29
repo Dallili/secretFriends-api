@@ -66,7 +66,7 @@ public class DiaryController {
 
     @Operation(summary = "Delete Diary DELETE", description = "일기장 삭제/지인 매칭 취소")
     @DeleteMapping(value = "/{diaryID}")
-    public void diaryRemove(String diaryID) {
+    public void diaryRemove(@PathVariable("diaryID") String diaryID) {
 
         diaryService.removeDiary(diaryID);
 
