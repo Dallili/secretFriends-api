@@ -30,6 +30,16 @@ public class EntryServiceTests {
     }
 
     @Test
+    public void testModifyContent(){
+        EntryDTO.ModifyRequest req = EntryDTO.ModifyRequest.builder()
+                .entryID(8L)
+                .content("수정된 일기")
+                .build();
+        EntryDTO.Response res = entryService.modifyContent(req);
+        log.info(res);
+    }
+
+    @Test
     public void testModifyState(){
         Long eid = 1L;
         Boolean result = entryService.modifyState(eid);

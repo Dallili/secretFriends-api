@@ -9,5 +9,6 @@ import java.util.List;
 public interface EntryService {
     Long addEntry(EntryDTO entryDTO);
     Boolean modifyState(Long entryID);
+    EntryDTO.Response modifyContent(EntryDTO.ModifyRequest entryDTO);
     List<EntryDTO.Response> findEntry(String diaryID);
 }

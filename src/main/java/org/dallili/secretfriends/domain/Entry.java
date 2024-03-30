@@ -49,6 +49,10 @@ public class Entry {
     @Builder.Default
     private String state = "N";
 
+    public void changeContent(String content){
+        this.content = content;
+    }
+
     @PrePersist
     public void defaultState(){
         if(this.state == null) {

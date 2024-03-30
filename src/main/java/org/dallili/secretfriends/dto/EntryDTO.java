@@ -32,6 +32,14 @@ public class EntryDTO {
     private String state;
 
     @Data
+    @Builder
+    public static class ModifyRequest{
+        private Long entryID;
+        @Size(min = 1, message = "일기 내용은 1자 이상 작성해야 한다.")
+        private String content;
+    }
+
+    @Data
     public static class Response{
         private Long entryID;
         @NotBlank
