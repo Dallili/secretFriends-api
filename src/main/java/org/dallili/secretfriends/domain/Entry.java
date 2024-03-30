@@ -60,4 +60,11 @@ public class Entry {
         }
     }
 
+    @PreUpdate
+    public void preventUpdate(){
+        if(this.state.equals("Y")){
+            throw new IllegalStateException("전달된 일기는 내용 수정 불가");
+        }
+    }
+
 }
