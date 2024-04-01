@@ -36,7 +36,26 @@ public class DiaryController {
         return diaries;
     }
 
+    @Operation(summary = "Diary Deactivate PATCH", description = "일기장 비활성화")
+    @PatchMapping(value = "/{diaryID}/isActivated")
+    public void diaryStateModify (@PathVariable("diaryID") String diaryID){
 
+        diaryService.modifyState(diaryID);
+
+        log.info(diaryService.findOne(diaryID));
+
+    }
+
+
+    @Operation(summary = "Replied Diary GET", description = "답장 온 일기장 조회")
+    @GetMapping(value = "/replied")
+    public List<DiaryDTO> repliedDiaryList(String loginUserID){
+
+        log.info(loginUserID+ "의 답장 온 일기장:  " + diaryService.findRepliedDiaries(loginUserID));
+
+        return diaryService.findRepliedDiaries(loginUserID);
+
+    }
 
 
 }
