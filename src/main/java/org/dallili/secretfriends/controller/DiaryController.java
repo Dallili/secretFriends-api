@@ -2,21 +2,25 @@ package org.dallili.secretfriends.controller;
 
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.dallili.secretfriends.dto.DiaryDTO;
 import org.dallili.secretfriends.repository.DiaryRepository;
 import org.dallili.secretfriends.service.DiaryService;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-@Controller
+@RestController
 @Log4j2
 @RequiredArgsConstructor
 @RequestMapping("/diaries")
@@ -27,13 +31,17 @@ public class DiaryController {
 
     @Operation(summary = "Diary List GET", description = "활성/비활성 일기장 목록 조회")
     @GetMapping(value = "/")
-    public List<DiaryDTO> diaryDTOList (@RequestParam("state") Boolean state, String userID) {
+    public Map<String, Object> diaryDTOList (@RequestParam("state") Boolean state, String userID) {
+
 
         List<DiaryDTO> diaries = diaryService.findStateDiaries(userID, state);
 
-        log.info(state+ " 상태인 일기장 목록: " + diaries);
+        Map<String, Object> result = new HashMap<>();
+        result.put("total", diaries.size());
+        result.put("diaries", diaries);
 
-        return diaries;
+
+        return result;
     }
 
     @Operation(summary = "Diary Deactivate PATCH", description = "일기장 비활성화")
@@ -49,11 +57,13 @@ public class DiaryController {
 
     @Operation(summary = "Replied Diary GET", description = "답장 온 일기장 조회")
     @GetMapping(value = "/replied")
-    public List<DiaryDTO> repliedDiaryList(String loginUserID){
+    public Map<String, Object> repliedDiaryList(String loginUserID){
 
-        log.info(loginUserID+ "의 답장 온 일기장:  " + diaryService.findRepliedDiaries(loginUserID));
+        List<DiaryDTO> diaries =  diaryService.findRepliedDiaries(loginUserID);
+        Map<String, Object> result = new HashMap<>();
+        result.put("diaries",diaries);
 
-        return diaryService.findRepliedDiaries(loginUserID);
+        return result;
 
     }
 
