@@ -49,10 +49,21 @@ public class Entry {
     @Builder.Default
     private String state = "N";
 
+    public void changeContent(String content){
+        this.content = content;
+    }
+
     @PrePersist
     public void defaultState(){
         if(this.state == null) {
             this.state = "N";
+        }
+    }
+
+    @PreUpdate
+    public void preventUpdate(){
+        if(this.state.equals("Y")){
+            throw new IllegalStateException("전달된 일기는 내용 수정 불가");
         }
     }
 
