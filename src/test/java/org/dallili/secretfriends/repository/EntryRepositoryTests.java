@@ -3,10 +3,12 @@ package org.dallili.secretfriends.repository;
 import lombok.extern.log4j.Log4j2;
 import org.dallili.secretfriends.domain.Diary;
 import org.dallili.secretfriends.domain.Entry;
+import org.dallili.secretfriends.dto.EntryDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -25,10 +27,20 @@ public class EntryRepositoryTests {
             Entry entry = Entry.builder()
                     .diary(diary)
                     .writer(diary.getUser().getUserID())
-                    .text("일기 텍스트...")
+                    .content("일기 텍스트...")
                     .build();
 
             entryRepository.save(entry);
         });
+    }
+
+    @Test
+    public void testSelectEntry(){
+        String diaryID = "diary1";
+
+        List<Entry> entries =  entryRepository.selectEntry(diaryID);
+
+        log.info(entries);
+
     }
 }

@@ -20,6 +20,8 @@ public interface DiaryService {
 
     List<DiaryDTO> findRepliedDiaries(String loginUserID); // 답장 온 일기장 목록 조회
 
+    List<DiaryDTO> findStateDiaries(String userID, Boolean state);
+
     void modifyPartner(String diaryID, String partnerID); // 일기장 파트너 결정
 
     void modifyState(String diaryID); // 일기장 비활성화

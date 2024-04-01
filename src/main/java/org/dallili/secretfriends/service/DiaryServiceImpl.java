@@ -133,7 +133,7 @@ public class DiaryServiceImpl implements DiaryService {
                 .collect(Collectors.toList());
 
     }
-
+  
     @Override
     public List<DiaryDTO> findRepliedDiaries(String loginUserID){
 
