@@ -41,6 +41,21 @@ public class EntryController {
 
     }
 
+    @Operation(summary = "일기 수정", description = "전달되지 않은 일기의 content 필드 값 업데이트")
+    @PutMapping(value = "/{entryID}")
+    public EntryDTO.Response contentModify(@Valid @RequestBody EntryDTO.ModifyRequest request, BindingResult bindingResult) throws BindException{
+
+        log.info(request);
+        if(bindingResult.hasErrors()){
+            throw new BindException(bindingResult);
+        }
+
+        EntryDTO.Response response = entryService.modifyContent(request);
+        log.info(response);
+
+        return response;
+    }
+
     @Operation(summary = "일기 전달", description = "저장된 일기의 state, sendAt 필드 값 업데이트")
     @PatchMapping(value = "/{entryID}")
     public Map<String,String> stateModify(@PathVariable("entryID") Long entryID){

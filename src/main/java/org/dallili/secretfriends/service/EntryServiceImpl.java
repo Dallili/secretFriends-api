@@ -43,6 +43,19 @@ public class EntryServiceImpl implements EntryService {
     }
 
     @Override
+    public EntryDTO.Response modifyContent(EntryDTO.ModifyRequest entryDTO) {
+        Optional<Entry> entryOptional = entryRepository.findById(entryDTO.getEntryID());
+        Entry entry = entryOptional.orElseThrow();
+
+        entry.changeContent(entryDTO.getContent());
+        entryRepository.save(entry);
+        entryRepository.flush();
+
+        EntryDTO.Response response = modelMapper.map(entry,EntryDTO.Response.class);
+        return response;
+    }
+
+    @Override
     public List<EntryDTO.Response> findEntry(String diaryID) {
         List<Entry> entries = entryRepository.selectEntry(diaryID);
 

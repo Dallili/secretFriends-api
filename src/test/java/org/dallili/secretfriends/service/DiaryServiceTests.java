@@ -106,4 +106,5 @@ public class DiaryServiceTests {
 
         log.info(diaries);
     }
+
 }

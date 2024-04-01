@@ -10,7 +10,10 @@ import org.dallili.secretfriends.repository.DiaryRepository;
 import org.dallili.secretfriends.service.DiaryService;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
 import java.util.List;
@@ -66,7 +69,7 @@ public class DiaryController {
 
     @Operation(summary = "Delete Diary DELETE", description = "일기장 삭제/지인 매칭 취소")
     @DeleteMapping(value = "/{diaryID}")
-    public void diaryRemove(String diaryID) {
+    public void diaryRemove(@PathVariable("diaryID") String diaryID) {
 
         diaryService.removeDiary(diaryID);
 
