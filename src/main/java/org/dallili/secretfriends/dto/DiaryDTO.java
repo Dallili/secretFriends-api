@@ -27,7 +27,7 @@ public class DiaryDTO {
 
     private String partnerID; //get, set
 
-    private boolean isActivated; //get, set
+    private boolean state; //get, set
 
     private String updatedBy; //get. set
 

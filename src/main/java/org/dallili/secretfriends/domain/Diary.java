@@ -27,8 +27,8 @@ public class Diary{
     @JoinColumn(name = "partnerID", referencedColumnName = "userID", insertable = true, updatable = true)
     private User partner;
 
-    @Column(name = "isActivated",columnDefinition = "TINYINT")
-    private boolean isActivated;
+    @Column(name = "state",columnDefinition = "TINYINT")
+    private boolean state;
 
     @Column(name = "updatedBy", length = 20)
     private String updatedBy;
@@ -49,7 +49,7 @@ public class Diary{
     }
 
     public void changeState(Boolean state){
-        this.isActivated = state;
+        this.state = state;
     }
 
 

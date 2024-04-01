@@ -31,7 +31,7 @@ public class DiaryRepositoryTests {
                     .diaryID("diary"+i)
                     .user(user.orElseThrow())
                     .partner(partner.orElseThrow())
-                    .isActivated(i%2==0?true:false)
+                    .state(i%2==0?true:false)
                     .updatedBy(user.orElseThrow().getUserID())
                     .updatedAt(LocalDateTime.now())
                     .color("#000000")

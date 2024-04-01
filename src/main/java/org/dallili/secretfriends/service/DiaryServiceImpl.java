@@ -127,7 +127,7 @@ public class DiaryServiceImpl implements DiaryService {
         List<Diary> diaries = diaryRepository.findAll();
 
         return diaries.stream()
-                .filter(diary -> diary.isActivated() == state)
+                .filter(diary -> diary.isState() == state)
                 .filter(diary -> userID.equals(diary.getUser().getUserID()) || userID.equals(diary.getPartner().getUserID()))
                 .map(diary -> modelMapper.map(diary, DiaryDTO.class) )
                 .collect(Collectors.toList());
@@ -140,7 +140,7 @@ public class DiaryServiceImpl implements DiaryService {
         List<Diary> diaries = diaryRepository.findAll();
 
         return diaries.stream()
-                .filter(diary -> diary.isActivated() == true)
+                .filter(diary -> diary.isState() == true)
                 .filter(diary -> loginUserID.equals(diary.getUser().getUserID()) || loginUserID.equals(diary.getPartner().getUserID()))
                 .filter(diary -> !loginUserID.equals(diary.getUpdatedBy()))
                 .map(diary -> modelMapper.map(diary, DiaryDTO.class))
