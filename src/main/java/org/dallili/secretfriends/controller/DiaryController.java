@@ -10,11 +10,14 @@ import org.dallili.secretfriends.repository.DiaryRepository;
 import org.dallili.secretfriends.service.DiaryService;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -40,6 +43,24 @@ public class DiaryController {
 
         return result;
     }
+
+    @Operation(summary = "Register Diary POST", description = "일기장 등록")
+    @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Map<String, UUID> diaryAdd(@Valid @RequestBody DiaryDTO diaryDTO, BindingResult bindingResult) throws BindException {
+
+        if(bindingResult.hasErrors()){
+            throw new BindException(bindingResult);
+        }
+
+        Map<String, UUID> result = new HashMap<>();
+
+        UUID diaryID = diaryService.addDiary(diaryDTO);
+        result.put("diaryID", diaryID);
+
+        return result;
+
+    }
+
 
     @Operation(summary = "Diary Deactivate PATCH", description = "일기장 비활성화")
     @PatchMapping(value = "/{diaryID}/isActivated")

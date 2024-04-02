@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 
 public class DiaryDTO {
 
-    @NotNull
     private String diaryID; //get
 
     @NotEmpty
