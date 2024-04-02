@@ -43,14 +43,14 @@ public class EntryController {
 
     @Operation(summary = "일기 수정", description = "전달되지 않은 일기의 content 필드 값 업데이트")
     @PutMapping(value = "/{entryID}")
-    public EntryDTO.Response contentModify(@Valid @RequestBody EntryDTO.ModifyRequest request, BindingResult bindingResult) throws BindException{
+    public EntryDTO.UnsentEntryResponse contentModify(@Valid @RequestBody EntryDTO.ModifyRequest request, BindingResult bindingResult) throws BindException{
 
         log.info(request);
         if(bindingResult.hasErrors()){
             throw new BindException(bindingResult);
         }
 
-        EntryDTO.Response response = entryService.modifyContent(request);
+        EntryDTO.UnsentEntryResponse response = entryService.modifyContent(request);
         log.info(response);
 
         return response;
@@ -72,11 +72,13 @@ public class EntryController {
     @Operation(summary = "일기 조회", description = "특정 다이어리의 일기 목록 조회")
     @GetMapping(value = "/list/{diaryID}")
     public Map<String,Object> entryList(@PathVariable("diaryID") String diaryID){
-        List<EntryDTO.Response> entryDTO = entryService.findEntry(diaryID);
+        List<EntryDTO.SentEntryResponse> SentEntry = entryService.findSentEntry(diaryID);
+        List<EntryDTO.UnsentEntryResponse> UnsentEntry = entryService.findUnsentEntry(diaryID);
 
         Map<String,Object> result = new HashMap<>();
-        result.put("total",entryDTO.size());
-        result.put("entries",entryDTO);
+        result.put("total",SentEntry.size());
+        result.put("sent",SentEntry);
+        result.put("unsent",UnsentEntry);
 
         return result;
     }

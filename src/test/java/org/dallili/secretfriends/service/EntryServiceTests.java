@@ -32,24 +32,30 @@ public class EntryServiceTests {
     @Test
     public void testModifyContent(){
         EntryDTO.ModifyRequest req = EntryDTO.ModifyRequest.builder()
-                .entryID(8L)
+                .entryID(11L)
                 .content("수정된 일기")
                 .build();
-        EntryDTO.Response res = entryService.modifyContent(req);
+        EntryDTO.UnsentEntryResponse res = entryService.modifyContent(req);
         log.info(res);
     }
 
     @Test
     public void testModifyState(){
-        Long eid = 1L;
+        Long eid = 12L;
         Boolean result = entryService.modifyState(eid);
         log.info(result);
     }
 
     @Test
-    public void testFindEntry(){
+    public void testFindSentEntry(){
         String diaryID = "diary1";
-        List<EntryDTO.Response> dto = entryService.findEntry(diaryID);
+        List<EntryDTO.SentEntryResponse> dto = entryService.findSentEntry(diaryID);
+        dto.stream().forEach(i -> log.info(i));
+    }
+    @Test
+    public void testFindUnsentEntry(){
+        String diaryID = "diary1";
+        List<EntryDTO.UnsentEntryResponse> dto = entryService.findUnsentEntry(diaryID);
         dto.stream().forEach(i -> log.info(i));
     }
 }

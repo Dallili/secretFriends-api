@@ -43,7 +43,7 @@ public class EntryServiceImpl implements EntryService {
     }
 
     @Override
-    public EntryDTO.Response modifyContent(EntryDTO.ModifyRequest entryDTO) {
+    public EntryDTO.UnsentEntryResponse modifyContent(EntryDTO.ModifyRequest entryDTO) {
         Optional<Entry> entryOptional = entryRepository.findById(entryDTO.getEntryID());
         Entry entry = entryOptional.orElseThrow();
 
@@ -51,16 +51,24 @@ public class EntryServiceImpl implements EntryService {
         entryRepository.save(entry);
         entryRepository.flush();
 
-        EntryDTO.Response response = modelMapper.map(entry,EntryDTO.Response.class);
+        EntryDTO.UnsentEntryResponse response = modelMapper.map(entry,EntryDTO.UnsentEntryResponse.class);
         return response;
     }
 
     @Override
-    public List<EntryDTO.Response> findEntry(String diaryID) {
-        List<Entry> entries = entryRepository.selectEntry(diaryID);
+    public List<EntryDTO.SentEntryResponse> findSentEntry(String diaryID) {
+        List<Entry> entries = entryRepository.selectEntry(diaryID,"Y");
 
-        List<EntryDTO.Response> dto = entries.stream().map(entry -> modelMapper.map(entry,EntryDTO.Response.class)).collect(Collectors.toList());
-        dto.stream().forEach(entry->log.info(entry));
+        List<EntryDTO.SentEntryResponse> dto = entries.stream().map(entry -> modelMapper.map(entry,EntryDTO.SentEntryResponse.class)).collect(Collectors.toList());
+
+        return dto;
+    }
+
+    @Override
+    public List<EntryDTO.UnsentEntryResponse> findUnsentEntry(String diaryID) {
+        List<Entry> entries = entryRepository.selectEntry(diaryID,"N");
+
+        List<EntryDTO.UnsentEntryResponse> dto = entries.stream().map(entry -> modelMapper.map(entry,EntryDTO.UnsentEntryResponse.class)).collect(Collectors.toList());
 
         return dto;
     }
