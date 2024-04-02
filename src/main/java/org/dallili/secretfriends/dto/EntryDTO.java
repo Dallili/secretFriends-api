@@ -40,12 +40,23 @@ public class EntryDTO {
     }
 
     @Data
-    public static class Response{
+    public static class UnsentEntryResponse{
         private Long entryID;
         @NotBlank
         private String writer;
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
         private LocalDateTime date;
+        @Size(min = 1, message = "일기 내용은 1자 이상 작성해야 한다.")
+        private String content;
+    }
+
+    @Data
+    public static class SentEntryResponse{
+        private Long entryID;
+        @NotBlank
+        private String writer;
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        private LocalDateTime sendAt;
         @Size(min = 1, message = "일기 내용은 1자 이상 작성해야 한다.")
         private String content;
     }

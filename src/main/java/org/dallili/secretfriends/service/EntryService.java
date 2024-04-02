@@ -9,6 +9,7 @@ import java.util.List;
 public interface EntryService {
     Long addEntry(EntryDTO entryDTO);
     Boolean modifyState(Long entryID);
-    EntryDTO.Response modifyContent(EntryDTO.ModifyRequest entryDTO);
-    List<EntryDTO.Response> findEntry(String diaryID);
+    EntryDTO.UnsentEntryResponse modifyContent(EntryDTO.ModifyRequest entryDTO);
+    List<EntryDTO.SentEntryResponse> findSentEntry(String diaryID);
+    List<EntryDTO.UnsentEntryResponse> findUnsentEntry(String diaryID);
 }
