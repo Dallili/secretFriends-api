@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,11 +30,11 @@ public class DiaryServiceImpl implements DiaryService {
     private final UserRepository userRepository;
 
     @Override
-    public String addDiary(DiaryDTO diaryDTO) {
+    public UUID addDiary(DiaryDTO diaryDTO) {
 
         Diary diary = modelMapper.map(diaryDTO, Diary.class);
 
-        String diaryID = diaryRepository.save(diary).getDiaryID();
+        UUID diaryID = diaryRepository.save(diary).getDiaryID();
 
         return diaryID;
     }

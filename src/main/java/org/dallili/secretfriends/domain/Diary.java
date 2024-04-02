@@ -3,10 +3,12 @@ package org.dallili.secretfriends.domain;
 import lombok.*;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 //엔티티 객체를 위한 엔티티 클래스는 반드시 @Entity를 적용해야하고 @Id가 필요하다
 @Entity
@@ -20,8 +22,10 @@ import java.time.LocalDateTime;
 public class Diary{
 
     @Id
-    @Column(name = "diaryID", length = 20)
-    private String diaryID;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name="uuid2", strategy = "uuid2")
+    @Column(name = "diaryID", columnDefinition = "VARBINARY(36)")
+    private UUID diaryID;
 
     @ManyToOne(fetch = FetchType.LAZY) //여러 개의 diary가 하나의 user에 속할 수 있음
     @JoinColumn(name = "userID", referencedColumnName = "userID", insertable = true, updatable = false)

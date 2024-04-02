@@ -4,9 +4,11 @@ import org.dallili.secretfriends.domain.Diary;
 import org.dallili.secretfriends.dto.DiaryDTO;
 
 import java.util.List;
+import java.util.UUID;
+
 public interface DiaryService {
 
-    String addDiary(DiaryDTO diaryDTO); // 일기장 등록
+    UUID addDiary(DiaryDTO diaryDTO); // 일기장 등록
 
     DiaryDTO findOne(String diaryID); // 일기장 조회
 

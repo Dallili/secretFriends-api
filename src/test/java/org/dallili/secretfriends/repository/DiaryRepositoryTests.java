@@ -28,12 +28,27 @@ public class DiaryRepositoryTests {
             Optional<User> partner = userRepository.findById("user"+((i+1)%100+1));
 
             Diary diary = Diary.builder()
-                    .diaryID("diary"+i)
                     .user(user.orElseThrow())
                     .partner(partner.orElseThrow())
                     .state(i%2==0?true:false)
                     .updatedBy(user.orElseThrow().getUserID())
                     .updatedAt(LocalDateTime.now())
+                    .color("#000000")
+                    .build();
+
+            diaryRepository.save(diary);
+
+        });
+    }
+
+    @Test
+    public void testKeyGenerate(){
+        IntStream.rangeClosed(1,10).forEach(i->{
+
+            Optional<User> user = userRepository.findById("user"+i);
+
+            Diary diary = Diary.builder()
+                    .user(user.orElseThrow())
                     .color("#000000")
                     .build();
 
@@ -50,7 +65,6 @@ public class DiaryRepositoryTests {
             Optional<User> partner = userRepository.findById("user2");
 
             Diary diary = Diary.builder()
-                    .diaryID("diary"+i)
                     .user(user.orElseThrow())
                     .partner(partner.orElseThrow())
                     .state(i%2==0?true:false)

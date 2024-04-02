@@ -29,7 +29,6 @@ public class DiaryServiceTests {
         //Optional<User> partner = userRepository.findById("user10");
 
         DiaryDTO diaryDTO = DiaryDTO.builder()
-                .diaryID("diary107")
                 .color("#123456")
                 .state(true)
                 .userID("user1")
