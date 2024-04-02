@@ -42,4 +42,24 @@ public class DiaryRepositoryTests {
         });
     }
 
+    @Test
+    public void testInsertBlankDiary(){
+        IntStream.rangeClosed(100,110).forEach(i->{
+
+            Optional<User> user = userRepository.findById("user1");
+            Optional<User> partner = userRepository.findById("user2");
+
+            Diary diary = Diary.builder()
+                    .diaryID("diary"+i)
+                    .user(user.orElseThrow())
+                    .partner(partner.orElseThrow())
+                    .state(i%2==0?true:false)
+                    .color("#000000")
+                    .build();
+
+            diaryRepository.save(diary);
+
+        });
+    }
+
 }
