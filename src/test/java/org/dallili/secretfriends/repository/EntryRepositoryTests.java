@@ -38,7 +38,7 @@ public class EntryRepositoryTests {
     public void testSelectEntry(){
         String diaryID = "diary1";
 
-        List<Entry> entries =  entryRepository.selectEntry(diaryID);
+        List<Entry> entries =  entryRepository.selectEntry(diaryID,"Y");
 
         log.info(entries);
 

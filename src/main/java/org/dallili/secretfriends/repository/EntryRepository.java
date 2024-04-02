@@ -19,7 +19,7 @@ public interface EntryRepository extends JpaRepository<Entry,Long> {
     @Query("update Entry e set e.sendAt = :sendAt  where e.entryID = :entryID")
     int updateSendAt(@Param("entryID") Long eid, @Param("sendAt") LocalDateTime sendAt);
 
-    @Query("select e from Entry e where e.diary.diaryID = :diaryID")
-    List<Entry> selectEntry(@Param("diaryID") String diaryID);
+    @Query("select e from Entry e where e.diary.diaryID = :diaryID and e.state = :state")
+    List<Entry> selectEntry(@Param("diaryID") String diaryID, @Param("state") String state);
 
 }
