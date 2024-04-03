@@ -18,6 +18,8 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
+application.properties 추가
+application.yml 추가
 .idea
 *.iws
 *.iml
