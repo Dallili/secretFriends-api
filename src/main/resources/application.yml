@@ -11,6 +11,9 @@ spring:
       format_sql: true
       show-sql: true
 
+  profiles:
+    active: local
+
 logging:
   level:
     org:
