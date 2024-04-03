@@ -43,7 +43,7 @@ public class EntryServiceTests {
     @Test
     public void testModifyContent(){
         EntryDTO.ModifyRequest req = EntryDTO.ModifyRequest.builder()
-                .entryID(2L)
+                .entryID(3L)
                 .content("수정된 일기")
                 .build();
         EntryDTO.UnsentEntryResponse res = entryService.modifyContent(req);
@@ -55,7 +55,7 @@ public class EntryServiceTests {
 
     @Test
     public void testModifyState(){
-        Long eid = 1L;
+        Long eid = 4L;
         Boolean result = entryService.modifyState(eid);
         log.info(result);
     }
