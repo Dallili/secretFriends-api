@@ -49,7 +49,7 @@ public class EntryServiceTests {
         EntryDTO.UnsentEntryResponse res = entryService.modifyContent(req);
         log.info(res);
 
-        assertThat(res.getEntryID()).isEqualTo(2L);
+        assertThat(res.getEntryID()).isEqualTo(3L);
         assertThat(res.getContent()).isEqualTo("수정된 일기");
     }
 
