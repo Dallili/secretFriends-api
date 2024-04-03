@@ -21,7 +21,7 @@ public class EntryRepositoryTests {
 
     @Test
     public void testInsertEntry(){
-        Diary diary = diaryRepository.findById("diary1").orElseThrow();
+        Diary diary = diaryRepository.findById("diary2").orElseThrow();
 
         IntStream.rangeClosed(1,10).forEach(i->{
             Entry entry = Entry.builder()
@@ -36,7 +36,7 @@ public class EntryRepositoryTests {
 
     @Test
     public void testSelectEntry(){
-        String diaryID = "diary1";
+        String diaryID = "diary2";
 
         List<Entry> entries =  entryRepository.selectEntry(diaryID,"Y");
 
