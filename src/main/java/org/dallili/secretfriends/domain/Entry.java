@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -29,6 +31,7 @@ public class Entry {
 
     @JoinColumn(name = "diaryID", referencedColumnName = "diaryID", insertable = true, updatable = false)
     @ManyToOne(fetch = FetchType.LAZY) // 여러 개의 페이지가 하나의 다이어리에 속할 수 있음.
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Diary diary;
 
     @Column(name = "writer")
