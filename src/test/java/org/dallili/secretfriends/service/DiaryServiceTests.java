@@ -31,7 +31,7 @@ public class DiaryServiceTests {
         DiaryDTO diaryDTO = DiaryDTO.builder()
                 .diaryID("diary107")
                 .color("#123456")
-                .isActivated(true)
+                .state(true)
                 .userID("user1")
                 .partnerID("user10")
                 .updatedBy("user10")

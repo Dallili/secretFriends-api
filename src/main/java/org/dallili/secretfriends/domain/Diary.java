@@ -2,6 +2,9 @@ package org.dallili.secretfriends.domain;
 
 import lombok.*;
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
@@ -12,6 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString(exclude = {"user","partner"})
+@EntityListeners(value = {AuditingEntityListener.class})
 @Table (name = "diary")
 public class Diary{
 
@@ -27,8 +31,8 @@ public class Diary{
     @JoinColumn(name = "partnerID", referencedColumnName = "userID", insertable = true, updatable = true)
     private User partner;
 
-    @Column(name = "isActivated",columnDefinition = "TINYINT")
-    private boolean isActivated;
+    @Column(name = "state",columnDefinition = "TINYINT")
+    private boolean state;
 
     @Column(name = "updatedBy", length = 20)
     private String updatedBy;
@@ -38,6 +42,11 @@ public class Diary{
 
     @Column(name = "color", length = 7)
     private String color;
+
+    @PrePersist
+    public void prePersist() {
+        this.state = true;
+    }
 
     public void updateDiary(String updatedBy, LocalDateTime updatedAt){
         this.updatedBy = updatedBy;
@@ -49,7 +58,7 @@ public class Diary{
     }
 
     public void changeState(Boolean state){
-        this.isActivated = state;
+        this.state = state;
     }
 
 
