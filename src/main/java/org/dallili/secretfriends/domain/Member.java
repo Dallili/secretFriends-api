@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 
 @Entity
@@ -13,13 +12,13 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "user")
+@Table(name = "member")
 @ToString
-public class User {
+public class Member {
 
     @Id
-    @Column(name = "userID", length = 20)
-    private String userID;
+    @Column(name = "memberID", length = 20)
+    private String memberID;
 
     @Column(name = "password", length = 20)
     private String password;
@@ -42,8 +41,8 @@ public class User {
     //modelmapper 매핑 규칙 정의를 위한 setter
     //일반 코드 작성 시에는 사용 지양
 
-    public void setUserID(String userID){
-        this.userID = userID;
+    public void setMemberID(String memberID){
+        this.memberID = memberID;
     }
 
 }

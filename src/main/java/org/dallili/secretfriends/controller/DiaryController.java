@@ -28,10 +28,10 @@ public class DiaryController {
 
     @Operation(summary = "Diary List GET", description = "활성/비활성 일기장 목록 조회")
     @GetMapping(value = "/")
-    public Map<String, Object> diaryDTOList (@RequestParam("state") Boolean state, String userID) {
+    public Map<String, Object> diaryDTOList (@RequestParam("state") Boolean state, String memberID) {
 
 
-        List<DiaryDTO> diaries = diaryService.findStateDiaries(userID, state);
+        List<DiaryDTO> diaries = diaryService.findStateDiaries(memberID, state);
 
         Map<String, Object> result = new HashMap<>();
         result.put("total", diaries.size());

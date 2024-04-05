@@ -1,4 +1,4 @@
 package org.dallili.secretfriends.controller;
 
-public class UserController {
+public class MemberController {
 }

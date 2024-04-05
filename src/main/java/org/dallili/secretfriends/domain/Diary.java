@@ -2,10 +2,8 @@ package org.dallili.secretfriends.domain;
 
 import lombok.*;
 import jakarta.persistence.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 //엔티티 객체를 위한 엔티티 클래스는 반드시 @Entity를 적용해야하고 @Id가 필요하다
@@ -24,12 +22,12 @@ public class Diary{
     private String diaryID;
 
     @ManyToOne(fetch = FetchType.LAZY) //여러 개의 diary가 하나의 user에 속할 수 있음
-    @JoinColumn(name = "userID", referencedColumnName = "userID", insertable = true, updatable = false)
-    private User user;
+    @JoinColumn(name = "userID", referencedColumnName = "memberID", insertable = true, updatable = false)
+    private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY) //여러 개의 diary가 하나의 user에 속할 수 있음
-    @JoinColumn(name = "partnerID", referencedColumnName = "userID", insertable = true, updatable = true)
-    private User partner;
+    @JoinColumn(name = "partnerID", referencedColumnName = "memberID", insertable = true, updatable = true)
+    private Member partner;
 
     @Column(name = "state",columnDefinition = "TINYINT")
     private boolean state;
@@ -53,7 +51,7 @@ public class Diary{
         this.updatedAt = updatedAt;
     }
 
-    public void decidePartner(User partner){
+    public void decidePartner(Member partner){
         this.partner = partner;
     }
 
@@ -64,11 +62,11 @@ public class Diary{
 
     //modelmapper 매핑 규칙 정의를 위한 setter
     //일반 코드 작성 시에는 사용 지양
-    public void setUser(User user){
-        this.user = user;
+    public void setMember(Member member){
+        this.member = member;
     }
 
-    public void setPartner(User partner){
+    public void setPartner(Member partner){
         this.partner = partner;
     }
 

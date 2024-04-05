@@ -1,17 +1,13 @@
 package org.dallili.secretfriends.service;
 
-import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
-import org.dallili.secretfriends.domain.User;
 import org.dallili.secretfriends.dto.DiaryDTO;
-import org.dallili.secretfriends.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @SpringBootTest
 @Log4j2
@@ -19,8 +15,6 @@ public class DiaryServiceTests {
 
     @Autowired
     private DiaryService diaryService;
-    @Autowired
-    private UserRepository userRepository;
 
     @Test
     public void testRegister() {
@@ -32,7 +26,7 @@ public class DiaryServiceTests {
                 .diaryID("diary107")
                 .color("#123456")
                 .state(true)
-                .userID("user1")
+                .memberID("user1")
                 .partnerID("user10")
                 .updatedBy("user10")
                 .updatedAt(LocalDateTime.now())

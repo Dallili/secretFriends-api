@@ -1,14 +1,12 @@
 package org.dallili.secretfriends.service;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.dallili.secretfriends.domain.Diary;
-import org.dallili.secretfriends.domain.User;
+import org.dallili.secretfriends.domain.Member;
 import org.dallili.secretfriends.dto.DiaryDTO;
-import org.dallili.secretfriends.dto.UserDTO;
 import org.dallili.secretfriends.repository.DiaryRepository;
-import org.dallili.secretfriends.repository.UserRepository;
+import org.dallili.secretfriends.repository.MemberRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +24,7 @@ public class DiaryServiceImpl implements DiaryService {
 
     private final DiaryRepository diaryRepository;
 
-    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
 
     @Override
     public String addDiary(DiaryDTO diaryDTO) {
@@ -88,9 +86,9 @@ public class DiaryServiceImpl implements DiaryService {
 
         Diary diary = result.orElseThrow();
 
-        Optional<User> partnerResult = userRepository.findById(partnerID);
+        Optional<Member> partnerResult = memberRepository.findById(partnerID);
 
-        User partner = partnerResult.orElseThrow();
+        Member partner = partnerResult.orElseThrow();
 
         diary.decidePartner(partner);
 
@@ -128,7 +126,7 @@ public class DiaryServiceImpl implements DiaryService {
 
         return diaries.stream()
                 .filter(diary -> diary.isState() == state)
-                .filter(diary -> userID.equals(diary.getUser().getUserID()) || userID.equals(diary.getPartner().getUserID()))
+                .filter(diary -> userID.equals(diary.getMember().getMemberID()) || userID.equals(diary.getPartner().getMemberID()))
                 .map(diary -> modelMapper.map(diary, DiaryDTO.class) )
                 .collect(Collectors.toList());
 
@@ -141,7 +139,7 @@ public class DiaryServiceImpl implements DiaryService {
 
         return diaries.stream()
                 .filter(diary -> diary.isState() == true)
-                .filter(diary -> loginUserID.equals(diary.getUser().getUserID()) || loginUserID.equals(diary.getPartner().getUserID()))
+                .filter(diary -> loginUserID.equals(diary.getMember().getMemberID()) || loginUserID.equals(diary.getPartner().getMemberID()))
                 .filter(diary -> diary.getUpdatedBy()!=null)
                 .filter(diary -> !loginUserID.equals(diary.getUpdatedBy()))
                 .map(diary -> modelMapper.map(diary, DiaryDTO.class))

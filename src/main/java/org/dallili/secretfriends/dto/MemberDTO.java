@@ -1,4 +1,4 @@
 package org.dallili.secretfriends.dto;
 
-public class UserDTO {
+public class MemberDTO {
 }
