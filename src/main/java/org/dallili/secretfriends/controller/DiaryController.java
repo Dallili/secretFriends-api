@@ -54,9 +54,9 @@ public class DiaryController {
 
     @Operation(summary = "Replied Diary GET", description = "답장 온 일기장 조회")
     @GetMapping(value = "/replied")
-    public Map<String, Object> repliedDiaryList(String loginUserID){
+    public Map<String, Object> repliedDiaryList(String loginMemberID){
 
-        List<DiaryDTO> diaries =  diaryService.findRepliedDiaries(loginUserID);
+        List<DiaryDTO> diaries =  diaryService.findRepliedDiaries(loginMemberID);
         Map<String, Object> result = new HashMap<>();
         result.put("diaries",diaries);
 

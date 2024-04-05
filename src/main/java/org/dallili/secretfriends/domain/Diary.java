@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = {"user","partner"})
+@ToString(exclude = {"member","partner"})
 @EntityListeners(value = {AuditingEntityListener.class})
 @Table (name = "diary")
 public class Diary{
@@ -22,7 +22,7 @@ public class Diary{
     private String diaryID;
 
     @ManyToOne(fetch = FetchType.LAZY) //여러 개의 diary가 하나의 user에 속할 수 있음
-    @JoinColumn(name = "userID", referencedColumnName = "memberID", insertable = true, updatable = false)
+    @JoinColumn(name = "memberID", referencedColumnName = "memberID", insertable = true, updatable = false)
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY) //여러 개의 diary가 하나의 user에 속할 수 있음

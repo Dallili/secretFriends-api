@@ -120,28 +120,28 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public List<DiaryDTO> findStateDiaries(String userID, Boolean state) {
+    public List<DiaryDTO> findStateDiaries(String memberID, Boolean state) {
 
         List<Diary> diaries = diaryRepository.findAll();
 
         return diaries.stream()
                 .filter(diary -> diary.isState() == state)
-                .filter(diary -> userID.equals(diary.getMember().getMemberID()) || userID.equals(diary.getPartner().getMemberID()))
+                .filter(diary -> memberID.equals(diary.getMember().getMemberID()) || memberID.equals(diary.getPartner().getMemberID()))
                 .map(diary -> modelMapper.map(diary, DiaryDTO.class) )
                 .collect(Collectors.toList());
 
     }
   
     @Override
-    public List<DiaryDTO> findRepliedDiaries(String loginUserID){
+    public List<DiaryDTO> findRepliedDiaries(String loginMemberID){
 
         List<Diary> diaries = diaryRepository.findAll();
 
         return diaries.stream()
                 .filter(diary -> diary.isState() == true)
-                .filter(diary -> loginUserID.equals(diary.getMember().getMemberID()) || loginUserID.equals(diary.getPartner().getMemberID()))
+                .filter(diary -> loginMemberID.equals(diary.getMember().getMemberID()) || loginMemberID.equals(diary.getPartner().getMemberID()))
                 .filter(diary -> diary.getUpdatedBy()!=null)
-                .filter(diary -> !loginUserID.equals(diary.getUpdatedBy()))
+                .filter(diary -> !loginMemberID.equals(diary.getUpdatedBy()))
                 .map(diary -> modelMapper.map(diary, DiaryDTO.class))
                 .collect(Collectors.toList());
 

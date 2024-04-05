@@ -16,7 +16,7 @@ public class MatchingHistoryDTO {
     @NotBlank
     private Long historyID;
     @NotBlank
-    private String userID;
+    private String memberID;
     @NotBlank
     private String partnerID;
 }

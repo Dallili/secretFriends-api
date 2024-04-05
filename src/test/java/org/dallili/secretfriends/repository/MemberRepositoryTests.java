@@ -20,7 +20,7 @@ public class MemberRepositoryTests {
     public void testInsertMember(){
         IntStream.rangeClosed(1,100).forEach(i->{
             Member member = Member.builder()
-                    .memberID("user"+i)
+                    .memberID("member"+i)
                     .password("1234")
                     .nickname("member"+i)
                     .birthday(LocalDate.of(2023,i%12+1,i%28+1))

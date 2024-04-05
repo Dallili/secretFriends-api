@@ -19,10 +19,10 @@ public class MatchingHistory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long historyID;
 
-    @JoinColumn(name = "userID", referencedColumnName = "userID", insertable = true, updatable = true)
-    private String userID;
+    @JoinColumn(name = "memberID", referencedColumnName = "memberID", insertable = true, updatable = true)
+    private String memberID;
 
-    @JoinColumn(name = "partnerID", referencedColumnName = "userID", insertable = true, updatable = true)
+    @JoinColumn(name = "partnerID", referencedColumnName = "memberID", insertable = true, updatable = true)
     private String partnerID;
 
 }

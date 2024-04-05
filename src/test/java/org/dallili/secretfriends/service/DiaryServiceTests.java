@@ -26,9 +26,9 @@ public class DiaryServiceTests {
                 .diaryID("diary107")
                 .color("#123456")
                 .state(true)
-                .memberID("user1")
-                .partnerID("user10")
-                .updatedBy("user10")
+                .memberID("member1")
+                .partnerID("member10")
+                .updatedBy("member10")
                 .updatedAt(LocalDateTime.now())
                 .build();
 
@@ -50,7 +50,7 @@ public class DiaryServiceTests {
 
         DiaryDTO diaryDTO = DiaryDTO.builder()
                 .diaryID("diary10")
-                .updatedBy("new user")
+                .updatedBy("new member")
                 .build();
 
         log.info("업데이트 할 것 : "+ diaryDTO);
@@ -68,7 +68,7 @@ public class DiaryServiceTests {
     @Test
     public void testModifyPartner() {
 
-        diaryService.modifyPartner("diary1", "user7");
+        diaryService.modifyPartner("diary1", "member7");
 
     }
 
@@ -88,7 +88,7 @@ public class DiaryServiceTests {
     @Test
     public void testFindStateDiaries(){
 
-        List<DiaryDTO> diaries = diaryService.findStateDiaries("user100", true);
+        List<DiaryDTO> diaries = diaryService.findStateDiaries("member100", true);
 
         log.info(diaries);
     }
@@ -96,7 +96,7 @@ public class DiaryServiceTests {
     @Test
     public void testFindRepliedDiaries() {
 
-        List<DiaryDTO> diaries = diaryService.findRepliedDiaries("user10");
+        List<DiaryDTO> diaries = diaryService.findRepliedDiaries("member10");
 
         log.info(diaries);
     }
