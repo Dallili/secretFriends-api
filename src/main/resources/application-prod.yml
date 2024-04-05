@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://secretfriends.creuq8q6kcbi.ap-northeast-2.rds.amazonaws.com:3306/secretfriends
+    username: root
+    password: sfroot28_
