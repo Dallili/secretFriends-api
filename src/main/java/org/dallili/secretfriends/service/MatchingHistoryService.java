@@ -7,6 +7,6 @@ import org.dallili.secretfriends.domain.MatchingHistory;
 @Transactional
 public interface MatchingHistoryService {
 
-    Long addHistory(String memberID, String partnerID);
+    Long addHistory(Long memberID, Long partnerID);
 
 }

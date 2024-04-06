@@ -28,7 +28,7 @@ public class DiaryController {
 
     @Operation(summary = "Diary List GET", description = "활성/비활성 일기장 목록 조회")
     @GetMapping(value = "/")
-    public Map<String, Object> diaryDTOList (@RequestParam("state") Boolean state, String memberID) {
+    public Map<String, Object> diaryDTOList (@RequestParam("state") Boolean state, Long memberID) {
 
 
         List<DiaryDTO> diaries = diaryService.findStateDiaries(memberID, state);
@@ -54,7 +54,7 @@ public class DiaryController {
 
     @Operation(summary = "Replied Diary GET", description = "답장 온 일기장 조회")
     @GetMapping(value = "/replied")
-    public Map<String, Object> repliedDiaryList(String loginMemberID){
+    public Map<String, Object> repliedDiaryList(Long loginMemberID){
 
         List<DiaryDTO> diaries =  diaryService.findRepliedDiaries(loginMemberID);
         Map<String, Object> result = new HashMap<>();

@@ -80,7 +80,7 @@ public class DiaryServiceImpl implements DiaryService {
 
 
     @Override
-    public void modifyPartner(String diaryID, String partnerID){
+    public void modifyPartner(String diaryID, Long partnerID){
 
         Optional<Diary> result = diaryRepository.findById(diaryID);
 
@@ -120,7 +120,7 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public List<DiaryDTO> findStateDiaries(String memberID, Boolean state) {
+    public List<DiaryDTO> findStateDiaries(Long memberID, Boolean state) {
 
         List<Diary> diaries = diaryRepository.findAll();
 
@@ -133,7 +133,7 @@ public class DiaryServiceImpl implements DiaryService {
     }
   
     @Override
-    public List<DiaryDTO> findRepliedDiaries(String loginMemberID){
+    public List<DiaryDTO> findRepliedDiaries(Long loginMemberID){
 
         List<Diary> diaries = diaryRepository.findAll();
 

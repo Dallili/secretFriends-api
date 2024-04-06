@@ -24,8 +24,8 @@ public class DiaryRepositoryTests {
     public void testInsertDiary(){
         IntStream.rangeClosed(1,100).forEach(i->{
 
-            Optional<Member> member = memberRepository.findById("member"+i);
-            Optional<Member> partner = memberRepository.findById("member"+((i+1)%100+1));
+            Optional<Member> member = memberRepository.findById(1L);
+            Optional<Member> partner = memberRepository.findById(2L);
 
             Diary diary = Diary.builder()
                     .diaryID("diary"+i)
@@ -46,8 +46,8 @@ public class DiaryRepositoryTests {
     public void testInsertBlankDiary(){
         IntStream.rangeClosed(100,110).forEach(i->{
 
-            Optional<Member> member = memberRepository.findById("member1");
-            Optional<Member> partner = memberRepository.findById("member2");
+            Optional<Member> member = memberRepository.findById(1L);
+            Optional<Member> partner = memberRepository.findById(2L);
 
             Diary diary = Diary.builder()
                     .diaryID("diary"+i)

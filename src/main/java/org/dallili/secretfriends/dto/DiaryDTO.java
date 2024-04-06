@@ -21,13 +21,13 @@ public class DiaryDTO {
     private String diaryID; //get
 
     @NotEmpty
-    private String memberID; //get, set
+    private Long memberID; //get, set
 
-    private String partnerID; //get, set
+    private Long partnerID; //get, set
 
     private boolean state; //get, set
 
-    private String updatedBy; //get. set
+    private Long updatedBy; //get. set
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updatedAt; // get, set

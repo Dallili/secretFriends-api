@@ -20,7 +20,7 @@ public class MatchingHistoryServiceImpl implements MatchingHistoryService{
     final ModelMapper modelMapper;
 
     @Override
-    public Long addHistory(String memberID, String partnerID){
+    public Long addHistory(Long memberID, Long partnerID){
 
         MatchingHistoryDTO matchingHistoryDTO = MatchingHistoryDTO.builder()
                 .memberID(memberID)

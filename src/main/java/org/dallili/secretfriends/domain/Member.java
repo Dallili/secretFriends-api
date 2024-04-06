@@ -2,9 +2,13 @@ package org.dallili.secretfriends.domain;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -13,14 +17,17 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "member")
-@ToString
 public class Member {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "memberID", length = 20)
-    private String memberID;
+    private Long memberID;
 
-    @Column(name = "password", length = 20)
+    @Column(name = "email", length = 255)
+    private String email;
+
+    @Column(name = "password", length = 255)
     private String password;
 
     @Column(name = "nickname", length = 20)
@@ -29,20 +36,29 @@ public class Member {
     @Column(name = "birthday", columnDefinition = "DATE")
     private LocalDate birthday;
 
-    @Column(name = "email", length = 255)
-    private String email;
-
-    @Column(name = "gender")
-    private char gender;
+    @Column(name = "gender", length = 1)
+    @Pattern(regexp = "[FM]", message = "성별 값은 F와 M 중 하나여야 한다.")
+    private String gender;
 
     @Column(name = "useFiltering",columnDefinition = "TINYINT")
     private boolean useFiltering;
 
+    @Enumerated(EnumType.STRING)
+    private MemberRole role;
+
     //modelmapper 매핑 규칙 정의를 위한 setter
     //일반 코드 작성 시에는 사용 지양
 
-    public void setMemberID(String memberID){
+    public void setMemberID(Long memberID){
         this.memberID = memberID;
+    }
+
+    public void changePassword(String password){
+        this.password = password;
+    }
+
+    public void addRole(MemberRole memberRole){
+        this.role = memberRole;
     }
 
 }

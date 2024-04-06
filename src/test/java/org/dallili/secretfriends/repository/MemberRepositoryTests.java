@@ -20,12 +20,11 @@ public class MemberRepositoryTests {
     public void testInsertMember(){
         IntStream.rangeClosed(1,100).forEach(i->{
             Member member = Member.builder()
-                    .memberID("member"+i)
                     .password("1234")
                     .nickname("member"+i)
                     .birthday(LocalDate.of(2023,i%12+1,i%28+1))
                     .email("main"+i+"@gmail.com")
-                    .gender(i%2==0?'F':'M')
+                    .gender(i%2==0?"F":"M")
                     .useFiltering(false)
                     .build();
             memberRepository.save(member);

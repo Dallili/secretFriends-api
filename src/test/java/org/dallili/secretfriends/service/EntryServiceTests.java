@@ -25,7 +25,7 @@ public class EntryServiceTests {
     public void testAddEntry(){
         EntryDTO entryDTO = EntryDTO.builder()
                 .diaryID("diary2")
-                .writer("member2")
+                .writer(1L)
                 .content("일기")
                 .build();
 

@@ -33,7 +33,7 @@ public class Diary{
     private boolean state;
 
     @Column(name = "updatedBy", length = 20)
-    private String updatedBy;
+    private Long updatedBy;
 
     @Column(name = "updatedAt",columnDefinition = "TIMESTAMP")
     private LocalDateTime updatedAt;
@@ -46,7 +46,7 @@ public class Diary{
         this.state = true;
     }
 
-    public void updateDiary(String updatedBy, LocalDateTime updatedAt){
+    public void updateDiary(Long updatedBy, LocalDateTime updatedAt){
         this.updatedBy = updatedBy;
         this.updatedAt = updatedAt;
     }

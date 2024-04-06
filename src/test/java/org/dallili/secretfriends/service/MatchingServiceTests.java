@@ -15,7 +15,7 @@ public class MatchingServiceTests {
     @Test
     public void testInsertMatchingHistory() {
 
-        log.info(matchingHistoryService.addHistory("member10", "member20"));
+        log.info(matchingHistoryService.addHistory(1L, 2L));
 
     }
 }
