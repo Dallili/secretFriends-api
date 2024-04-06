@@ -21,8 +21,15 @@ public class MySecurityConfig{
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
-        return httpSecurity.build();
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+        //CSRF 토큰 비활성화
+        http.csrf(csrf->csrf.disable());
+
+        //세션을 사용하지 않음을 지정
+        http.sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+
+        return http.build();
     }
 
 

@@ -18,10 +18,10 @@ public class MemberServiceImpl implements MemberService{
     private final ModelMapper modelMapper;
 
     @Override
-    public void singUp(MemberDTO.SignUpRequest requestDTO) {
+    public void singUp(MemberDTO.SignUpRequest requestDTO){
 
         if (memberRepository.findByEmail(requestDTO.getEmail()).isPresent()) {
-            throw new RuntimeException("이미 존재하는 이메일입니다.");
+            throw new IllegalStateException("이미 존재하는 이메일입니다.");
         }
 
         Member member = modelMapper.map(requestDTO,Member.class);
@@ -29,5 +29,17 @@ public class MemberServiceImpl implements MemberService{
         member.addRole(MemberRole.USER);
 
         memberRepository.save(member);
+    }
+
+    @Override
+    public MemberDTO.DetailsResponse findMember(Long memberID) {
+
+        Member member = memberRepository.findById(memberID).orElseThrow(()->{
+            throw new IllegalStateException(memberID + ": 존재하지 않는 회원입니다.");
+        });
+
+        MemberDTO.DetailsResponse response = modelMapper.map(member,MemberDTO.DetailsResponse.class);
+
+        return response;
     }
 }
