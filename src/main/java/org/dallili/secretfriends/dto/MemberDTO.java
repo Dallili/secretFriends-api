@@ -14,8 +14,6 @@ public class MemberDTO {
     @Data
     @Builder
     public static class SignUpRequest{
-        @NotBlank(message = "아이디를 입력해주세요.")
-        private Long memberID;
 
         @NotBlank(message = "비밀번호를 입력해주세요.")
         @Size(min=5, message = "비밀번호가 너무 짧습니다. (최소 5글자)")
