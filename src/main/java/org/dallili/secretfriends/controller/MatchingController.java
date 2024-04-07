@@ -1,6 +1,7 @@
 package org.dallili.secretfriends.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.dallili.secretfriends.dto.DiaryDTO;
@@ -26,7 +27,7 @@ public class MatchingController {
 
     @Operation(summary = "Create Known-Matching Diary POST", description = "지인 매칭을 위한 일기장 생성")
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, String> knownMatchingDiaryAdd(DiaryDTO.knownMatchingDiary diaryDTO){
+    public Map<String, String> knownMatchingDiaryAdd(@Valid @RequestBody DiaryDTO diaryDTO){
 
         Long diaryID = diaryService.addKnownMatchingDiary(diaryDTO);
 
@@ -46,7 +47,6 @@ public class MatchingController {
     public UUID codeDetails(Long diaryID){
 
         UUID code = diaryService.findCode(diaryID);
-
         return code;
     }
 

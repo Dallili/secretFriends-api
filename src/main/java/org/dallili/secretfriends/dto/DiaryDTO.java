@@ -23,7 +23,7 @@ public class DiaryDTO {
     @NotNull
     private Long diaryID; //get
 
-    @NotEmpty
+    @NotNull
     private Long memberID; //get, set
 
     private Long partnerID; //get, set
@@ -40,6 +40,7 @@ public class DiaryDTO {
     private UUID code;
 
     @Data
+    @Builder
     public static class knownMatchingDiary{
         private Long memberID;
         private String color;

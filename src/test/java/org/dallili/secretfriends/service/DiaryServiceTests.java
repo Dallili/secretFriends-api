@@ -114,4 +114,15 @@ public class DiaryServiceTests {
         log.info(diaryService.findDiaryByCode("cf4dacee-3ffc-40aa-946a-972a98506b38").getDiaryID());
     }
 
+    @Test
+    public void testAddKnownMatchingDiary() {
+
+        DiaryDTO diaryDTO = DiaryDTO.builder()
+                .memberID(10L)
+                .color("123123")
+                .build();
+
+        log.info(diaryService.addKnownMatchingDiary(diaryDTO));
+    }
+
 }
