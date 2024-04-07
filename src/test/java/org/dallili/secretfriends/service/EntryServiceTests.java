@@ -25,7 +25,7 @@ public class EntryServiceTests {
     public void testAddEntry(){
         EntryDTO entryDTO = EntryDTO.builder()
                 .diaryID("diary2")
-                .writer("user2")
+                .writer(1L)
                 .content("일기")
                 .build();
 
@@ -36,7 +36,7 @@ public class EntryServiceTests {
 
         assertThat(entry.getEntryID()).isEqualTo(eid);
         assertThat(entry.getDiary().getDiaryID()).isEqualTo("diary2");
-        assertThat(entry.getWriter()).isEqualTo("user2");
+        assertThat(entry.getWriter()).isEqualTo("member2");
         assertThat(entry.getContent()).isEqualTo("일기");
     }
 

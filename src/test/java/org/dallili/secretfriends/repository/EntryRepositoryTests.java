@@ -3,7 +3,6 @@ package org.dallili.secretfriends.repository;
 import lombok.extern.log4j.Log4j2;
 import org.dallili.secretfriends.domain.Diary;
 import org.dallili.secretfriends.domain.Entry;
-import org.dallili.secretfriends.dto.EntryDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,7 +25,7 @@ public class EntryRepositoryTests {
         IntStream.rangeClosed(1,10).forEach(i->{
             Entry entry = Entry.builder()
                     .diary(diary)
-                    .writer(diary.getUser().getUserID())
+                    .writer(diary.getMember().getMemberID())
                     .content("일기 텍스트...")
                     .build();
 

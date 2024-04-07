@@ -24,8 +24,8 @@ public class MatchingHistoryRepositoryTests {
 
         IntStream.rangeClosed(1,30).forEach(i->{
             MatchingHistory matchingHistory = MatchingHistory.builder()
-                    .userID("user"+random.nextInt(100))
-                    .partnerID("user"+random.nextInt(100))
+                    .memberID("member"+random.nextInt(100))
+                    .partnerID("member"+random.nextInt(100))
                     .build();
             matchingHistoryRepository.save(matchingHistory);
         });
