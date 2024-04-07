@@ -27,9 +27,9 @@ public class MatchingController {
 
     @Operation(summary = "Create Known-Matching Diary POST", description = "지인 매칭을 위한 일기장 생성")
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, String> knownMatchingDiaryAdd(@Valid @RequestBody DiaryDTO diaryDTO){
+    public Map<String, String> knownMatchingDiaryAdd(@Valid @RequestBody DiaryDTO.knownMatchingDiary diaryDTO){
 
-        Long diaryID = diaryService.addKnownMatchingDiary(diaryDTO);
+        Long diaryID = diaryService.addKnownsDiary(diaryDTO.getMemberID(), diaryDTO.getColor());
 
         UUID code = diaryService.findCode(diaryID);
 
@@ -50,15 +50,17 @@ public class MatchingController {
         return code;
     }
 
-    @Operation(summary = "Match Knowns PATCH", description = "코드 입력을 통한 다이어리 partner 확정(=지인 매칭 완료)")
+    @Operation(summary = "Match Knowns PATCH", description = "코드 입력을 통한 다이어리 partner 확정 (=지인 매칭 완료)")
     @PatchMapping(value = "/")
     public Long partnerModify(String code, Long userID){
 
         DiaryDTO diaryDTO = diaryService.findDiaryByCode(code);
-        diaryService.modifyUpdate(diaryDTO);
-        diaryService.modifyPartner(diaryDTO.getDiaryID(), userID);
+        Long diaryID = diaryDTO.getDiaryID();
+        diaryService.modifyUpdate(diaryID, userID);
+        diaryService.modifyPartner(diaryID, userID);
+        matchingHistoryService.addHistory(diaryDTO.getMemberID(), userID);
 
-        return diaryDTO.getDiaryID();
+        return diaryID;
 
     }
 

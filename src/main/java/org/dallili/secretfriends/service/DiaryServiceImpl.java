@@ -54,6 +54,25 @@ public class DiaryServiceImpl implements DiaryService {
 
     }
 
+    @Override
+    public Long addKnownsDiary(Long memberID, String color){
+
+        UUID code = UUID.randomUUID();
+
+        DiaryDTO diaryDTO = DiaryDTO.builder()
+                .memberID(memberID)
+                .color(color)
+                .code(code)
+                .build();
+
+        Diary diary = modelMapper.map(diaryDTO, Diary.class);
+
+        Long diaryID = diaryRepository.save(diary).getDiaryID();
+
+        return diaryID;
+
+    }
+
 
     @Override
     public DiaryDTO findOne(Long diaryID){
@@ -69,16 +88,16 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public void modifyUpdate(DiaryDTO diaryDTO) { //일기 전송 후 작동해야하는 메소드.
+    public void modifyUpdate(Long diaryID, Long memberID) { //일기 전송 후 작동해야하는 메소드.
         // 마지막 작성자와 마지막 작성일을 수정한다.
 
-        Optional<Diary> result = diaryRepository.findById(diaryDTO.getDiaryID());
+        Optional<Diary> result = diaryRepository.findById(diaryID);
 
         Diary diary = result.orElseThrow();
 
         //log.info("업데이트 전: " + diary);
 
-        diary.updateDiary(diaryDTO.getUpdatedBy(), LocalDateTime.now());
+        diary.updateDiary(memberID, LocalDateTime.now());
 
         diaryRepository.save(diary);
 

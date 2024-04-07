@@ -12,9 +12,11 @@ public interface DiaryService {
 
     Long addKnownMatchingDiary(DiaryDTO diaryDTO);
 
+    Long addKnownsDiary(Long userID, String color);
+
     DiaryDTO findOne(Long diaryID); // 일기장 조회
 
-    void modifyUpdate(DiaryDTO diaryDTO); // 일기장 업데이트 (새로운 답장)
+    void modifyUpdate(Long diaryID, Long memberID); // 일기장 업데이트 (새로운 답장)
 
     void removeDiary(Long diaryID); // 일기장 삭제
 

@@ -118,9 +118,11 @@ public class DiaryServiceTests {
     public void testAddKnownMatchingDiary() {
 
         DiaryDTO diaryDTO = DiaryDTO.builder()
-                .memberID(10L)
+                .memberID(12L)
                 .color("123123")
                 .build();
+
+        log.info(diaryDTO);
 
         log.info(diaryService.addKnownMatchingDiary(diaryDTO));
     }
