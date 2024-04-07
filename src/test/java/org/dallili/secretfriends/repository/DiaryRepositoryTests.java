@@ -28,7 +28,6 @@ public class DiaryRepositoryTests {
             Optional<User> partner = userRepository.findById("user"+((i+1)%100+1));
 
             Diary diary = Diary.builder()
-                    .diaryID("diary"+i)
                     .user(user.orElseThrow())
                     .partner(partner.orElseThrow())
                     .state(i%2==0?true:false)
@@ -50,7 +49,6 @@ public class DiaryRepositoryTests {
             Optional<User> partner = userRepository.findById("user2");
 
             Diary diary = Diary.builder()
-                    .diaryID("diary"+i)
                     .user(user.orElseThrow())
                     .partner(partner.orElseThrow())
                     .state(i%2==0?true:false)

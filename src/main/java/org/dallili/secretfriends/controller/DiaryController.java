@@ -43,7 +43,7 @@ public class DiaryController {
 
     @Operation(summary = "Diary Deactivate PATCH", description = "일기장 비활성화")
     @PatchMapping(value = "/{diaryID}/state")
-    public void diaryStateModify (@PathVariable("diaryID") String diaryID){
+    public void diaryStateModify (@PathVariable("diaryID") Long diaryID){
 
         diaryService.modifyState(diaryID);
 
@@ -66,7 +66,7 @@ public class DiaryController {
 
     @Operation(summary = "Delete Diary DELETE", description = "일기장 삭제/지인 매칭 취소")
     @DeleteMapping(value = "/{diaryID}")
-    public void diaryRemove(@PathVariable("diaryID") String diaryID) {
+    public void diaryRemove(@PathVariable("diaryID") Long diaryID) {
 
         diaryService.removeDiary(diaryID);
 

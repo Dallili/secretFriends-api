@@ -19,7 +19,7 @@ public class EntryDTO {
 
     private Long entryID;
     @NotBlank
-    private String diaryID;
+    private Long diaryID;
     @NotBlank
     private String writer;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
