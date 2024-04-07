@@ -1,6 +1,7 @@
 package org.dallili.secretfriends.service;
 
 import lombok.extern.log4j.Log4j2;
+import org.dallili.secretfriends.domain.Diary;
 import org.dallili.secretfriends.dto.DiaryDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @SpringBootTest
 @Log4j2
@@ -96,6 +98,20 @@ public class DiaryServiceTests {
         List<DiaryDTO> diaries = diaryService.findRepliedDiaries(1L);
 
         log.info(diaries);
+    }
+
+    @Test
+    public void testFindCode() {
+
+        log.info(diaryService.findCode(112L));
+
+    }
+
+    @Test
+    public void testFindByCode() {
+
+
+        log.info(diaryService.findDiaryByCode("cf4dacee-3ffc-40aa-946a-972a98506b38").getDiaryID());
     }
 
 }

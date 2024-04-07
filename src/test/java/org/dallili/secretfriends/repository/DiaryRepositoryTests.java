@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -42,16 +43,16 @@ public class DiaryRepositoryTests {
     }
 
     @Test
-    public void testInsertBlankDiary(){
-        IntStream.rangeClosed(100,110).forEach(i->{
+    public void testInsertKnownMatchingDiary(){
+        IntStream.rangeClosed(100,150).forEach(i->{
 
-            Optional<Member> member = memberRepository.findById(1L);
-            Optional<Member> partner = memberRepository.findById(2L);
+            Optional<Member> member = memberRepository.findById(i-50L);
+
+            UUID code = UUID.randomUUID();
 
             Diary diary = Diary.builder()
                     .member(member.orElseThrow())
-                    .partner(partner.orElseThrow())
-                    .state(i%2==0?true:false)
+                    .code(code)
                     .color("#000000")
                     .build();
 

@@ -4,6 +4,8 @@ import org.dallili.secretfriends.domain.Diary;
 import org.dallili.secretfriends.dto.DiaryDTO;
 
 import java.util.List;
+import java.util.UUID;
+
 public interface DiaryService {
 
     Long addDiary(DiaryDTO diaryDTO); // 일기장 등록
@@ -23,4 +25,8 @@ public interface DiaryService {
     void modifyPartner(Long diaryID, Long partnerID); // 일기장 파트너 결정
 
     void modifyState(Long diaryID); // 일기장 비활성화
+
+    UUID findCode(Long diaryID); //일기장 초대코드 조회
+
+    DiaryDTO findDiaryByCode(String code); // 초대코드로 일기장 조회
 }

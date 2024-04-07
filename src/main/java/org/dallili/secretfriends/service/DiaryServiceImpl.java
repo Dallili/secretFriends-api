@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -148,6 +149,32 @@ public class DiaryServiceImpl implements DiaryService {
 
 
 
+
+    }
+
+    @Override
+    public UUID findCode(Long diaryID) {
+
+        Optional<Diary> result = diaryRepository.findById(diaryID);
+
+        Diary diary = result.orElseThrow();
+
+        return diary.getCode();
+
+    }
+
+    @Override
+    public DiaryDTO findDiaryByCode(String code){
+
+        UUID uuidCode = UUID.fromString(code);
+
+        Optional<Diary> result = diaryRepository.selectDiary(uuidCode);
+
+        Diary diary = result.orElseThrow();
+
+        DiaryDTO diaryDTO = modelMapper.map(diary, DiaryDTO.class);
+
+        return diaryDTO;
 
     }
 
