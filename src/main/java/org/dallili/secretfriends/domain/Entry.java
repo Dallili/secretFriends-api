@@ -35,7 +35,7 @@ public class Entry {
     private Diary diary;
 
     @Column(name = "writer")
-    private String writer;
+    private Long writer;
 
     @Column(name = "date", columnDefinition = "TIMESTAMP")
     @LastModifiedDate

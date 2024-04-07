@@ -1,17 +1,13 @@
 package org.dallili.secretfriends.service;
 
-import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
-import org.dallili.secretfriends.domain.User;
 import org.dallili.secretfriends.dto.DiaryDTO;
-import org.dallili.secretfriends.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @SpringBootTest
 @Log4j2
@@ -19,22 +15,17 @@ public class DiaryServiceTests {
 
     @Autowired
     private DiaryService diaryService;
-    @Autowired
-    private UserRepository userRepository;
 
     @Test
     public void testRegister() {
 
-        //Optional<User> user = userRepository.findById("user1");
-        //Optional<User> partner = userRepository.findById("user10");
 
         DiaryDTO diaryDTO = DiaryDTO.builder()
-                .diaryID(100L)
                 .color("#123456")
                 .state(true)
-                .userID("user1")
-                .partnerID("user10")
-                .updatedBy("user10")
+                .memberID(1L)
+                .partnerID(2L)
+                .updatedBy(1L)
                 .updatedAt(LocalDateTime.now())
                 .build();
 
@@ -56,7 +47,7 @@ public class DiaryServiceTests {
 
         DiaryDTO diaryDTO = DiaryDTO.builder()
                 .diaryID(10L)
-                .updatedBy("new user")
+                .updatedBy(1L)
                 .build();
 
         log.info("업데이트 할 것 : "+ diaryDTO);
@@ -74,7 +65,7 @@ public class DiaryServiceTests {
     @Test
     public void testModifyPartner() {
 
-        diaryService.modifyPartner(1L, "user7");
+        diaryService.modifyPartner(1L, 1L);
 
     }
 
@@ -94,7 +85,7 @@ public class DiaryServiceTests {
     @Test
     public void testFindStateDiaries(){
 
-        List<DiaryDTO> diaries = diaryService.findStateDiaries("user100", true);
+        List<DiaryDTO> diaries = diaryService.findStateDiaries(1L, true);
 
         log.info(diaries);
     }
@@ -102,7 +93,7 @@ public class DiaryServiceTests {
     @Test
     public void testFindRepliedDiaries() {
 
-        List<DiaryDTO> diaries = diaryService.findRepliedDiaries("user10");
+        List<DiaryDTO> diaries = diaryService.findRepliedDiaries(1L);
 
         log.info(diaries);
     }

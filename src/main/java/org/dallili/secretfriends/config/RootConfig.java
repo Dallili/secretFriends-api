@@ -26,16 +26,16 @@ public class RootConfig {
     PropertyMap<DiaryDTO, Diary> diaryMapping = new PropertyMap<DiaryDTO, Diary>() {
         @Override
         protected void configure() {
-            map().getUser().setUserID(source.getUserID());
-            map().getPartner().setUserID(source.getPartnerID());
+            map().getMember().setMemberID(source.getMemberID());
+            map().getPartner().setMemberID(source.getPartnerID());
         }
     };
 
     PropertyMap<Diary,DiaryDTO> diaryFieldMapping = new PropertyMap<Diary, DiaryDTO>() {
         @Override
         protected void configure() {
-            map().setUserID(source.getUser().getUserID());
-            map().setPartnerID(source.getPartner().getUserID());
+            map().setMemberID(source.getMember().getMemberID());
+            map().setPartnerID(source.getPartner().getMemberID());
         }
     };
 }
