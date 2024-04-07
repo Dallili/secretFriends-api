@@ -28,10 +28,10 @@ public class DiaryController {
 
     @Operation(summary = "Diary List GET", description = "활성/비활성 일기장 목록 조회")
     @GetMapping(value = "/")
-    public Map<String, Object> diaryDTOList (@RequestParam("state") Boolean state, String userID) {
+    public Map<String, Object> diaryDTOList (@RequestParam("state") Boolean state, Long memberID) {
 
 
-        List<DiaryDTO> diaries = diaryService.findStateDiaries(userID, state);
+        List<DiaryDTO> diaries = diaryService.findStateDiaries(memberID, state);
 
         Map<String, Object> result = new HashMap<>();
         result.put("total", diaries.size());
@@ -54,9 +54,9 @@ public class DiaryController {
 
     @Operation(summary = "Replied Diary GET", description = "답장 온 일기장 조회")
     @GetMapping(value = "/replied")
-    public Map<String, Object> repliedDiaryList(String loginUserID){
+    public Map<String, Object> repliedDiaryList(Long loginMemberID){
 
-        List<DiaryDTO> diaries =  diaryService.findRepliedDiaries(loginUserID);
+        List<DiaryDTO> diaries =  diaryService.findRepliedDiaries(loginMemberID);
         Map<String, Object> result = new HashMap<>();
         result.put("diaries",diaries);
 

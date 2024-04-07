@@ -21,7 +21,7 @@ public class EntryDTO {
     @NotBlank
     private String diaryID;
     @NotBlank
-    private String writer;
+    private Long writer;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime date;
     @Size(min = 1, message = "일기 내용은 1자 이상 작성해야 한다.")
@@ -43,7 +43,7 @@ public class EntryDTO {
     public static class UnsentEntryResponse{
         private Long entryID;
         @NotBlank
-        private String writer;
+        private Long writer;
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
         private LocalDateTime date;
         @Size(min = 1, message = "일기 내용은 1자 이상 작성해야 한다.")
@@ -54,7 +54,7 @@ public class EntryDTO {
     public static class SentEntryResponse{
         private Long entryID;
         @NotBlank
-        private String writer;
+        private Long writer;
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
         private LocalDateTime sendAt;
         @Size(min = 1, message = "일기 내용은 1자 이상 작성해야 한다.")

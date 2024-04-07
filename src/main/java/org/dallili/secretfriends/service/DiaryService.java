@@ -16,11 +16,11 @@ public interface DiaryService {
 
     List<DiaryDTO> findAllDiaries(); //모든 일기장 목록 조회
 
-    List<DiaryDTO> findStateDiaries(String userID, Boolean state); // 활성화 or 비활성화된 상태의 일기장 목록 조회
+    List<DiaryDTO> findStateDiaries(Long memberID, Boolean state); // 활성화 or 비활성화된 상태의 일기장 목록 조회
 
-    List<DiaryDTO> findRepliedDiaries(String loginUserID); // 답장 온 일기장 목록 조회
+    List<DiaryDTO> findRepliedDiaries(Long loginMemberID); // 답장 온 일기장 목록 조회
 
-    void modifyPartner(String diaryID, String partnerID); // 일기장 파트너 결정
+    void modifyPartner(String diaryID, Long partnerID); // 일기장 파트너 결정
 
     void modifyState(String diaryID); // 일기장 비활성화
 }

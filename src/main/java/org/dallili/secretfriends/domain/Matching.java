@@ -19,8 +19,8 @@ public class Matching {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long matchingID;
 
-    @JoinColumn(name = "userID", referencedColumnName = "userID", insertable = true, updatable = true)
-    private String userID;
+    @JoinColumn(name = "memberID", referencedColumnName = "memberID", insertable = true, updatable = true)
+    private String memberID;
 
     @Column(name = "createdAt", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt;

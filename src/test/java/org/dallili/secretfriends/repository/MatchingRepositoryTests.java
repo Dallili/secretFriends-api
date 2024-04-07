@@ -24,7 +24,7 @@ public class MatchingRepositoryTests {
 
         IntStream.rangeClosed(1,50).forEach(i-> {
             Matching matching = Matching.builder()
-                    .userID("user"+i)
+                    .memberID("member"+i)
                     .createdAt(LocalDateTime.now())
                     .firstInterest(Long.valueOf(random.nextInt(10)))
                     .secondInterest(Long.valueOf(random.nextInt(10)))
