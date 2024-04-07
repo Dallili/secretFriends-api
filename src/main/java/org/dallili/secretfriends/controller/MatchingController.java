@@ -52,15 +52,27 @@ public class MatchingController {
 
     @Operation(summary = "Match Knowns PATCH", description = "코드 입력을 통한 다이어리 partner 확정 (=지인 매칭 완료)")
     @PatchMapping(value = "/")
-    public Long partnerModify(String code, Long userID){
+    public Map<String, String> partnerModify(String code, Long userID){
 
         DiaryDTO diaryDTO = diaryService.findDiaryByCode(code);
         Long diaryID = diaryDTO.getDiaryID();
-        diaryService.modifyUpdate(diaryID, userID);
-        diaryService.modifyPartner(diaryID, userID);
-        matchingHistoryService.addHistory(diaryDTO.getMemberID(), userID);
+        Map<String, String> result = new HashMap<>();
 
-        return diaryID;
+        if(diaryDTO.getPartnerID() == null){
+
+            diaryService.modifyUpdate(diaryID, userID);
+            diaryService.modifyPartner(diaryID, userID);
+            matchingHistoryService.addHistory(diaryDTO.getMemberID(), userID);
+
+            result.put("diaryID", diaryID.toString());
+            result.put("state", "매칭 성공");
+            return result;
+        }
+        else {
+            result.put("state", "이미 매칭이 완료된 일기장입니다");
+            return result;
+        }
+
 
     }
 
