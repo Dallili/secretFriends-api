@@ -8,10 +8,7 @@ import org.dallili.secretfriends.repository.DiaryRepository;
 import org.dallili.secretfriends.service.DiaryService;
 import org.dallili.secretfriends.service.MatchingHistoryService;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,14 +41,25 @@ public class MatchingController {
 
     }
 
-/*
-    @Operation(summary = "Get Code GET", description = "초대 코드 리턴")
+    @Operation(summary = "Get Code GET", description = "초대 코드 조회")
     @GetMapping(value = "/{diaryID}")
-    public String codeDetails(Long diaryID){
+    public UUID codeDetails(Long diaryID){
 
-        String code = diaryService.findOne(diaryID).getCode();
+        UUID code = diaryService.findCode(diaryID);
 
         return code;
     }
-    */
+
+    @Operation(summary = "Match Knowns PATCH", description = "코드 입력을 통한 다이어리 partner 확정(=지인 매칭 완료)")
+    @PatchMapping(value = "/")
+    public Long partnerModify(String code, Long userID){
+
+        DiaryDTO diaryDTO = diaryService.findDiaryByCode(code);
+        diaryService.modifyUpdate(diaryDTO);
+        diaryService.modifyPartner(diaryDTO.getDiaryID(), userID);
+
+        return diaryDTO.getDiaryID();
+
+    }
+
 }
