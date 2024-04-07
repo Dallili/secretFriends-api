@@ -4,8 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.dallili.secretfriends.domain.Member;
 import org.dallili.secretfriends.domain.MemberRole;
 import org.dallili.secretfriends.dto.MemberDTO;
+import org.dallili.secretfriends.jwt.JwtUtil;
 import org.dallili.secretfriends.repository.MemberRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,7 @@ public class MemberServiceImpl implements MemberService{
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
+    private final JwtUtil jwtUtil;
 
     @Override
     public void singUp(MemberDTO.SignUpRequest requestDTO){
@@ -41,5 +45,22 @@ public class MemberServiceImpl implements MemberService{
         MemberDTO.DetailsResponse response = modelMapper.map(member,MemberDTO.DetailsResponse.class);
 
         return response;
+    }
+
+    @Override
+    public String login(MemberDTO.LoginRequest requestDTO){
+        String email = requestDTO.getEmail();
+        String pwd = requestDTO.getPassword();
+        Member member = memberRepository.findByEmail(email).orElseThrow(()->{
+            throw new UsernameNotFoundException(email + ": 존재하지 않는 회원입니다.");
+        });
+        if(!passwordEncoder.matches(pwd,member.getPassword())){
+            throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
+        }
+
+        MemberDTO.CustomUserInfo info = modelMapper.map(member, MemberDTO.CustomUserInfo.class);
+
+        String accessToken = jwtUtil.generateToken(info);
+        return accessToken;
     }
 }
