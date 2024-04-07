@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.*;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NonNull;
+import org.hibernate.validator.constraints.Range;
 
 import java.time.LocalDate;
 
@@ -31,5 +33,16 @@ public class MemberDTO {
         @NotBlank(message = "성별을 입력해주세요.")
         @Pattern(regexp = "[FM]", message = "성별 값은 F와 M 중 하나여야 한다.")
         private String gender;
+    }
+
+    @Data
+    public static class DetailsResponse{
+        private Long memberID;
+        private String nickname;
+        private String gender;
+        @JsonFormat(pattern = "yyyy-MM-dd")
+        private LocalDate birthday;
+        //@Range(min = 0, max = 3)
+        //private int diaryNum;
     }
 }

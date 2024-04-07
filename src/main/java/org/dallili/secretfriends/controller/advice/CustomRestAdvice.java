@@ -16,7 +16,7 @@ public class CustomRestAdvice {
 
         return HttpErrorResponse.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
-                .error(ex.toString())
+                .error(ex.getClass().getName())
                 .message(ex.getMessage())
                 .path(request.getRequestURI())
                 .build();
