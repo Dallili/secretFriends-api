@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
+import org.dallili.secretfriends.domain.MemberRole;
 import org.hibernate.validator.constraints.Range;
 
 import java.time.LocalDate;
@@ -47,5 +48,24 @@ public class MemberDTO {
         private LocalDate birthday;
         //@Range(min = 0, max = 3)
         //private int diaryNum;
+    }
+
+    @Data
+    @Builder
+    public static class LoginRequest{
+        @Email
+        @NotBlank(message = "이메일을 입력해주세요.")
+        private String email;
+        @NotBlank(message = "비밀번호를 입력해주세요.")
+        private String password;
+    }
+
+    @Data
+    public static class CustomUserInfo{
+        private Long memberID;
+        private String nickname;
+        private String email;
+        private String password;
+        private MemberRole role;
     }
 }

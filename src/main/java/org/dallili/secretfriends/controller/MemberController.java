@@ -31,4 +31,12 @@ public class MemberController {
         return memberService.findMember(memberID);
     }
 
+    @Operation(summary = "로그인")
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/login")
+    public String login(@Valid @RequestBody MemberDTO.LoginRequest request){
+        String token = memberService.login(request);
+        return token;
+    }
+
 }
