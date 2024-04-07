@@ -1,10 +1,7 @@
 package org.dallili.secretfriends.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
@@ -25,7 +22,7 @@ public class MemberDTO {
         @Size(max=20, message = "닉네임이 너무 깁니다. (최대 20글자)")
         private String nickname;
 
-        @NonNull
+        @NotNull
         @JsonFormat(pattern = "yyyy-MM-dd")
         private LocalDate birthday;
 
