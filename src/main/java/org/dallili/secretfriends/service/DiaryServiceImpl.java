@@ -37,6 +37,21 @@ public class DiaryServiceImpl implements DiaryService {
         return diaryID;
     }
 
+    @Override
+    public Long addKnownMatchingDiary(DiaryDTO.knownMatchingDiary diaryDTO){
+
+        Diary diary = modelMapper.map(diaryDTO, Diary.class);
+
+        UUID code = UUID.randomUUID();
+
+        diary.makeCode(code);
+
+        Long diaryID = diaryRepository.save(diary).getDiaryID();
+
+        return diaryID;
+
+    }
+
 
     @Override
     public DiaryDTO findOne(Long diaryID){

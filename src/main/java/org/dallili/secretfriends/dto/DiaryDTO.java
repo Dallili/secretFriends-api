@@ -1,14 +1,17 @@
 package org.dallili.secretfriends.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.GeneratedValue;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -33,6 +36,14 @@ public class DiaryDTO {
     private LocalDateTime updatedAt; // get, set
 
     private String color; //get
+
+    private UUID code;
+
+    @Data
+    public static class knownMatchingDiary{
+        private Long memberID;
+        private String color;
+    }
 
 
 }

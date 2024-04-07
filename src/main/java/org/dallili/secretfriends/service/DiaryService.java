@@ -10,6 +10,8 @@ public interface DiaryService {
 
     Long addDiary(DiaryDTO diaryDTO); // 일기장 등록
 
+    Long addKnownMatchingDiary(DiaryDTO.knownMatchingDiary diaryDTO)
+
     DiaryDTO findOne(Long diaryID); // 일기장 조회
 
     void modifyUpdate(DiaryDTO diaryDTO); // 일기장 업데이트 (새로운 답장)
