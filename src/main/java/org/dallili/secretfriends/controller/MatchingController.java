@@ -88,4 +88,13 @@ public class MatchingController {
 
     }
 
+    @Operation(summary = "Delete unknown-Matching DELETE", description = "랜덤 매칭 취소")
+    @DeleteMapping(value = "/{matchingID}")
+    public Long matchingRemove(@PathVariable ("matchingID") Long matchingID){
+
+        Long deletedMatchingID = matchingService.removeMatching(matchingID);
+
+        return deletedMatchingID;
+    }
+
 }

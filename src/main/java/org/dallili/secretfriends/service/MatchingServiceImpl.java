@@ -24,7 +24,7 @@ public class MatchingServiceImpl implements MatchingService{
     private final float firstInterestPoint = 1f;
     private final float secondInterestPoint = 0.7f;
     private final float thirdInterestPoint = 0.4f;
-    private final float scoreThreshold = 1;
+    private final float scoreThreshold = 100;
 
     private final MatchingRepository matchingRepository;
 
@@ -50,11 +50,11 @@ public class MatchingServiceImpl implements MatchingService{
     @Override
     public Long removeMatching(Long matchingID){
 
-        Long memberID = matchingRepository.findById(matchingID).get().getMemberID();
+        Long deletedMatchingID = matchingRepository.findById(matchingID).get().getMatchingID();
 
         matchingRepository.deleteById(matchingID);
 
-        return memberID;
+        return deletedMatchingID;
 
     }
 
