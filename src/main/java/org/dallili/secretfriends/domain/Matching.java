@@ -20,7 +20,7 @@ public class Matching {
     private Long matchingID;
 
     @JoinColumn(name = "memberID", referencedColumnName = "memberID", insertable = true, updatable = true)
-    private String memberID;
+    private Long memberID;
 
     @Column(name = "createdAt", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt;
