@@ -24,7 +24,7 @@ public class MatchingServiceImpl implements MatchingService{
     private final float firstInterestPoint = 1f;
     private final float secondInterestPoint = 0.7f;
     private final float thirdInterestPoint = 0.4f;
-    private final float scoreThreshold = 10;
+    private final float scoreThreshold = 1;
 
     private final MatchingRepository matchingRepository;
 
@@ -104,17 +104,21 @@ public class MatchingServiceImpl implements MatchingService{
                     score += thirdInterestPoint * thirdInterestPoint;
                 }
 
+                log.info(oldMatching.getMatchingID()+"번 매칭과의 점수: "+score);
+
                 scoreList.add(score);
             }
 
             // 궁합 최대값
             maxScore = Collections.max(scoreList);
-            log.info("최댓값: " + maxScore);
+            log.info("최종 최댓값: " + maxScore);
 
             // 매칭 성공 (일정 점수 이상 이어야 한다는 조건 통과)
             if(maxScore > scoreThreshold){
                 maxIndex = scoreList.indexOf(maxScore);
-                Long oldMemberID = removeMatching(maxIndex+1L); // 매칭 큐에서 삭제
+                Long maxMatchingID = matchingQueue.get(maxIndex).getMatchingID();
+
+                Long oldMemberID = removeMatching(maxMatchingID); // 매칭 큐에서 삭제
                 Long newMemberID = newMatching.getMemberID();
 
                 DiaryDTO diaryDTO = DiaryDTO.builder()
@@ -122,7 +126,7 @@ public class MatchingServiceImpl implements MatchingService{
                         .partnerID(newMemberID)
                         .updatedAt(LocalDateTime.now())
                         .updatedBy(newMemberID)
-                        .color("#defalutColor")
+                        .color("#777777")
                         .build();
 
                 Long diaryID = diaryService.addDiary(diaryDTO); // 다이어리 생성

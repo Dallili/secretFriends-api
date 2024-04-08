@@ -45,4 +45,20 @@ public class MatchingServiceTests {
 
         matchingService.removeMatching(11L);
     }
+
+    @Test
+    public void testSaveMatchingSearch() {
+
+        MatchingDTO matchingDTO = MatchingDTO.builder()
+                .createdAt(LocalDateTime.now())
+                .firstInterest(6L)
+                .secondInterest(7L)
+                .thirdInterest(8L)
+                .memberID(1L)
+                .build();
+
+        matchingService.saveMatchingSearch(matchingDTO);
+
+
+    }
 }

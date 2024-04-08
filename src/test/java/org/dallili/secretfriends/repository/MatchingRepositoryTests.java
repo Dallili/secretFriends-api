@@ -23,9 +23,12 @@ public class MatchingRepositoryTests {
         Random random = new Random();
 
         IntStream.rangeClosed(1,10).forEach(i-> {
+
+            LocalDateTime customTime = LocalDateTime.of(2024, 4, 8, i, 30, 0);
+
             Matching matching = Matching.builder()
                     .memberID(Long.valueOf(i))
-                    .createdAt(LocalDateTime.now())
+                    .createdAt(customTime)
                     .firstInterest(Long.valueOf(random.nextInt(9)+1))
                     .secondInterest(Long.valueOf(random.nextInt(9)+1))
                     .thirdInterest(Long.valueOf(random.nextInt(9)+1))
