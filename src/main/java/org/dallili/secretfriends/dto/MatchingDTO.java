@@ -19,7 +19,6 @@ public class MatchingDTO {
 
     private Long matchingID;
 
-    @NotBlank
     private Long memberID;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
