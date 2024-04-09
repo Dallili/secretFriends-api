@@ -22,13 +22,16 @@ public class MatchingRepositoryTests {
 
         Random random = new Random();
 
-        IntStream.rangeClosed(1,50).forEach(i-> {
+        IntStream.rangeClosed(1,10).forEach(i-> {
+
+            LocalDateTime customTime = LocalDateTime.of(2024, 4, 8, i, 30, 0);
+
             Matching matching = Matching.builder()
-                    .memberID("member"+i)
-                    .createdAt(LocalDateTime.now())
-                    .firstInterest(Long.valueOf(random.nextInt(10)))
-                    .secondInterest(Long.valueOf(random.nextInt(10)))
-                    .thirdInterest(Long.valueOf(random.nextInt(10)))
+                    .memberID(Long.valueOf(i))
+                    .createdAt(customTime)
+                    .firstInterest(Long.valueOf(random.nextInt(9)+1))
+                    .secondInterest(Long.valueOf(random.nextInt(9)+1))
+                    .thirdInterest(Long.valueOf(random.nextInt(9)+1))
                     .build();
             matchingRepository.save(matching);
         });

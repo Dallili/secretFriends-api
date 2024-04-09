@@ -54,7 +54,7 @@ public class DiaryServiceTests {
 
         log.info("업데이트 할 것 : "+ diaryDTO);
 
-        diaryService.modifyUpdate(diaryDTO);
+        diaryService.modifyUpdate(diaryDTO.getDiaryID(), diaryDTO.getMemberID());
     }
 
     @Test
