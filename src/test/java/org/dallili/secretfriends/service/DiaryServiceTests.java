@@ -67,7 +67,7 @@ public class DiaryServiceTests {
     @Test
     public void testModifyPartner() {
 
-        diaryService.modifyPartner(1L, 1L);
+        diaryService.modifyPartner("fc2413e4-559a-45c2-b94c-a0d45da9c2c9", 1L);
 
     }
 
@@ -110,8 +110,7 @@ public class DiaryServiceTests {
     @Test
     public void testFindByCode() {
 
-
-        log.info(diaryService.findDiaryByCode("cf4dacee-3ffc-40aa-946a-972a98506b38").getDiaryID());
+        log.info(diaryService.findDiaryByCode("fc2413e4-559a-45c2-b94c-a0d45da9c2c9"));
     }
 
     @Test
