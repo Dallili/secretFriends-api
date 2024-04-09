@@ -10,7 +10,7 @@ name: Java CI&CD with Gradle
 
 on:
   push:
-    branches: ["settings-cd"]
+    branches: ["develop"]
   pull_request:
     branches: ["develop"]
 
