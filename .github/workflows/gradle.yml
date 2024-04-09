@@ -10,7 +10,7 @@ name: Java CI&CD with Gradle
 
 on:
   push:
-    branches: ["develop"]
+    branches: ["settings-cd"]
   pull_request:
     branches: ["develop"]
 
@@ -71,12 +71,15 @@ jobs:
         username: ec2-user
         key: ${{secrets.AWS_EC2_KEY}}
         script: |
-          sudo docker ps
+          CONTAINER_ID=$(sudo docker ps -q --filter "publish=80-8080")
+
+          if [ ! -z "$CONTAINER_ID" ]; then
+            sudo docker stop $CONTAINER_ID
+            sudo docker rm $CONTAINER_ID
+          fi
+
           sudo docker pull ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPOSITORY}}:prod
-          sudo docker run -d -p 8080:8080 ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPOSITORY}}:prod
-          sudo docker image prune -f
-    
-        
+          sudo docker run -d -p 80:8080 -e TZ=Asia/Seoul ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPOSITORY}}:prod
 
     # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
     # If your project does not have the Gradle Wrapper configured, you can use the following configuration to run Gradle with a specified version.
