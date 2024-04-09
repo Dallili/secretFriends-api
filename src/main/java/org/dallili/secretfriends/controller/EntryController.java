@@ -71,7 +71,7 @@ public class EntryController {
 
     @Operation(summary = "일기 조회", description = "특정 다이어리의 일기 목록 조회")
     @GetMapping(value = "/list/{diaryID}")
-    public Map<String,Object> entryList(@PathVariable("diaryID") String diaryID){
+    public Map<String,Object> entryList(@PathVariable("diaryID") Long diaryID){
         List<EntryDTO.SentEntryResponse> SentEntry = entryService.findSentEntry(diaryID);
         List<EntryDTO.UnsentEntryResponse> UnsentEntry = entryService.findUnsentEntry(diaryID);
 

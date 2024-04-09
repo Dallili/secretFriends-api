@@ -24,7 +24,7 @@ public class EntryServiceTests {
     @Test
     public void testAddEntry(){
         EntryDTO entryDTO = EntryDTO.builder()
-                .diaryID("diary2")
+                .diaryID(2L)
                 .writer(1L)
                 .content("일기")
                 .build();
@@ -62,13 +62,13 @@ public class EntryServiceTests {
 
     @Test
     public void testFindSentEntry(){
-        String diaryID = "diary2";
+        Long diaryID = 2L;
         List<EntryDTO.SentEntryResponse> dto = entryService.findSentEntry(diaryID);
         dto.stream().forEach(i -> log.info(i));
     }
     @Test
     public void testFindUnsentEntry(){
-        String diaryID = "diary2";
+        Long diaryID = 2L;
         List<EntryDTO.UnsentEntryResponse> dto = entryService.findUnsentEntry(diaryID);
         dto.stream().forEach(i -> log.info(i));
     }

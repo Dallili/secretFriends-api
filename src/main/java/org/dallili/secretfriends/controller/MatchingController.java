@@ -21,13 +21,14 @@ public class MatchingController {
 
     final DiaryService diaryService;
 
-
+/*
     @Operation(summary = "Get Code GET", description = "초대 코드 리턴")
     @GetMapping(value = "/{diaryID}")
-    public String codeDetails(String diaryID){
+    public String codeDetails(Long diaryID){
 
-        String code = diaryService.findOne(diaryID).getDiaryID();
+        String code = diaryService.findOne(diaryID).getCode();
 
         return code;
     }
+    */
 }

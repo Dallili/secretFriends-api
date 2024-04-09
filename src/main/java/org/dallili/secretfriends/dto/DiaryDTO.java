@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 public class DiaryDTO {
 
     @NotNull
-    private String diaryID; //get
+    private Long diaryID; //get
 
     @NotEmpty
     private Long memberID; //get, set

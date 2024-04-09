@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 //엔티티 객체를 위한 엔티티 클래스는 반드시 @Entity를 적용해야하고 @Id가 필요하다
 @Entity
@@ -19,7 +20,8 @@ public class Diary{
 
     @Id
     @Column(name = "diaryID", length = 20)
-    private String diaryID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long diaryID;
 
     @ManyToOne(fetch = FetchType.LAZY) //여러 개의 diary가 하나의 user에 속할 수 있음
     @JoinColumn(name = "memberID", referencedColumnName = "memberID", insertable = true, updatable = false)
@@ -41,6 +43,9 @@ public class Diary{
     @Column(name = "color", length = 7)
     private String color;
 
+    @Column(name="code", columnDefinition = "VARBINARY(36)")
+    private UUID code;
+
     @PrePersist
     public void prePersist() {
         this.state = true;
@@ -58,6 +63,8 @@ public class Diary{
     public void changeState(Boolean state){
         this.state = state;
     }
+
+    public void makeCode(UUID code) { this.code = code; }
 
 
     //modelmapper 매핑 규칙 정의를 위한 setter

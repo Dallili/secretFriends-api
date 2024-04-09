@@ -28,7 +28,6 @@ public class DiaryRepositoryTests {
             Optional<Member> partner = memberRepository.findById(2L);
 
             Diary diary = Diary.builder()
-                    .diaryID("diary"+i)
                     .member(member.orElseThrow())
                     .partner(partner.orElseThrow())
                     .state(i%2==0?true:false)
@@ -50,7 +49,6 @@ public class DiaryRepositoryTests {
             Optional<Member> partner = memberRepository.findById(2L);
 
             Diary diary = Diary.builder()
-                    .diaryID("diary"+i)
                     .member(member.orElseThrow())
                     .partner(partner.orElseThrow())
                     .state(i%2==0?true:false)

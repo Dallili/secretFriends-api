@@ -27,18 +27,18 @@ public class DiaryServiceImpl implements DiaryService {
     private final MemberRepository memberRepository;
 
     @Override
-    public String addDiary(DiaryDTO diaryDTO) {
+    public Long addDiary(DiaryDTO diaryDTO) {
 
         Diary diary = modelMapper.map(diaryDTO, Diary.class);
 
-        String diaryID = diaryRepository.save(diary).getDiaryID();
+        Long diaryID = diaryRepository.save(diary).getDiaryID();
 
         return diaryID;
     }
 
 
     @Override
-    public DiaryDTO findOne(String diaryID){
+    public DiaryDTO findOne(Long diaryID){
 
         Optional<Diary> result = diaryRepository.findById(diaryID);
 
@@ -71,7 +71,7 @@ public class DiaryServiceImpl implements DiaryService {
 
 
     @Override
-    public void removeDiary(String diaryID) {
+    public void removeDiary(Long diaryID) {
 
         diaryRepository.deleteById(diaryID);
 
@@ -80,7 +80,8 @@ public class DiaryServiceImpl implements DiaryService {
 
 
     @Override
-    public void modifyPartner(String diaryID, Long partnerID){
+
+    public void modifyPartner(Long diaryID, Long partnerID){
 
         Optional<Diary> result = diaryRepository.findById(diaryID);
 
@@ -96,7 +97,7 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public void modifyState(String diaryID) {
+    public void modifyState(Long diaryID) {
 
         Optional<Diary> result = diaryRepository.findById(diaryID);
 

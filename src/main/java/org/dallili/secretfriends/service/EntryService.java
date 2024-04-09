@@ -10,6 +10,6 @@ public interface EntryService {
     Long addEntry(EntryDTO entryDTO);
     Boolean modifyState(Long entryID);
     EntryDTO.UnsentEntryResponse modifyContent(EntryDTO.ModifyRequest entryDTO);
-    List<EntryDTO.SentEntryResponse> findSentEntry(String diaryID);
-    List<EntryDTO.UnsentEntryResponse> findUnsentEntry(String diaryID);
+    List<EntryDTO.SentEntryResponse> findSentEntry(Long diaryID);
+    List<EntryDTO.UnsentEntryResponse> findUnsentEntry(Long diaryID);
 }

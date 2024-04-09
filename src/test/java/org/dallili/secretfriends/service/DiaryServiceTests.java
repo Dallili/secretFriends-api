@@ -19,11 +19,8 @@ public class DiaryServiceTests {
     @Test
     public void testRegister() {
 
-        //Optional<User> user = userRepository.findById("user1");
-        //Optional<User> partner = userRepository.findById("user10");
 
         DiaryDTO diaryDTO = DiaryDTO.builder()
-                .diaryID("diary107")
                 .color("#123456")
                 .state(true)
                 .memberID(1L)
@@ -40,7 +37,7 @@ public class DiaryServiceTests {
     @Test
     public void testReadOne() {
 
-        DiaryDTO diaryDTO = diaryService.findOne("diary4");
+        DiaryDTO diaryDTO = diaryService.findOne(4L);
 
         log.info(diaryDTO);
     }
@@ -49,7 +46,7 @@ public class DiaryServiceTests {
     public void testUpdate() {
 
         DiaryDTO diaryDTO = DiaryDTO.builder()
-                .diaryID("diary10")
+                .diaryID(10L)
                 .updatedBy(1L)
                 .build();
 
@@ -61,21 +58,21 @@ public class DiaryServiceTests {
     @Test
     public void testRemove() {
 
-        diaryService.removeDiary("diary1");
+        diaryService.removeDiary(1L);
 
     }
 
     @Test
     public void testModifyPartner() {
 
-        diaryService.modifyPartner("diary1", 1L);
+        diaryService.modifyPartner(1L, 1L);
 
     }
 
     @Test
     public void testModifyState() {
 
-        diaryService.modifyState("diary10");
+        diaryService.modifyState(10L);
     }
 
     @Test
