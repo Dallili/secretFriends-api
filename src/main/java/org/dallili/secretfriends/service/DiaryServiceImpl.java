@@ -55,7 +55,7 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public Long addKnownsDiary(Long memberID, String color){
+    public UUID addKnownsDiary(Long memberID, String color){
 
         UUID code = UUID.randomUUID();
 
@@ -67,9 +67,9 @@ public class DiaryServiceImpl implements DiaryService {
 
         Diary diary = modelMapper.map(diaryDTO, Diary.class);
 
-        Long diaryID = diaryRepository.save(diary).getDiaryID();
+        diaryRepository.save(diary);
 
-        return diaryID;
+        return code;
 
     }
 
@@ -117,10 +117,11 @@ public class DiaryServiceImpl implements DiaryService {
 
 
     @Override
+    public void modifyPartner(String code, Long partnerID){
 
-    public void modifyPartner(Long diaryID, Long partnerID){
+        UUID uuidCode = UUID.fromString(code);
 
-        Optional<Diary> result = diaryRepository.findById(diaryID);
+        Optional<Diary> result = diaryRepository.findByCode(uuidCode);
 
         Diary diary = result.orElseThrow();
 
@@ -184,8 +185,6 @@ public class DiaryServiceImpl implements DiaryService {
                 .collect(Collectors.toList());
 
 
-
-
     }
 
     @Override
@@ -204,7 +203,7 @@ public class DiaryServiceImpl implements DiaryService {
 
         UUID uuidCode = UUID.fromString(code);
 
-        Optional<Diary> result = diaryRepository.selectDiary(uuidCode);
+        Optional<Diary> result = diaryRepository.findByCode(uuidCode);
 
         Diary diary = result.orElseThrow();
 
@@ -213,5 +212,6 @@ public class DiaryServiceImpl implements DiaryService {
         return diaryDTO;
 
     }
+
 
 }

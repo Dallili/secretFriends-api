@@ -34,13 +34,10 @@ public class MatchingController {
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> knownMatchingDiaryAdd(@Valid @RequestBody DiaryDTO.knownMatchingDiary diaryDTO){
 
-        Long diaryID = diaryService.addKnownsDiary(diaryDTO.getMemberID(), diaryDTO.getColor());
-
-        UUID code = diaryService.findCode(diaryID);
+        UUID code = diaryService.addKnownsDiary(diaryDTO.getMemberID(), diaryDTO.getColor());
 
         Map<String, String> result = new HashMap<>();
 
-        result.put("diaryID", diaryID.toString());
         result.put("code", code.toString());
 
         return result;
@@ -66,7 +63,7 @@ public class MatchingController {
         if(diaryDTO.getPartnerID() == null){
 
             diaryService.modifyUpdate(diaryID, userID);
-            diaryService.modifyPartner(diaryID, userID);
+            diaryService.modifyPartner(code, userID);
             matchingHistoryService.addHistory(diaryDTO.getMemberID(), userID);
 
             result.put("diaryID", diaryID.toString());
@@ -81,9 +78,9 @@ public class MatchingController {
 
     @Operation(summary = "Create unKnown-Matching POST", description = "랜덤 매칭 - 일기장 생성 or 매칭 레코드 등록")
     @PostMapping(value = "/unknown", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, Long> unknownMatchingAdd(@Valid @RequestBody MatchingDTO newMatching){
+    public Map<String, Object> unknownMatchingAdd(@Valid @RequestBody MatchingDTO newMatching){
 
-        Map<String, Long> result = matchingService.saveMatchingSearch(newMatching);
+        Map<String, Object> result = matchingService.saveMatchingSearch(newMatching);
 
         return result;
 

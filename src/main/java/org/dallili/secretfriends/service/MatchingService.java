@@ -10,7 +10,7 @@ public interface MatchingService {
 
     Long removeMatching(Long matchingID);
 
-    Map<String, Long> saveMatchingSearch(MatchingDTO matchingDTO);
+    Map<String, Object> saveMatchingSearch(MatchingDTO matchingDTO);
     // 매칭이 성공할 경우 Matching 테이블에서 old user의 레코드를 삭제 후, new user와 함께 diary 테이블에 등록
     // 매칭이 실패할 경우 new user를 Matching 테이블에 등록
 

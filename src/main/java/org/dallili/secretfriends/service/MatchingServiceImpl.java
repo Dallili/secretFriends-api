@@ -59,9 +59,9 @@ public class MatchingServiceImpl implements MatchingService{
     }
 
     @Override
-    public Map<String, Long> saveMatchingSearch(MatchingDTO newMatching) {
+    public Map<String, Object> saveMatchingSearch(MatchingDTO newMatching) {
 
-        Map<String, Long> result = new HashMap<>();
+        Map<String, Object> result = new HashMap<>();
 
         List<Matching> matchingQueue = matchingRepository.findAll();
 
@@ -132,6 +132,7 @@ public class MatchingServiceImpl implements MatchingService{
                 Long diaryID = diaryService.addDiary(diaryDTO); // 다이어리 생성
                 Long historyID = matchingHistoryService.addHistory(oldMemberID, newMemberID); // 매칭히스토리 생성
 
+                result.put("state", true);
                 result.put("user", oldMemberID);
                 result.put("partner", newMemberID);
                 result.put("diaryID", diaryID);
@@ -140,6 +141,7 @@ public class MatchingServiceImpl implements MatchingService{
             } else { // 매칭 실패 (점수 조건 통과 못함. 매칭큐에 추가해서 대기)
 
                 Long newMatchingID = addMatching(newMatching);
+                result.put("state", false);
                 result.put("matchingID", newMatchingID);
 
                 return result;
@@ -148,6 +150,7 @@ public class MatchingServiceImpl implements MatchingService{
         } else { // 매칭 실패 (매칭 큐가 비어있음. 매칭큐에 추가해서 대기)
 
             Long newMatchingID = addMatching(newMatching);
+            result.put("state", false);
             result.put("matchingID", newMatchingID);
 
             return result;
