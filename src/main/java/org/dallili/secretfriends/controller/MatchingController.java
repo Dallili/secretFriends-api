@@ -1,15 +1,19 @@
 package org.dallili.secretfriends.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.dallili.secretfriends.dto.DiaryDTO;
 import org.dallili.secretfriends.repository.DiaryRepository;
 import org.dallili.secretfriends.service.DiaryService;
 import org.dallili.secretfriends.service.MatchingHistoryService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @Log4j2
@@ -21,14 +25,56 @@ public class MatchingController {
 
     final DiaryService diaryService;
 
-/*
-    @Operation(summary = "Get Code GET", description = "초대 코드 리턴")
+
+    @Operation(summary = "Create Known-Matching Diary POST", description = "지인 매칭을 위한 일기장 생성")
+    @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Map<String, String> knownMatchingDiaryAdd(@Valid @RequestBody DiaryDTO.knownMatchingDiary diaryDTO){
+
+        Long diaryID = diaryService.addKnownsDiary(diaryDTO.getMemberID(), diaryDTO.getColor());
+
+        UUID code = diaryService.findCode(diaryID);
+
+        Map<String, String> result = new HashMap<>();
+
+        result.put("diaryID", diaryID.toString());
+        result.put("code", code.toString());
+
+        return result;
+
+    }
+
+    @Operation(summary = "Get Code GET", description = "초대 코드 조회")
     @GetMapping(value = "/{diaryID}")
-    public String codeDetails(Long diaryID){
-
-        String code = diaryService.findOne(diaryID).getCode();
-
+    public UUID codeDetails(Long diaryID){
+        UUID code = diaryService.findCode(diaryID);
         return code;
     }
-    */
+
+
+    @Operation(summary = "Match Knowns PATCH", description = "코드 입력을 통한 다이어리 partner 확정 (=지인 매칭 완료)")
+    @PatchMapping(value = "/")
+    public Map<String, String> partnerModify(String code, Long userID){
+
+        DiaryDTO diaryDTO = diaryService.findDiaryByCode(code);
+        Long diaryID = diaryDTO.getDiaryID();
+        Map<String, String> result = new HashMap<>();
+
+        if(diaryDTO.getPartnerID() == null){
+
+            diaryService.modifyUpdate(diaryID, userID);
+            diaryService.modifyPartner(diaryID, userID);
+            matchingHistoryService.addHistory(diaryDTO.getMemberID(), userID);
+
+            result.put("diaryID", diaryID.toString());
+            result.put("state", "매칭 성공");
+            return result;
+        }
+        else {
+            result.put("state", "이미 매칭이 완료된 일기장입니다");
+            return result;
+        }
+
+
+    }
+
 }

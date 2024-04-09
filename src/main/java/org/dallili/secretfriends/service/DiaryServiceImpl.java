@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,6 +37,42 @@ public class DiaryServiceImpl implements DiaryService {
         return diaryID;
     }
 
+    @Override
+    public Long addKnownMatchingDiary(DiaryDTO diaryDTO){
+
+        Diary diary = modelMapper.map(diaryDTO, Diary.class);
+
+        UUID code = UUID.randomUUID();
+
+        diary.makeCode(code);
+
+        Long diaryID = diaryRepository.save(diary).getDiaryID();
+
+        diaryRepository.flush();
+
+        return diaryID;
+
+    }
+
+    @Override
+    public Long addKnownsDiary(Long memberID, String color){
+
+        UUID code = UUID.randomUUID();
+
+        DiaryDTO diaryDTO = DiaryDTO.builder()
+                .memberID(memberID)
+                .color(color)
+                .code(code)
+                .build();
+
+        Diary diary = modelMapper.map(diaryDTO, Diary.class);
+
+        Long diaryID = diaryRepository.save(diary).getDiaryID();
+
+        return diaryID;
+
+    }
+
 
     @Override
     public DiaryDTO findOne(Long diaryID){
@@ -51,16 +88,16 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public void modifyUpdate(DiaryDTO diaryDTO) { //일기 전송 후 작동해야하는 메소드.
+    public void modifyUpdate(Long diaryID, Long memberID) { //일기 전송 후 작동해야하는 메소드.
         // 마지막 작성자와 마지막 작성일을 수정한다.
 
-        Optional<Diary> result = diaryRepository.findById(diaryDTO.getDiaryID());
+        Optional<Diary> result = diaryRepository.findById(diaryID);
 
         Diary diary = result.orElseThrow();
 
         //log.info("업데이트 전: " + diary);
 
-        diary.updateDiary(diaryDTO.getUpdatedBy(), LocalDateTime.now());
+        diary.updateDiary(memberID, LocalDateTime.now());
 
         diaryRepository.save(diary);
 
@@ -148,6 +185,32 @@ public class DiaryServiceImpl implements DiaryService {
 
 
 
+
+    }
+
+    @Override
+    public UUID findCode(Long diaryID) {
+
+        Optional<Diary> result = diaryRepository.findById(diaryID);
+
+        Diary diary = result.orElseThrow();
+
+        return diary.getCode();
+
+    }
+
+    @Override
+    public DiaryDTO findDiaryByCode(String code){
+
+        UUID uuidCode = UUID.fromString(code);
+
+        Optional<Diary> result = diaryRepository.selectDiary(uuidCode);
+
+        Diary diary = result.orElseThrow();
+
+        DiaryDTO diaryDTO = modelMapper.map(diary, DiaryDTO.class);
+
+        return diaryDTO;
 
     }
 
