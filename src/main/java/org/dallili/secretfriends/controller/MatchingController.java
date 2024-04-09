@@ -25,6 +25,7 @@ public class MatchingController {
 
     final DiaryService diaryService;
 
+
     @Operation(summary = "Create Known-Matching Diary POST", description = "지인 매칭을 위한 일기장 생성")
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> knownMatchingDiaryAdd(@Valid @RequestBody DiaryDTO.knownMatchingDiary diaryDTO){
@@ -45,10 +46,10 @@ public class MatchingController {
     @Operation(summary = "Get Code GET", description = "초대 코드 조회")
     @GetMapping(value = "/{diaryID}")
     public UUID codeDetails(Long diaryID){
-
         UUID code = diaryService.findCode(diaryID);
         return code;
     }
+
 
     @Operation(summary = "Match Knowns PATCH", description = "코드 입력을 통한 다이어리 partner 확정 (=지인 매칭 완료)")
     @PatchMapping(value = "/")

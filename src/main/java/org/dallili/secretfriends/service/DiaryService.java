@@ -14,6 +14,7 @@ public interface DiaryService {
 
     Long addKnownsDiary(Long userID, String color);
 
+
     DiaryDTO findOne(Long diaryID); // 일기장 조회
 
     void modifyUpdate(Long diaryID, Long memberID); // 일기장 업데이트 (새로운 답장)
@@ -33,4 +34,5 @@ public interface DiaryService {
     UUID findCode(Long diaryID); //일기장 초대코드 조회
 
     DiaryDTO findDiaryByCode(String code); // 초대코드로 일기장 조회
+
 }

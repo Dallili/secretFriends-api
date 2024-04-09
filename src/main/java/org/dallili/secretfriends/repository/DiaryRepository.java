@@ -14,4 +14,5 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
     @Query("SELECT d FROM Diary d WHERE d.code = :code")
     Optional<Diary> selectDiary(@Param("code") UUID code);
+
 }
