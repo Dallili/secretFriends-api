@@ -5,9 +5,11 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.dallili.secretfriends.dto.DiaryDTO;
+import org.dallili.secretfriends.dto.MatchingDTO;
 import org.dallili.secretfriends.repository.DiaryRepository;
 import org.dallili.secretfriends.service.DiaryService;
 import org.dallili.secretfriends.service.MatchingHistoryService;
+import org.dallili.secretfriends.service.MatchingService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +24,8 @@ import java.util.UUID;
 public class MatchingController {
 
     final MatchingHistoryService matchingHistoryService;
+
+    final MatchingService matchingService;
 
     final DiaryService diaryService;
 
@@ -73,7 +77,15 @@ public class MatchingController {
             result.put("state", "이미 매칭이 완료된 일기장입니다");
             return result;
         }
+    }
 
+    @Operation(summary = "Create unKnown-Matching POST", description = "랜덤 매칭 - 일기장 생성 or 매칭 레코드 등록")
+    @PostMapping(value = "/unknown", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Map<String, Long> unknownMatchingAdd(@Valid @RequestBody MatchingDTO newMatching){
+
+        Map<String, Long> result = matchingService.saveMatchingSearch(newMatching);
+
+        return result;
 
     }
 
