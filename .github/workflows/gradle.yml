@@ -46,6 +46,7 @@ jobs:
         spring.datasource.url: ${{secrets.AWS_RDS_HOST}}
         spring.datasource.username: ${{secrets.AWS_RDS_USERNAME}}
         spring.datasource.password: ${{secrets.AWS_RDS_PASSWORD}}
+        jwt.secret: ${{secrets.JWT_SECRET_KEY}}
         JWT_SECRET_KEY: ${{secrets.JWT_SECRET_KEY}}
 
     # Configure Gradle for optimal use in GiHub Actions, including caching of downloaded dependencies.
