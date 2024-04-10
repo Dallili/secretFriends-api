@@ -126,7 +126,7 @@ public class MatchingServiceImpl implements MatchingService{
                         .partnerID(newMemberID)
                         .updatedAt(LocalDateTime.now())
                         .updatedBy(newMemberID)
-                        .color("#777777")
+                        .color("#000000")
                         .build();
 
                 Long diaryID = diaryService.addDiary(diaryDTO); // 다이어리 생성
