@@ -23,7 +23,6 @@ public class MemberDTO {
         @Size(max=20, message = "닉네임이 너무 깁니다. (최대 20글자)")
         private String nickname;
 
-        @NotNull
         @JsonFormat(pattern = "yyyy-MM-dd")
         private LocalDate birthday;
 
