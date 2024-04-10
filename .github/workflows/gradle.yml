@@ -57,13 +57,13 @@ jobs:
     - name: Build with Gradle 
       run: ./gradlew build -x test
 
-    # docker build & push to production
-    - name: Docker Build & Push to Prod
+    # docker build & push
+    - name: Docker Build & Push
       if: contains(github.ref, 'develop')
       run: |
         docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
-        docker build -f Dockerfile -t ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPOSITORY}}:prod .
-        docker push ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPOSITORY}}:prod
+        docker build -f Dockerfile -t ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPOSITORY}}:dev .
+        docker push ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPOSITORY}}:dev
 
     # deploy to EC2
     - name: Deploy to EC2
@@ -73,13 +73,13 @@ jobs:
         username: ec2-user
         key: ${{secrets.AWS_EC2_KEY}}
         script: |
-          CONTAINER_ID=$(sudo docker ps -q --filter "publish=8080-8080")
+          CONTAINER_ID=$(sudo docker ps -q --filter "publish=80-8080")
           if [ ! -z "$CONTAINER_ID" ]; then
             sudo docker stop $CONTAINER_ID
             sudo docker rm $CONTAINER_ID
           fi
-          sudo docker pull ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPOSITORY}}:prod
-          sudo docker run -d -p 8080:8080 -e TZ=Asia/Seoul ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPOSITORY}}:prod
+          sudo docker pull ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPOSITORY}}:dev
+          sudo docker run -d -p 80:8080 -e TZ=Asia/Seoul ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPOSITORY}}:dev
 
     # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
     # If your project does not have the Gradle Wrapper configured, you can use the following configuration to run Gradle with a specified version.
