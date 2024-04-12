@@ -17,6 +17,11 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    @GetMapping("/healthcheck")
+    public String healthcheck() {
+        return "OK";
+    }
+
     @Operation(summary = "회원가입", description = "회원 데이터를 생성하고 id 반환")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
