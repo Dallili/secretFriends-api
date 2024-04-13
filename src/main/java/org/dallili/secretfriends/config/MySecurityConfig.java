@@ -93,6 +93,7 @@ public class MySecurityConfig{
         config.addAllowedOrigin("https://localhost:8080");
         config.addAllowedOrigin("http://localhost:9090"); // 도커랑 8080 포트 겹칠 때 9090 포트 사용
         config.addAllowedOrigin("https://localhost:9090");
+        config.addAllowedOrigin("http://ec2-3-17-227-166.us-east-2.compute.amazonaws.com");
         config.addAllowedOrigin("api.secretfriends.shop");
         config.addAllowedOrigin("http://api.secretfriends.shop");
         config.addAllowedOrigin("https://api.secretfriends.shop");
