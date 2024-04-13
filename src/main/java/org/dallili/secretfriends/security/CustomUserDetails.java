@@ -1,7 +1,8 @@
-package org.dallili.secretfriends.jwt;
+package org.dallili.secretfriends.security;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.dallili.secretfriends.domain.Member;
 import org.dallili.secretfriends.dto.MemberDTO;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
-    private final MemberDTO.CustomUserInfo member;
+    private final Member member;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -36,8 +37,10 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return member.getMemberID().toString();
+        return member.getEmail();
     }
+
+    public Long getId(){ return member.getMemberID();}
 
     @Override
     public boolean isAccountNonExpired() {

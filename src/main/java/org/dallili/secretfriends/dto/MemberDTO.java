@@ -57,11 +57,9 @@ public class MemberDTO {
     }
 
     @Data
-    public static class CustomUserInfo{
+    public static class MemberInfo{
         private Long memberID;
-        private String nickname;
         private String email;
-        private String password;
         private MemberRole role;
     }
 }
