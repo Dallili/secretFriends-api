@@ -37,7 +37,6 @@ public class MemberDTO {
 
     @Data
     public static class DetailsResponse{
-        private Long memberID;
         private String nickname;
         private String gender;
         @JsonFormat(pattern = "yyyy-MM-dd")
