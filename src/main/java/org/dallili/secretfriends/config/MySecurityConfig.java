@@ -19,6 +19,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @RequiredArgsConstructor
 @Configuration
@@ -72,6 +75,35 @@ public class MySecurityConfig{
 
 
         return http.build();
+    }
+
+
+    // cors 오류 해결
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        // 리액트 오리진
+        config.addAllowedOrigin("http://localhost:3000"); // 로컬 환경
+        config.addAllowedOrigin("https://localhost:3000");
+        config.addAllowedOrigin("secret-friends.link");
+        config.addAllowedOrigin("http://secret-friends.link");
+        config.addAllowedOrigin("https://secret-friends.link");
+        // 스프링부트 오리진
+        config.addAllowedOrigin("http://localhost:8080"); // 로컬 환경
+        config.addAllowedOrigin("https://localhost:8080");
+        config.addAllowedOrigin("http://localhost:9090"); // 도커랑 8080 포트 겹칠 때 9090 포트 사용
+        config.addAllowedOrigin("https://localhost:9090");
+        config.addAllowedOrigin("api.secretfriends.shop");
+        config.addAllowedOrigin("http://api.secretfriends.shop");
+        config.addAllowedOrigin("https://api.secretfriends.shop");
+
+        config.addAllowedMethod("*"); // 모든 메소드 허용.
+        config.addAllowedHeader("*");
+        config.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 
 
