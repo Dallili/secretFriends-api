@@ -3,6 +3,7 @@ package org.dallili.secretfriends.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
+import org.dallili.secretfriends.dto.EntryDTO;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -16,9 +17,9 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "diary")
+@ToString(exclude = {"diary","member"})
 @Table(name = "entry", indexes = {
-        @Index(name="idx_entry_diary_diaryID", columnList = "diaryID")
+        @Index(name="idx_entry_diary_diaryID", columnList = "diary_id")
 })
 @EntityListeners(value = {AuditingEntityListener.class})
 @DynamicInsert
@@ -29,13 +30,15 @@ public class Entry {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long entryID;
 
-    @JoinColumn(name = "diary_id", referencedColumnName = "diaryID", insertable = true, updatable = false)
+    @JoinColumn(name = "diary_id", referencedColumnName = "diary_id", insertable = true, updatable = false)
     @ManyToOne(fetch = FetchType.LAZY) // 여러 개의 페이지가 하나의 다이어리에 속할 수 있음.
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Diary diary;
 
-    @Column(name = "writer_id")
-    private Long writerID;
+    @JoinColumn(name = "writer_id", referencedColumnName = "member_id", insertable = true, updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Member member;
 
     @Column(name = "updatedAt", columnDefinition = "TIMESTAMP")
     @LastModifiedDate
@@ -68,6 +71,23 @@ public class Entry {
         if(this.state.equals("Y")){
             throw new IllegalStateException("전달된 일기는 내용 수정 불가");
         }
+    }
+
+    public EntryDTO.UnsentEntryResponse toUnsentDto(){
+        return EntryDTO.UnsentEntryResponse.builder()
+                .entryID(this.getEntryID())
+                .writerName(this.getMember().getNickname())
+                .updatedAt(this.getUpdatedAt())
+                .content(this.getContent())
+                .build();
+    }
+    public EntryDTO.SentEntryResponse toSentDto(){
+        return EntryDTO.SentEntryResponse.builder()
+                .entryID(this.getEntryID())
+                .writerName(this.getMember().getNickname())
+                .sendAt(this.getSendAt())
+                .content(this.getContent())
+                .build();
     }
 
 }

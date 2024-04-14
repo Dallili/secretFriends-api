@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.dallili.secretfriends.domain.Diary;
 import org.dallili.secretfriends.domain.Entry;
+import org.dallili.secretfriends.domain.Member;
 import org.dallili.secretfriends.dto.EntryDTO;
 import org.dallili.secretfriends.repository.EntryRepository;
 import org.modelmapper.ModelMapper;
@@ -24,6 +25,7 @@ public class EntryServiceImpl implements EntryService {
     private final EntryRepository entryRepository;
     private final ModelMapper modelMapper;
     private final DiaryService diaryService;
+    private final MemberService memberService;
 
     @Override
     public Long addEntry(EntryDTO.CreateRequest entryDTO) {
@@ -33,7 +35,9 @@ public class EntryServiceImpl implements EntryService {
             throw new IllegalArgumentException("작성 권한이 없는 일기장입니다.");
         }
 
-        Entry entry = entryDTO.toEntity(diary);
+        Member member = memberService.findMemberById(entryDTO.getWriterID());
+
+        Entry entry = entryDTO.toEntity(diary,member);
         Long eid = entryRepository.save(entry).getEntryID();
         return eid;
     }
@@ -67,7 +71,7 @@ public class EntryServiceImpl implements EntryService {
     public List<EntryDTO.SentEntryResponse> findSentEntry(Long diaryID) {
         List<Entry> entries = entryRepository.selectEntry(diaryID,"Y");
 
-        List<EntryDTO.SentEntryResponse> dto = entries.stream().map(entry -> modelMapper.map(entry,EntryDTO.SentEntryResponse.class)).collect(Collectors.toList());
+        List<EntryDTO.SentEntryResponse> dto = entries.stream().map(entry -> entry.toSentDto() ).collect(Collectors.toList());
 
         return dto;
     }
@@ -76,7 +80,7 @@ public class EntryServiceImpl implements EntryService {
     public List<EntryDTO.UnsentEntryResponse> findUnsentEntry(Long diaryID) {
         List<Entry> entries = entryRepository.selectEntry(diaryID,"N");
 
-        List<EntryDTO.UnsentEntryResponse> dto = entries.stream().map(entry -> modelMapper.map(entry,EntryDTO.UnsentEntryResponse.class)).collect(Collectors.toList());
+        List<EntryDTO.UnsentEntryResponse> dto = entries.stream().map(entry -> entry.toUnsentDto()).collect(Collectors.toList());
 
         return dto;
     }

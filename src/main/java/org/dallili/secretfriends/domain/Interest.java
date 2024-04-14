@@ -13,7 +13,7 @@ import lombok.*;
 public class Interest {
 
     @Id
-    @Column(name = "interestID")
+    @Column(name = "interest_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long interestID;
 

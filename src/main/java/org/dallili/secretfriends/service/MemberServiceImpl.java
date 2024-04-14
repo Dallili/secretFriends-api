@@ -1,5 +1,6 @@
 package org.dallili.secretfriends.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.dallili.secretfriends.domain.Member;
 import org.dallili.secretfriends.domain.MemberRole;
@@ -38,9 +39,7 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public MemberDTO.DetailsResponse findMember(Long memberID) {
 
-        Member member = memberRepository.findById(memberID).orElseThrow(()->{
-            throw new IllegalStateException(memberID + ": 존재하지 않는 회원입니다.");
-        });
+        Member member = findMemberById(memberID);
 
         MemberDTO.DetailsResponse response = modelMapper.map(member,MemberDTO.DetailsResponse.class);
 
@@ -62,5 +61,13 @@ public class MemberServiceImpl implements MemberService{
 
         String accessToken = jwtUtil.generateToken(info);
         return accessToken;
+    }
+
+    @Override
+    public Member findMemberById(Long memberID) {
+        Member member = memberRepository.findById(memberID).orElseThrow(()->{
+            throw new EntityNotFoundException(memberID + ": 존재하지 않는 회원입니다.");
+        });
+        return member;
     }
 }

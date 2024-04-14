@@ -15,23 +15,23 @@ import java.time.LocalDateTime;
 public class Matching {
 
     @Id
-    @Column(name = "matchingID")
+    @Column(name = "matching_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long matchingID;
 
-    @JoinColumn(name = "memberID", referencedColumnName = "memberID", insertable = true, updatable = true)
+    @JoinColumn(name = "member_id", referencedColumnName = "member_id", insertable = true, updatable = true)
     private Long memberID;
 
     @Column(name = "createdAt", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt;
 
-    @JoinColumn(name = "firstInterest", referencedColumnName = "interestID", insertable = true, updatable = true)
+    @JoinColumn(name = "firstInterest", referencedColumnName = "interest_id", insertable = true, updatable = true)
     private Long firstInterest;
 
-    @JoinColumn(name = "secondInterest", referencedColumnName = "interestID", insertable = true, updatable = true)
+    @JoinColumn(name = "secondInterest", referencedColumnName = "interest_id", insertable = true, updatable = true)
     private Long secondInterest;
 
-    @JoinColumn(name = "thirdInterest", referencedColumnName = "interestID", insertable = true, updatable = true)
+    @JoinColumn(name = "thirdInterest", referencedColumnName = "interest_id", insertable = true, updatable = true)
     private Long thirdInterest;
 
 
