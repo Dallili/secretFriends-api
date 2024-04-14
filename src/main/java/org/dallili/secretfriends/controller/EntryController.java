@@ -7,6 +7,7 @@ import lombok.extern.log4j.Log4j2;
 import org.dallili.secretfriends.dto.EntryDTO;
 import org.dallili.secretfriends.service.EntryService;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -23,16 +24,16 @@ public class EntryController {
 
     private final EntryService entryService;
 
-    @Operation(summary = "Entries POST", description = "일기 생성")
+    @Operation(summary = "일기 생성", description = "일기 생성 후 임시 저장")
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String,Long> EntryAdd(@Valid @RequestBody EntryDTO entryDTO, BindingResult bindingResult) throws BindException{
+    public Map<String,Long> EntryAdd(@Valid @RequestBody EntryDTO.CreateRequest entryDTO, Authentication authentication, BindingResult bindingResult) throws BindException{
 
-        log.info(entryDTO);
         if(bindingResult.hasErrors()){
             throw new BindException(bindingResult);
         }
 
         Map<String,Long> result = new HashMap<>();
+        entryDTO.setWriterID(Long.parseLong(authentication.getName()));
 
         Long entryID = entryService.addEntry(entryDTO);
         result.put("entryID",entryID);

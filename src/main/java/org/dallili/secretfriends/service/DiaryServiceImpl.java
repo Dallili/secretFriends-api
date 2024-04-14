@@ -1,5 +1,6 @@
 package org.dallili.secretfriends.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.dallili.secretfriends.domain.Diary;
@@ -213,5 +214,11 @@ public class DiaryServiceImpl implements DiaryService {
 
     }
 
-
+    @Override
+    public Diary findDiaryById(Long id) {
+        Diary diary = diaryRepository.findById(id).orElseThrow(()->{
+            return new EntityNotFoundException(id + ": 존재하지 않는 일기장입니다.");
+        });
+        return diary;
+    }
 }

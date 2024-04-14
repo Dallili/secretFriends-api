@@ -25,7 +25,7 @@ public class EntryRepositoryTests {
         IntStream.rangeClosed(1,10).forEach(i->{
             Entry entry = Entry.builder()
                     .diary(diary)
-                    .writer(diary.getMember().getMemberID())
+                    .writerID(diary.getMember().getMemberID())
                     .content("일기 텍스트...")
                     .build();
 

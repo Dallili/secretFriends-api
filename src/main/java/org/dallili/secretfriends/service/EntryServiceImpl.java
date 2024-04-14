@@ -3,6 +3,7 @@ package org.dallili.secretfriends.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.dallili.secretfriends.domain.Diary;
 import org.dallili.secretfriends.domain.Entry;
 import org.dallili.secretfriends.dto.EntryDTO;
 import org.dallili.secretfriends.repository.EntryRepository;
@@ -22,10 +23,17 @@ public class EntryServiceImpl implements EntryService {
 
     private final EntryRepository entryRepository;
     private final ModelMapper modelMapper;
+    private final DiaryService diaryService;
 
     @Override
-    public Long addEntry(EntryDTO entryDTO) {
-        Entry entry = modelMapper.map(entryDTO, Entry.class);
+    public Long addEntry(EntryDTO.CreateRequest entryDTO) {
+        Diary diary = diaryService.findDiaryById(entryDTO.getDiaryID());
+
+        if(!(entryDTO.getWriterID()==diary.getMember().getMemberID()||entryDTO.getWriterID()==diary.getPartner().getMemberID())){
+            throw new IllegalArgumentException("작성 권한이 없는 일기장입니다.");
+        }
+
+        Entry entry = entryDTO.toEntity(diary);
         Long eid = entryRepository.save(entry).getEntryID();
         return eid;
     }

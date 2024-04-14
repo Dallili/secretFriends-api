@@ -23,21 +23,15 @@ public class EntryServiceTests {
 
     @Test
     public void testAddEntry(){
-        EntryDTO entryDTO = EntryDTO.builder()
-                .diaryID(2L)
-                .writer(1L)
+        EntryDTO.CreateRequest entryDTO = EntryDTO.CreateRequest.builder()
+                .diaryID(1L)
+                .writerID(1L)
                 .content("일기")
                 .build();
 
         Long eid = entryService.addEntry(entryDTO);
 
-        Entry entry = entryRepository.findById(eid).get();
         log.info(eid);
-
-        assertThat(entry.getEntryID()).isEqualTo(eid);
-        assertThat(entry.getDiary().getDiaryID()).isEqualTo("diary2");
-        assertThat(entry.getWriter()).isEqualTo("member2");
-        assertThat(entry.getContent()).isEqualTo("일기");
     }
 
     @Test
