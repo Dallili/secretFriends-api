@@ -1,5 +1,6 @@
 package org.dallili.secretfriends.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -44,8 +45,9 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     public Boolean modifyState(Long entryID) {
-        Optional<Entry> entryOptional = entryRepository.findById(entryID);
-        Entry entry = entryOptional.orElseThrow();
+        Entry entry = entryRepository.findById(entryID).orElseThrow(()->{
+            throw new EntityNotFoundException("존재하지 않는 일기입니다.");
+        });
         if(entry.getState().equals("N")){
             entryRepository.updateState(entryID);
             entryRepository.updateSendAt(entryID, LocalDateTime.now());
@@ -56,14 +58,15 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     public EntryDTO.UnsentEntryResponse modifyContent(EntryDTO.ModifyRequest entryDTO) {
-        Optional<Entry> entryOptional = entryRepository.findById(entryDTO.getEntryID());
-        Entry entry = entryOptional.orElseThrow();
+        Entry entry = entryRepository.findById(entryDTO.getEntryID()).orElseThrow(()->{
+            throw new EntityNotFoundException("존재하지 않는 일기입니다.");
+        });
 
         entry.changeContent(entryDTO.getContent());
         entryRepository.save(entry);
         entryRepository.flush();
 
-        EntryDTO.UnsentEntryResponse response = modelMapper.map(entry,EntryDTO.UnsentEntryResponse.class);
+        EntryDTO.UnsentEntryResponse response = entry.toUnsentDto();
         return response;
     }
 
