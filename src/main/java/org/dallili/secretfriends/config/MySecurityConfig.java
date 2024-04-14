@@ -1,12 +1,11 @@
 package org.dallili.secretfriends.config;
 
 import lombok.RequiredArgsConstructor;
-import org.dallili.secretfriends.jwt.*;
+import org.dallili.secretfriends.security.*;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,7 +17,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -30,7 +28,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class MySecurityConfig{
 
     private final CustomUserDetailsService customUserDetailsService;
-    private final JwtUtil JwtUtil;
+    private final JwtUtil jwtUtil;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
@@ -59,15 +57,15 @@ public class MySecurityConfig{
                 //.formLogin(form->form.disable())
                 .csrf(csrf-> csrf.disable())
                 .cors(Customizer.withDefaults())
+                .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .headers(header -> header
+                        .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 //JwtFilter를 UsernamePasswordAuthenticationFilter 앞에 추가
-                .addFilterBefore(new JwtFilter(customUserDetailsService,JwtUtil), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtFilter(customUserDetailsService,jwtUtil), UsernamePasswordAuthenticationFilter.class)
                 //exception handling 할 때 만들었던 클래스를 추가
                 .exceptionHandling(authenticationManager->authenticationManager
                         .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                         .accessDeniedHandler(jwtAccessDeniedHandler))
-                .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .headers(header -> header
-                        .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers(AUTH_WHITELIST).permitAll()
                         .anyRequest().authenticated());

@@ -1,4 +1,4 @@
-package org.dallili.secretfriends.jwt;
+package org.dallili.secretfriends.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -6,27 +6,15 @@ import io.jsonwebtoken.security.Keys;
 import lombok.extern.log4j.Log4j2;
 import org.dallili.secretfriends.dto.MemberDTO;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import java.security.Key;
 import java.time.ZonedDateTime;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
-import java.util.stream.Collectors;
-
 
 @Component
 @Log4j2
 public class JwtUtil {
 
-    private static final String AUTHORITIES_KEY = "auth";
-    private static final String BEARER_TYPE = "Bearer";
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30; //30분
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7; //7일
 
@@ -38,7 +26,7 @@ public class JwtUtil {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String generateToken(MemberDTO.CustomUserInfo member){
+    public String generateToken(MemberDTO.MemberInfo member){
 
         Claims claims = Jwts.claims();
         claims.put("memberID",member.getMemberID());
@@ -56,23 +44,6 @@ public class JwtUtil {
                 .compact();
 
         return accessToken;
-    }
-
-    public Authentication getAuthentication(String accessToken){
-        Claims claims = parseClaim(accessToken);
-
-        if(claims.get(AUTHORITIES_KEY) == null){
-            throw new RuntimeException("권한 정보가 없는 토큰입니다.");
-        }
-
-        Collection<? extends GrantedAuthority> authorities =
-                Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
-                        .map(SimpleGrantedAuthority::new)
-                        .collect(Collectors.toList());
-
-        UserDetails principal = new User(claims.getSubject(),"",authorities);
-
-        return new UsernamePasswordAuthenticationToken(principal,"",authorities);
     }
 
     public boolean validateToken(String token){
@@ -93,18 +64,9 @@ public class JwtUtil {
         return false;
     }
 
-    private Claims parseClaim(String accessToken){
-        try{
-            return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody();
-        }catch (ExpiredJwtException e){
-            return e.getClaims();
-        }
+    public String getEmail(String token){
+        Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+        return claims.get("email",String.class);
     }
-
-    public Long getUserId(String token){
-        return parseClaim(token).get("memberID",Long.class);
-    }
-
-
 
 }

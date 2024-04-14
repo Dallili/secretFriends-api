@@ -1,4 +1,4 @@
-package org.dallili.secretfriends.jwt;
+package org.dallili.secretfriends.security;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,9 +30,9 @@ public class JwtFilter extends OncePerRequestFilter { //요청 받을 때 단 �
            String token = authorizationHeader.substring(7);
 
            if(jwtUtil.validateToken(token)){
-               Long userid = jwtUtil.getUserId(token);
+               String email = jwtUtil.getEmail(token);
 
-               UserDetails userDetails = customUserDetailsService.loadUserByUsername(userid.toString());
+               UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
 
                if(userDetails!=null){
                    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =

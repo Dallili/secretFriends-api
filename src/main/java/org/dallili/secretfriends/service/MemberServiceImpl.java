@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.dallili.secretfriends.domain.Member;
 import org.dallili.secretfriends.domain.MemberRole;
 import org.dallili.secretfriends.dto.MemberDTO;
-import org.dallili.secretfriends.jwt.JwtUtil;
+import org.dallili.secretfriends.security.JwtUtil;
 import org.dallili.secretfriends.repository.MemberRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -58,7 +58,7 @@ public class MemberServiceImpl implements MemberService{
             throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
         }
 
-        MemberDTO.CustomUserInfo info = modelMapper.map(member, MemberDTO.CustomUserInfo.class);
+        MemberDTO.MemberInfo info = modelMapper.map(member, MemberDTO.MemberInfo.class);
 
         String accessToken = jwtUtil.generateToken(info);
         return accessToken;

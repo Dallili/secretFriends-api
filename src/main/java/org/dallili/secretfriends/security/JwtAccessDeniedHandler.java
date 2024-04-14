@@ -1,4 +1,4 @@
-package org.dallili.secretfriends.jwt;
+package org.dallili.secretfriends.security;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
