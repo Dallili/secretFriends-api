@@ -7,7 +7,10 @@ import lombok.extern.log4j.Log4j2;
 import org.dallili.secretfriends.dto.MemberDTO;
 import org.dallili.secretfriends.service.MemberService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/members")
@@ -26,9 +29,9 @@ public class MemberController {
 
     @Operation(summary = "멤버 조회", description = "회원 데이터 조회")
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{memberID}")
-    public MemberDTO.DetailsResponse MemberDetails(@PathVariable Long memberID){
-        return memberService.findMember(memberID);
+    @GetMapping()
+    public MemberDTO.DetailsResponse MemberDetails(Authentication authentication){
+        return memberService.findMember(Long.parseLong(authentication.getName()));
     }
 
     @Operation(summary = "로그인")
