@@ -71,7 +71,7 @@ public class EntryServiceImpl implements EntryService {
     public List<EntryDTO.SentEntryResponse> findSentEntry(Long diaryID) {
         List<Entry> entries = entryRepository.selectEntry(diaryID,"Y");
 
-        List<EntryDTO.SentEntryResponse> dto = entries.stream().map(entry -> modelMapper.map(entry,EntryDTO.SentEntryResponse.class)).collect(Collectors.toList());
+        List<EntryDTO.SentEntryResponse> dto = entries.stream().map(entry -> entry.toSentDto() ).collect(Collectors.toList());
 
         return dto;
     }
@@ -80,7 +80,7 @@ public class EntryServiceImpl implements EntryService {
     public List<EntryDTO.UnsentEntryResponse> findUnsentEntry(Long diaryID) {
         List<Entry> entries = entryRepository.selectEntry(diaryID,"N");
 
-        List<EntryDTO.UnsentEntryResponse> dto = entries.stream().map(entry -> modelMapper.map(entry,EntryDTO.UnsentEntryResponse.class)).collect(Collectors.toList());
+        List<EntryDTO.UnsentEntryResponse> dto = entries.stream().map(entry -> entry.toUnsentDto()).collect(Collectors.toList());
 
         return dto;
     }

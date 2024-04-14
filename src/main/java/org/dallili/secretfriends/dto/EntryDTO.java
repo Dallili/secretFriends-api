@@ -43,19 +43,17 @@ public class EntryDTO {
     }
 
     @Data
+    @Builder
     public static class UnsentEntryResponse{
         private Long entryID;
         private String writerName;
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-        private LocalDateTime date;
+        private LocalDateTime updatedAt;
         private String content;
-
-//        public UnsentEntryResponse toDto(Entry entry){
-//
-//        }
     }
 
     @Data
+    @Builder
     public static class SentEntryResponse{
         private Long entryID;
         private String writerName;

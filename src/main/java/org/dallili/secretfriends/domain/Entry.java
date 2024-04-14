@@ -3,6 +3,7 @@ package org.dallili.secretfriends.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
+import org.dallili.secretfriends.dto.EntryDTO;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -70,6 +71,23 @@ public class Entry {
         if(this.state.equals("Y")){
             throw new IllegalStateException("전달된 일기는 내용 수정 불가");
         }
+    }
+
+    public EntryDTO.UnsentEntryResponse toUnsentDto(){
+        return EntryDTO.UnsentEntryResponse.builder()
+                .entryID(this.getEntryID())
+                .writerName(this.getMember().getNickname())
+                .updatedAt(this.getUpdatedAt())
+                .content(this.getContent())
+                .build();
+    }
+    public EntryDTO.SentEntryResponse toSentDto(){
+        return EntryDTO.SentEntryResponse.builder()
+                .entryID(this.getEntryID())
+                .writerName(this.getMember().getNickname())
+                .sendAt(this.getSendAt())
+                .content(this.getContent())
+                .build();
     }
 
 }
