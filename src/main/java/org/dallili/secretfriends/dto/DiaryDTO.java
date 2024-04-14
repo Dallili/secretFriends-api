@@ -42,7 +42,6 @@ public class DiaryDTO {
     @Data
     @Builder
     public static class knownMatchingDiary{
-        private Long memberID;
         private String color;
     }
 

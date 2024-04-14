@@ -49,15 +49,15 @@ public class MatchingServiceTests {
     @Test
     public void testSaveMatchingSearch() {
 
-        MatchingDTO matchingDTO = MatchingDTO.builder()
+        MatchingDTO.newMatching matchingDTO = MatchingDTO.newMatching.builder()
                 .createdAt(LocalDateTime.now())
                 .firstInterest(6L)
                 .secondInterest(7L)
                 .thirdInterest(8L)
-                .memberID(1L)
                 .build();
 
-        matchingService.saveMatchingSearch(matchingDTO);
+
+        matchingService.saveMatchingSearch(matchingDTO, 9L);
 
 
     }

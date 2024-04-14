@@ -10,7 +10,9 @@ import org.dallili.secretfriends.repository.DiaryRepository;
 import org.dallili.secretfriends.service.DiaryService;
 import org.dallili.secretfriends.service.MatchingHistoryService;
 import org.dallili.secretfriends.service.MatchingService;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -23,6 +25,8 @@ import java.util.UUID;
 @RequestMapping("/matches")
 public class MatchingController {
 
+    final ModelMapper modelMapper;
+
     final MatchingHistoryService matchingHistoryService;
 
     final MatchingService matchingService;
@@ -32,9 +36,9 @@ public class MatchingController {
 
     @Operation(summary = "Create Known-Matching Diary POST", description = "지인 매칭을 위한 일기장 생성")
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, String> knownMatchingDiaryAdd(@Valid @RequestBody DiaryDTO.knownMatchingDiary diaryDTO){
+    public Map<String, String> knownMatchingDiaryAdd(@Valid @RequestBody String color, Authentication authentication){
 
-        UUID code = diaryService.addKnownsDiary(diaryDTO.getMemberID(), diaryDTO.getColor());
+        UUID code = diaryService.addKnownsDiary(Long.parseLong(authentication.getName()), color);
 
         Map<String, String> result = new HashMap<>();
 
@@ -54,7 +58,9 @@ public class MatchingController {
 
     @Operation(summary = "Match Knowns PATCH", description = "코드 입력을 통한 다이어리 partner 확정 (=지인 매칭 완료)")
     @PatchMapping(value = "/")
-    public Map<String, String> partnerModify(String code, Long userID){
+    public Map<String, String> partnerModify(String code, Authentication authentication){
+
+        Long userID = Long.parseLong(authentication.getName());
 
         DiaryDTO diaryDTO = diaryService.findDiaryByCode(code);
         Long diaryID = diaryDTO.getDiaryID();
@@ -78,9 +84,9 @@ public class MatchingController {
 
     @Operation(summary = "Create unKnown-Matching POST", description = "랜덤 매칭 - 일기장 생성 or 매칭 레코드 등록")
     @PostMapping(value = "/unknown", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, Object> unknownMatchingAdd(@Valid @RequestBody MatchingDTO newMatching){
+    public Map<String, Object> unknownMatchingAdd(@Valid @RequestBody MatchingDTO.newMatching newMatching, Authentication authentication){
 
-        Map<String, Object> result = matchingService.saveMatchingSearch(newMatching);
+        Map<String, Object> result = matchingService.saveMatchingSearch(newMatching, Long.parseLong(authentication.getName()));
 
         return result;
 
