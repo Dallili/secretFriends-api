@@ -19,16 +19,16 @@ import java.util.UUID;
 public class Diary{
 
     @Id
-    @Column(name = "diaryID", length = 20)
+    @Column(name = "diary_id", length = 20)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long diaryID;
 
     @ManyToOne(fetch = FetchType.LAZY) //여러 개의 diary가 하나의 user에 속할 수 있음
-    @JoinColumn(name = "memberID", referencedColumnName = "memberID", insertable = true, updatable = false)
+    @JoinColumn(name = "member_id", referencedColumnName = "member_id", insertable = true, updatable = false)
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY) //여러 개의 diary가 하나의 user에 속할 수 있음
-    @JoinColumn(name = "partnerID", referencedColumnName = "memberID", insertable = true, updatable = true)
+    @JoinColumn(name = "partner_id", referencedColumnName = "member_id", insertable = true, updatable = true)
     private Member partner;
 
     @Column(name = "state",columnDefinition = "TINYINT")

@@ -15,14 +15,14 @@ import java.time.LocalDateTime;
 public class MatchingHistory {
 
     @Id
-    @Column(name = "historyID")
+    @Column(name = "history_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long historyID;
 
-    @JoinColumn(name = "memberID", referencedColumnName = "memberID", insertable = true, updatable = true)
+    @JoinColumn(name = "member_id", referencedColumnName = "member_id", insertable = true, updatable = true)
     private String memberID;
 
-    @JoinColumn(name = "partnerID", referencedColumnName = "memberID", insertable = true, updatable = true)
+    @JoinColumn(name = "partner_id", referencedColumnName = "member_id", insertable = true, updatable = true)
     private String partnerID;
 
 }
