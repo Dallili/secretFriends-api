@@ -25,21 +25,21 @@ import java.time.LocalDateTime;
 public class Entry {
 
     @Id
-    @Column(name = "entryID")
+    @Column(name = "entry_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long entryID;
 
-    @JoinColumn(name = "diaryID", referencedColumnName = "diaryID", insertable = true, updatable = false)
+    @JoinColumn(name = "diary_id", referencedColumnName = "diaryID", insertable = true, updatable = false)
     @ManyToOne(fetch = FetchType.LAZY) // 여러 개의 페이지가 하나의 다이어리에 속할 수 있음.
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Diary diary;
 
-    @Column(name = "writer")
-    private Long writer;
+    @Column(name = "writer_id")
+    private Long writerID;
 
-    @Column(name = "date", columnDefinition = "TIMESTAMP")
+    @Column(name = "updatedAt", columnDefinition = "TIMESTAMP")
     @LastModifiedDate
-    private LocalDateTime date;
+    private LocalDateTime updatedAt;
 
     @Column(name = "content", columnDefinition = "TEXT")
     private String content;

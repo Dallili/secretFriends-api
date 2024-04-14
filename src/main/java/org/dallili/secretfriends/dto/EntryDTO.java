@@ -1,35 +1,37 @@
 package org.dallili.secretfriends.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.dallili.secretfriends.domain.Diary;
+import org.dallili.secretfriends.domain.Entry;
 
 import java.time.LocalDateTime;
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class EntryDTO {
 
-    private Long entryID;
-    @NotBlank
-    private Long diaryID;
-    @NotBlank
-    private Long writer;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime date;
-    @Size(min = 1, message = "일기 내용은 1자 이상 작성해야 한다.")
-    private String content;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime sendAt;
-    @Pattern(regexp = "[YN]", message = "state는 Y 혹은 N 값 중 하나여야 한다.")
-    private String state;
+    @Data
+    @Builder
+    public static class CreateRequest{
+        @NotNull
+        private Long diaryID;
+        @Size(min = 1, message = "일기 내용은 1자 이상 작성해야 한다.")
+        private String content;
+        @JsonIgnore
+        private Long writerID;
+
+        public Entry toEntity(Diary diary){
+            return Entry.builder()
+                    .diary(diary)
+                    .writerID(this.writerID)
+                    .content(this.content)
+                    .build();
+        }
+    }
 
     @Data
     @Builder

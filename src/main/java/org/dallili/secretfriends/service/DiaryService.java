@@ -34,4 +34,5 @@ public interface DiaryService {
 
     DiaryDTO findDiaryByCode(String code); // 초대코드로 일기장 조회
 
+    Diary findDiaryById(Long id);
 }
