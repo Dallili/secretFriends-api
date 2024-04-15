@@ -40,7 +40,7 @@ public class Diary{
     @Column(name = "updatedAt",columnDefinition = "TIMESTAMP")
     private LocalDateTime updatedAt;
 
-    @Column(name = "color", length = 7)
+    @Column(name = "color", length = 20)
     private String color;
 
     @Column(name="code", columnDefinition = "VARBINARY(36)")
