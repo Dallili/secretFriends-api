@@ -29,4 +29,17 @@ public class MatchingDTO {
     private Long secondInterest;
 
     private Long thirdInterest;
+
+    @Data
+    @Builder
+    public static class newMatching{
+
+        private LocalDateTime createdAt;
+
+        private Long firstInterest;
+
+        private Long secondInterest;
+
+        private Long thirdInterest;
+    }
 }

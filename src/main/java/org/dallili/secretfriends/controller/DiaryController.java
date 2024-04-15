@@ -9,6 +9,7 @@ import org.dallili.secretfriends.dto.DiaryDTO;
 import org.dallili.secretfriends.repository.DiaryRepository;
 import org.dallili.secretfriends.service.DiaryService;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,10 +29,9 @@ public class DiaryController {
 
     @Operation(summary = "Diary List GET", description = "활성/비활성 일기장 목록 조회")
     @GetMapping(value = "/")
-    public Map<String, Object> diaryDTOList (@RequestParam("state") Boolean state, Long memberID) {
+    public Map<String, Object> diaryDTOList (@RequestParam("state") Boolean state, Authentication authentication) {
 
-
-        List<DiaryDTO> diaries = diaryService.findStateDiaries(memberID, state);
+        List<DiaryDTO> diaries = diaryService.findStateDiaries(Long.parseLong(authentication.getName()), state);
 
         Map<String, Object> result = new HashMap<>();
         result.put("total", diaries.size());
@@ -54,9 +54,9 @@ public class DiaryController {
 
     @Operation(summary = "Replied Diary GET", description = "답장 온 일기장 조회")
     @GetMapping(value = "/replied")
-    public Map<String, Object> repliedDiaryList(Long loginMemberID){
+    public Map<String, Object> repliedDiaryList(Authentication authentication){
 
-        List<DiaryDTO> diaries =  diaryService.findRepliedDiaries(loginMemberID);
+        List<DiaryDTO> diaries =  diaryService.findRepliedDiaries(Long.parseLong(authentication.getName()));
         Map<String, Object> result = new HashMap<>();
         result.put("diaries",diaries);
 

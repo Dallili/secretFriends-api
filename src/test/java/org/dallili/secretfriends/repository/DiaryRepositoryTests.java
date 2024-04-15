@@ -25,8 +25,8 @@ public class DiaryRepositoryTests {
     public void testInsertDiary(){
         IntStream.rangeClosed(1,100).forEach(i->{
 
-            Optional<Member> member = memberRepository.findById(1L);
-            Optional<Member> partner = memberRepository.findById(2L);
+            Optional<Member> member = memberRepository.findById(Long.valueOf(101-i));
+            Optional<Member> partner = memberRepository.findById(Long.valueOf(i));
 
             Diary diary = Diary.builder()
                     .member(member.orElseThrow())

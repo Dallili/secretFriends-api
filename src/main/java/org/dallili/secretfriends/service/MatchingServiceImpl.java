@@ -59,7 +59,16 @@ public class MatchingServiceImpl implements MatchingService{
     }
 
     @Override
-    public Map<String, Object> saveMatchingSearch(MatchingDTO newMatching) {
+    public Map<String, Object> saveMatchingSearch(MatchingDTO.newMatching matching, Long newUserID) {
+
+
+        MatchingDTO newMatching = MatchingDTO.builder()
+                .firstInterest(matching.getFirstInterest())
+                .secondInterest(matching.getSecondInterest())
+                .thirdInterest(matching.getThirdInterest())
+                .memberID(newUserID)
+                .createdAt(matching.getCreatedAt())
+                .build();
 
         Map<String, Object> result = new HashMap<>();
 
