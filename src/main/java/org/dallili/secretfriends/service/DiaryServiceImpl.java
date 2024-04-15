@@ -179,6 +179,7 @@ public class DiaryServiceImpl implements DiaryService {
 
         return diaries.stream()
                 .filter(diary -> diary.isState() == true)
+                .filter(diary -> diary.getPartner()!=null)
                 .filter(diary -> loginMemberID.equals(diary.getMember().getMemberID()) || loginMemberID.equals(diary.getPartner().getMemberID()))
                 .filter(diary -> diary.getUpdatedBy()!=null)
                 .filter(diary -> !loginMemberID.equals(diary.getUpdatedBy()))

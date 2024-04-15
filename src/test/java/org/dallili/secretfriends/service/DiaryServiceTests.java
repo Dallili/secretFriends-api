@@ -95,7 +95,7 @@ public class DiaryServiceTests {
     @Test
     public void testFindRepliedDiaries() {
 
-        List<DiaryDTO> diaries = diaryService.findRepliedDiaries(1L);
+        List<DiaryDTO> diaries = diaryService.findRepliedDiaries(100L);
 
         log.info(diaries);
     }
