@@ -59,8 +59,9 @@ public class EntryController {
 
     @Operation(summary = "일기 전달", description = "저장된 일기의 state, sendAt 필드 값 업데이트")
     @PatchMapping(value = "/{entryID}")
-    public Map<String,String> stateModify(@PathVariable("entryID") Long entryID){
-        Boolean result = entryService.modifyState(entryID);
+    public Map<String,String> stateModify(@PathVariable("entryID") Long entryID, Authentication authentication){
+        Long memberID = Long.parseLong(authentication.getName());
+        Boolean result = entryService.modifyState(entryID,memberID);
         if(result){
             return Map.of("entryID",Long.toString(entryID),
                     "result","일기 전달 성공");

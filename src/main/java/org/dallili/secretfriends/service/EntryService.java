@@ -8,7 +8,7 @@ import java.util.List;
 @Transactional
 public interface EntryService {
     Long addEntry(EntryDTO.CreateRequest entryDTO);
-    Boolean modifyState(Long entryID);
+    Boolean modifyState(Long entryID, Long memberID);
     EntryDTO.UnsentEntryResponse modifyContent(EntryDTO.ModifyRequest entryDTO);
     List<EntryDTO.SentEntryResponse> findSentEntry(Long diaryID);
     List<EntryDTO.UnsentEntryResponse> findUnsentEntry(Long diaryID);

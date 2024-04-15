@@ -50,7 +50,8 @@ public class EntryServiceTests {
     @Test
     public void testModifyState(){
         Long eid = 4L;
-        Boolean result = entryService.modifyState(eid);
+        Long senderId = 1L;
+        Boolean result = entryService.modifyState(eid,senderId);
         log.info(result);
     }
 
