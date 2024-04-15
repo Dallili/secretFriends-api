@@ -44,13 +44,20 @@ public class EntryServiceImpl implements EntryService {
     }
 
     @Override
-    public Boolean modifyState(Long entryID) {
+    @Transactional
+    public Boolean modifyState(Long entryID, Long memberID) {
         Entry entry = entryRepository.findById(entryID).orElseThrow(()->{
             throw new EntityNotFoundException("존재하지 않는 일기입니다.");
         });
+
+        if(!(entry.getMember().getMemberID().equals(memberID))){
+            throw new IllegalArgumentException("전달 권한이 없는 일기입니다.");
+        }
+
         if(entry.getState().equals("N")){
             entryRepository.updateState(entryID);
             entryRepository.updateSendAt(entryID, LocalDateTime.now());
+            diaryService.modifyUpdate(entry.getDiary().getDiaryID(),memberID);
             return true;
         } else
             return false;
