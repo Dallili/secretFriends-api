@@ -87,7 +87,7 @@ public class DiaryServiceTests {
     @Test
     public void testFindStateDiaries(){
 
-        List<DiaryDTO> diaries = diaryService.findStateDiaries(1L, true);
+        List<DiaryDTO> diaries = diaryService.findStateDiaries(2L, true);
 
         log.info(diaries);
     }

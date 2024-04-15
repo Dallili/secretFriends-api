@@ -161,16 +161,22 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public List<DiaryDTO> findStateDiaries(Long memberID, Boolean state) {
-
         List<Diary> diaries = diaryRepository.findAll();
 
         return diaries.stream()
                 .filter(diary -> diary.isState() == state)
-                .filter(diary -> memberID.equals(diary.getMember().getMemberID()) || memberID.equals(diary.getPartner().getMemberID()))
-                .map(diary -> modelMapper.map(diary, DiaryDTO.class) )
+                .filter(diary -> {
+                    if (diary.getPartner() != null) {
+                        return memberID.equals(diary.getMember().getMemberID()) ||
+                                memberID.equals(diary.getPartner().getMemberID());
+                    } else {
+                        return memberID.equals(diary.getMember().getMemberID());
+                    }
+                })
+                .map(diary -> modelMapper.map(diary, DiaryDTO.class))
                 .collect(Collectors.toList());
-
     }
+
   
     @Override
     public List<DiaryDTO> findRepliedDiaries(Long loginMemberID){
