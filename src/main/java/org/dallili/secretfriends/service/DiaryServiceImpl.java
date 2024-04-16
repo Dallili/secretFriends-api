@@ -62,9 +62,12 @@ public class DiaryServiceImpl implements DiaryService {
 
         DiaryDTO diaryDTO = DiaryDTO.builder()
                 .memberID(memberID)
+                .memberName(memberRepository.findById(memberID).get().getNickname())
                 .color(color)
                 .code(code)
                 .build();
+
+        log.info(diaryDTO);
 
         Diary diary = modelMapper.map(diaryDTO, Diary.class);
 

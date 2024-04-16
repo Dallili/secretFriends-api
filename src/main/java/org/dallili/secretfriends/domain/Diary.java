@@ -73,6 +73,7 @@ public class Diary{
         this.member = member;
     }
 
+
     public void setPartner(Member partner){
         this.partner = partner;
     }

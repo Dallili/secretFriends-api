@@ -20,6 +20,7 @@ public class RootConfig {
                 .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)
                 .setMatchingStrategy(MatchingStrategies.LOOSE);
         modelMapper.addMappings(diaryMapping);
+        modelMapper.addMappings(diaryFieldMapping);
         return modelMapper;
     }
 
@@ -28,6 +29,8 @@ public class RootConfig {
         protected void configure() {
             map().getMember().setMemberID(source.getMemberID());
             map().getPartner().setMemberID(source.getPartnerID());
+            map().getMember().setNickname(source.getMemberName());
+            map().getPartner().setNickname(source.getPartnerName());
         }
     };
 
@@ -36,6 +39,10 @@ public class RootConfig {
         protected void configure() {
             map().setMemberID(source.getMember().getMemberID());
             map().setPartnerID(source.getPartner().getMemberID());
+            map().setMemberName(source.getMember().getNickname());
+            map().setPartnerName(source.getPartner().getNickname());
         }
     };
+
+
 }

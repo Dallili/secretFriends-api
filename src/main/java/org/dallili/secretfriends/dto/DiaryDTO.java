@@ -28,6 +28,10 @@ public class DiaryDTO {
 
     private Long partnerID; //get, set
 
+    private String memberName;
+
+    private String partnerName;
+
     private boolean state; //get, set
 
     private Long updatedBy; //get. set
@@ -38,6 +42,8 @@ public class DiaryDTO {
     private String color; //get
 
     private UUID code;
+
+
 
     @Data
     @Builder

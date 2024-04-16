@@ -7,6 +7,7 @@ import org.dallili.secretfriends.domain.Matching;
 import org.dallili.secretfriends.dto.DiaryDTO;
 import org.dallili.secretfriends.dto.MatchingDTO;
 import org.dallili.secretfriends.repository.MatchingRepository;
+import org.dallili.secretfriends.repository.MemberRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,8 @@ public class MatchingServiceImpl implements MatchingService{
     private final float scoreThreshold = 1;
 
     private final MatchingRepository matchingRepository;
+
+    private final MemberRepository memberRepository;
 
     private final DiaryService diaryService;
     
@@ -129,10 +132,14 @@ public class MatchingServiceImpl implements MatchingService{
 
                 Long oldMemberID = removeMatching(maxMatchingID); // 매칭 큐에서 삭제
                 Long newMemberID = newMatching.getMemberID();
+                String oldMemberName = memberRepository.findById(oldMemberID).get().getNickname();
+                String newMemberName = memberRepository.findById(newMemberID).get().getNickname();
 
                 DiaryDTO diaryDTO = DiaryDTO.builder()
                         .memberID(oldMemberID)
                         .partnerID(newMemberID)
+                        .memberName(oldMemberName)
+                        .partnerName(newMemberName)
                         .updatedAt(LocalDateTime.now())
                         .updatedBy(newMemberID)
                         .color("#000000")
@@ -142,8 +149,10 @@ public class MatchingServiceImpl implements MatchingService{
                 Long historyID = matchingHistoryService.addHistory(oldMemberID, newMemberID); // 매칭히스토리 생성
 
                 result.put("state", true);
-                result.put("user", oldMemberID);
-                result.put("partner", newMemberID);
+                result.put("memberID", oldMemberID);
+                result.put("memberName", oldMemberName);
+                result.put("partnerID", newMemberID);
+                result.put("partnerName", newMemberName);
                 result.put("diaryID", diaryID);
                 return result;
 
