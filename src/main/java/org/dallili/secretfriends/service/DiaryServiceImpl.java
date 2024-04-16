@@ -26,7 +26,7 @@ public class DiaryServiceImpl implements DiaryService {
 
     private final DiaryRepository diaryRepository;
 
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
     @Override
     public Long addDiary(DiaryDTO diaryDTO) {
@@ -62,9 +62,12 @@ public class DiaryServiceImpl implements DiaryService {
 
         DiaryDTO diaryDTO = DiaryDTO.builder()
                 .memberID(memberID)
+                .memberName(memberService.findMemberById(memberID).getNickname())
                 .color(color)
                 .code(code)
                 .build();
+
+        //log.info(diaryDTO);
 
         Diary diary = modelMapper.map(diaryDTO, Diary.class);
 
@@ -126,9 +129,7 @@ public class DiaryServiceImpl implements DiaryService {
 
         Diary diary = result.orElseThrow();
 
-        Optional<Member> partnerResult = memberRepository.findById(partnerID);
-
-        Member partner = partnerResult.orElseThrow();
+        Member partner = memberService.findMemberById(partnerID);
 
         diary.decidePartner(partner);
 

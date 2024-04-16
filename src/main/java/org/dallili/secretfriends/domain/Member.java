@@ -53,6 +53,8 @@ public class Member {
         this.memberID = memberID;
     }
 
+    public void setNickname(String nickname) { this.nickname = nickname; }
+
     public void changePassword(String password){
         this.password = password;
     }
