@@ -29,7 +29,7 @@ public class MatchingServiceImpl implements MatchingService{
 
     private final MatchingRepository matchingRepository;
 
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
     private final DiaryService diaryService;
     
@@ -132,8 +132,8 @@ public class MatchingServiceImpl implements MatchingService{
 
                 Long oldMemberID = removeMatching(maxMatchingID); // 매칭 큐에서 삭제
                 Long newMemberID = newMatching.getMemberID();
-                String oldMemberName = memberRepository.findById(oldMemberID).get().getNickname();
-                String newMemberName = memberRepository.findById(newMemberID).get().getNickname();
+                String oldMemberName = memberService.findMemberById(oldMemberID).getNickname();
+                String newMemberName = memberService.findMemberById(newMemberID).getNickname();
 
                 DiaryDTO diaryDTO = DiaryDTO.builder()
                         .memberID(oldMemberID)
