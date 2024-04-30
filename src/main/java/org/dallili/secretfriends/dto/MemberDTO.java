@@ -68,4 +68,13 @@ public class MemberDTO {
         @Size(min=5, message = "비밀번호가 너무 짧습니다. (최소 5글자)")
         private String password;
     }
+
+    @Data
+    public static class ModifyRequest{
+        @NotBlank(message = "닉네임을 입력해주세요.")
+        @Size(max=20, message = "닉네임이 너무 깁니다. (최대 20글자)")
+        private String nickname;
+        @JsonFormat(pattern = "yyyy-MM-dd")
+        private LocalDate birthday;
+    }
 }

@@ -63,4 +63,10 @@ public class Member {
         this.role = memberRole;
     }
 
+    //회원 정보 수정 (별명, 생일)
+    public void modifyProfile(String nickname, LocalDate birthday){
+        this.nickname = nickname;
+        this.birthday = birthday;
+    }
+
 }
