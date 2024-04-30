@@ -78,4 +78,11 @@ public class MemberServiceImpl implements MemberService{
         member.changePassword(passwordEncoder.encode(password));
         memberRepository.save(member);
     }
+
+    @Override
+    public void modifyMember(Long memberID, MemberDTO.ModifyRequest request) {
+        Member member = findMemberById(memberID);
+        member.modifyProfile(request.getNickname(),request.getBirthday());
+        memberRepository.save(member);
+    }
 }

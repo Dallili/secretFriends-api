@@ -50,4 +50,12 @@ public class MemberController {
         memberService.modifyPassword(memberId, request.getPassword());
     }
 
+    @Operation(summary = "회원정보 수정")
+    @ResponseStatus(HttpStatus.OK)
+    @PatchMapping
+    public void memberModify(@RequestBody @Valid MemberDTO.ModifyRequest request,Authentication authentication){
+        Long memberId = Long.parseLong(authentication.getName());
+        memberService.modifyMember(memberId, request);
+    }
+
 }
