@@ -2,6 +2,7 @@ package org.dallili.secretfriends.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.dallili.secretfriends.domain.Member;
 import org.dallili.secretfriends.domain.MemberRole;
 import org.dallili.secretfriends.dto.MemberDTO;
@@ -69,5 +70,12 @@ public class MemberServiceImpl implements MemberService{
             throw new EntityNotFoundException(memberID + ": 존재하지 않는 회원입니다.");
         });
         return member;
+    }
+
+    @Override
+    public void modifyPassword(Long memberID, String password) {
+        Member member = findMemberById(memberID);
+        member.changePassword(passwordEncoder.encode(password));
+        memberRepository.save(member);
     }
 }

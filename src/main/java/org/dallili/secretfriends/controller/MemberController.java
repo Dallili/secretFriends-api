@@ -42,4 +42,12 @@ public class MemberController {
         return token;
     }
 
+    @Operation(summary = "비밀번호 변경")
+    @ResponseStatus(HttpStatus.OK)
+    @PatchMapping("/pw")
+    public void passwordModify(@RequestBody @Valid MemberDTO.PasswordRequest request, Authentication authentication){
+        Long memberId = Long.parseLong(authentication.getName());
+        memberService.modifyPassword(memberId, request.getPassword());
+    }
+
 }
