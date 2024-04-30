@@ -61,4 +61,11 @@ public class MemberDTO {
         private String email;
         private MemberRole role;
     }
+
+    @Data
+    public static class PasswordRequest{
+        @NotBlank(message = "비밀번호를 입력해주세요.")
+        @Size(min=5, message = "비밀번호가 너무 짧습니다. (최소 5글자)")
+        private String password;
+    }
 }
