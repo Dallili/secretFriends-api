@@ -20,7 +20,7 @@ public class MemberDTO {
         private String password;
 
         @NotBlank(message = "닉네임을 입력해주세요.")
-        @Size(max=20, message = "닉네임이 너무 깁니다. (최대 20글자)")
+        @Pattern(regexp = "^[가-힣a-zA-Z0-9]{2,20}$" , message = "특수문자를 포함하지 않은 2-20자의 문자만 허용됩니다.")
         private String nickname;
 
         @JsonFormat(pattern = "yyyy-MM-dd")
@@ -72,7 +72,7 @@ public class MemberDTO {
     @Data
     public static class ModifyRequest{
         @NotBlank(message = "닉네임을 입력해주세요.")
-        @Size(max=20, message = "닉네임이 너무 깁니다. (최대 20글자)")
+        @Pattern(regexp = "^[가-힣a-zA-Z0-9]{2,20}$" , message = "특수문자를 포함하지 않은 2-20자의 문자만 허용됩니다.")
         private String nickname;
         @JsonFormat(pattern = "yyyy-MM-dd")
         private LocalDate birthday;
