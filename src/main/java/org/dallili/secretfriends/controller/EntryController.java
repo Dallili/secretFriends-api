@@ -1,5 +1,6 @@
 package org.dallili.secretfriends.controller;
 
+import com.vane.badwordfiltering.BadWordFiltering;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -73,14 +74,23 @@ public class EntryController {
 
     @Operation(summary = "일기 조회", description = "특정 다이어리의 일기 목록 조회")
     @GetMapping(value = "/list/{diaryID}")
-    public Map<String,Object> entryList(@PathVariable("diaryID") Long diaryID){
+    public Map<String,Object> entryList(@PathVariable("diaryID") Long diaryID, Authentication authentication){
+        Long memberID = Long.parseLong(authentication.getName());
+        Boolean useFiltering = entryService.findMemberUseFiltering(memberID);
+
         List<EntryDTO.SentEntryResponse> SentEntry = entryService.findSentEntry(diaryID);
         List<EntryDTO.UnsentEntryResponse> UnsentEntry = entryService.findUnsentEntry(diaryID);
-
         Map<String,Object> result = new HashMap<>();
+
+        if (useFiltering == true){
+            SentEntry = entryService.modifyTextFiltering(SentEntry);
+        }
+
         result.put("total",SentEntry.size());
         result.put("sent",SentEntry);
         result.put("unsent",UnsentEntry);
+
+
 
         return result;
     }

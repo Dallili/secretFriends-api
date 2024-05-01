@@ -1,5 +1,6 @@
 package org.dallili.secretfriends.service;
 
+import com.vane.badwordfiltering.BadWordFiltering;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -93,5 +96,19 @@ public class EntryServiceImpl implements EntryService {
         List<EntryDTO.UnsentEntryResponse> dto = entries.stream().map(entry -> entry.toUnsentDto()).collect(Collectors.toList());
 
         return dto;
+    }
+    @Override
+    public Boolean findMemberUseFiltering (Long memberID){
+        Member member = memberService.findMemberById(memberID);
+        return member.isUseFiltering();
+    }
+    public List<EntryDTO.SentEntryResponse> modifyTextFiltering(List<EntryDTO.SentEntryResponse> entry){
+
+        BadWordFiltering badWordFiltering = new BadWordFiltering();
+        for (EntryDTO.SentEntryResponse sentEntry : entry) {
+            String filteredText = badWordFiltering.change(sentEntry.getContent());
+            sentEntry.changeContent(filteredText);
+        }
+        return entry;
     }
 }
