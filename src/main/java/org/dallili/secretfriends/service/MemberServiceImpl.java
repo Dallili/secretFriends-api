@@ -73,9 +73,20 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public void modifyPassword(Long memberID, String password) {
+    public void modifyPassword(Long memberID, MemberDTO.PasswordRequest requestDTO) {
         Member member = findMemberById(memberID);
-        member.changePassword(passwordEncoder.encode(password));
+
+        String oldPassword = member.getPassword();
+
+        if(!(passwordEncoder.matches(requestDTO.getOldPassword(),oldPassword))){
+            throw new IllegalArgumentException("현재 비밀번호가 틀립니다.");
+        }
+
+        if(!requestDTO.getNewPassword().equals(requestDTO.getConfirmPassword())){
+            throw new IllegalArgumentException("새로 변경할 비밀번호 입력이 서로 동일하지 않습니다.");
+        }
+
+        member.changePassword(passwordEncoder.encode(requestDTO.getNewPassword()));
         memberRepository.save(member);
     }
 }

@@ -64,8 +64,12 @@ public class MemberDTO {
 
     @Data
     public static class PasswordRequest{
-        @NotBlank(message = "비밀번호를 입력해주세요.")
+        @NotBlank(message = "'현재 비밀번호' 항목을 입력해주세요.")
+        private String oldPassword;
+        @NotBlank(message = "'새 비밀번호' 항목을 입력해주세요.")
         @Size(min=5, message = "비밀번호가 너무 짧습니다. (최소 5글자)")
-        private String password;
+        private String newPassword;
+        @NotBlank(message = "'새 비밀번호 확인' 항목을 입력해주세요.")
+        private String confirmPassword;
     }
 }

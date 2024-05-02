@@ -11,5 +11,5 @@ public interface MemberService{
 
     public Member findMemberById(Long memberID);
 
-    public void modifyPassword(Long memberID, String password);
+    public void modifyPassword(Long memberID, MemberDTO.PasswordRequest requestDTO);
 }
