@@ -21,7 +21,6 @@ public class NoticeDTO {
         String title;
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
         LocalDateTime createdAt;
-        Boolean pin;
     }
     @Data
     public static class DetailsResponse{

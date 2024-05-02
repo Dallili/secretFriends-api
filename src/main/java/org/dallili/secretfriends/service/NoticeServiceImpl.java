@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,8 +26,10 @@ public class NoticeServiceImpl implements NoticeService{
     }
 
     @Override
-    public List<NoticeDTO.ListResponse> findNoticeList() {
-        return null;
+    public List<NoticeDTO.ListResponse> findNoticeList(boolean isPinned) {
+        List<Notice> noticeList = noticeRepository.findAllByPin(isPinned);
+
+        return noticeList.stream().map(notice -> modelMapper.map(notice,NoticeDTO.ListResponse.class)).collect(Collectors.toList());
     }
 
     @Override

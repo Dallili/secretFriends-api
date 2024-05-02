@@ -8,7 +8,9 @@ import org.dallili.secretfriends.dto.NoticeDTO;
 import org.dallili.secretfriends.service.NoticeService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/notice")
@@ -24,11 +26,20 @@ public class NoticeController {
         return noticeService.addNotice(request);
     }
 
+    @Operation(summary = "공지사항 목록 조회")
     @GetMapping
-    public List<NoticeDTO.ListResponse> noticeList(){
-        return noticeService.findNoticeList();
+    public Map<String,Object> noticeList(){
+        List<NoticeDTO.ListResponse> pinList = noticeService.findNoticeList(true);
+        List<NoticeDTO.ListResponse> unpinList = noticeService.findNoticeList(false);
+
+        Map<String,Object> result = new HashMap<>();
+        result.put("pinList",pinList);
+        result.put("unpinList",unpinList);
+
+        return result;
     }
 
+    @Operation(summary = "공지사항 상세 조회")
     @GetMapping("/{noticeID}")
     public NoticeDTO.DetailsResponse noticeDetails(@PathVariable Long noticeID){
         return noticeService.findNoticeDetails(noticeID);
