@@ -1,5 +1,6 @@
 package org.dallili.secretfriends.service;
 
+import org.dallili.secretfriends.domain.Notice;
 import org.dallili.secretfriends.dto.NoticeDTO;
 
 import java.util.List;

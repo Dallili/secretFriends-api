@@ -1,5 +1,6 @@
 package org.dallili.secretfriends.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.dallili.secretfriends.domain.Notice;
 import org.dallili.secretfriends.dto.NoticeDTO;
@@ -30,6 +31,12 @@ public class NoticeServiceImpl implements NoticeService{
 
     @Override
     public NoticeDTO.DetailsResponse findNoticeDetails(Long noticeID) {
-        return null;
+        Notice notice = noticeRepository.findById(noticeID).orElseThrow(()->{
+            throw new EntityNotFoundException("존재하지 않는 공지사항입니다.");
+        });
+
+        NoticeDTO.DetailsResponse response = modelMapper.map(notice, NoticeDTO.DetailsResponse.class);
+
+        return response;
     }
 }
