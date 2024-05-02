@@ -33,7 +33,7 @@ public class MySecurityConfig{
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
     private static final String[] AUTH_WHITELIST = {
-            "/swagger-ui/**", "/swagger-ui.html", "/members", "/members/login",
+            "/swagger-ui/**", "/swagger-ui.html", "/members/signup", "/members/login",
             "/v3/api-docs","/api-docs/**","/swagger-resources/**","api-docs/",
             "/v3/api-docs/**"
     };

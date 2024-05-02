@@ -22,7 +22,7 @@ public class MemberController {
 
     @Operation(summary = "회원가입", description = "회원 데이터를 생성하고 id 반환")
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
+    @PostMapping("/signup")
     public void signUp(@Valid @RequestBody MemberDTO.SignUpRequest request){
         memberService.singUp(request);
     }
@@ -48,6 +48,14 @@ public class MemberController {
     public void passwordModify(@RequestBody @Valid MemberDTO.PasswordRequest request, Authentication authentication){
         Long memberId = Long.parseLong(authentication.getName());
         memberService.modifyPassword(memberId, request);
+    }
+
+    @Operation(summary = "회원정보 수정")
+    @ResponseStatus(HttpStatus.OK)
+    @PatchMapping
+    public void memberModify(@RequestBody @Valid MemberDTO.ModifyRequest request,Authentication authentication){
+        Long memberId = Long.parseLong(authentication.getName());
+        memberService.modifyMember(memberId, request);
     }
 
 }
