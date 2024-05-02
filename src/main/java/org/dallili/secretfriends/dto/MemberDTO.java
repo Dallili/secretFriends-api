@@ -41,6 +41,7 @@ public class MemberDTO {
         private String gender;
         @JsonFormat(pattern = "yyyy-MM-dd")
         private LocalDate birthday;
+        private boolean useFiltering;
         //@Range(min = 0, max = 3)
         //private int diaryNum;
     }
