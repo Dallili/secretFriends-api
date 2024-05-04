@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.dallili.secretfriends.dto.EntryDTO;
 import org.dallili.secretfriends.service.EntryService;
+import org.dallili.secretfriends.service.MemberService;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindException;
@@ -24,6 +25,8 @@ import java.util.Map;
 public class EntryController {
 
     private final EntryService entryService;
+
+    private final MemberService memberService;
 
     @Operation(summary = "일기 생성", description = "일기 생성 후 임시 저장")
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -76,7 +79,7 @@ public class EntryController {
     @GetMapping(value = "/list/{diaryID}")
     public Map<String,Object> entryList(@PathVariable("diaryID") Long diaryID, Authentication authentication){
         Long memberID = Long.parseLong(authentication.getName());
-        Boolean useFiltering = entryService.findMemberUseFiltering(memberID);
+        Boolean useFiltering = memberService.findMemberUseFiltering(memberID);
 
         List<EntryDTO.SentEntryResponse> SentEntry = entryService.findSentEntry(diaryID);
         List<EntryDTO.UnsentEntryResponse> UnsentEntry = entryService.findUnsentEntry(diaryID);

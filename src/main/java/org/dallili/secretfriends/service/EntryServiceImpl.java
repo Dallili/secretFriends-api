@@ -97,11 +97,6 @@ public class EntryServiceImpl implements EntryService {
 
         return dto;
     }
-    @Override
-    public Boolean findMemberUseFiltering (Long memberID){
-        Member member = memberService.findMemberById(memberID);
-        return member.isUseFiltering();
-    }
     public List<EntryDTO.SentEntryResponse> modifyTextFiltering(List<EntryDTO.SentEntryResponse> entry){
 
         BadWordFiltering badWordFiltering = new BadWordFiltering();
