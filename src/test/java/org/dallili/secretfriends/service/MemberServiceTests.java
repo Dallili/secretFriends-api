@@ -35,4 +35,10 @@ public class MemberServiceTests {
         MemberDTO.DetailsResponse response = memberService.findMember(memberID);
         log.info(response);
     }
+
+    @Test
+    public void testfindMemberUseFiltering() {
+
+        log.info(memberService.findMemberUseFiltering(101L));
+    }
 }

@@ -76,9 +76,5 @@ public class EntryServiceTests {
         log.info(entryService.modifyTextFiltering(entry));
     }
 
-    @Test
-    public void testfindMemberUseFiltering() {
 
-        log.info(entryService.findMemberUseFiltering(101L));
-    }
 }
