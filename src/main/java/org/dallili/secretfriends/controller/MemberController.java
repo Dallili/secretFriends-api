@@ -47,7 +47,7 @@ public class MemberController {
     @PatchMapping("/pw")
     public void passwordModify(@RequestBody @Valid MemberDTO.PasswordRequest request, Authentication authentication){
         Long memberId = Long.parseLong(authentication.getName());
-        memberService.modifyPassword(memberId, request.getPassword());
+        memberService.modifyPassword(memberId, request);
     }
 
     @Operation(summary = "회원정보 수정")

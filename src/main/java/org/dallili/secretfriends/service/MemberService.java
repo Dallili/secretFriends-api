@@ -9,7 +9,7 @@ public interface MemberService{
     public MemberDTO.DetailsResponse findMember(Long memberID);
     public String login(MemberDTO.LoginRequest requestDTO);
     public Member findMemberById(Long memberID);
-    public void modifyPassword(Long memberID, String password);
+    public void modifyPassword(Long memberID, MemberDTO.PasswordRequest requestDTO);
     public void modifyMember(Long memberID, MemberDTO.ModifyRequest request);
     public Boolean findMemberUseFiltering (Long memberID);
 }
