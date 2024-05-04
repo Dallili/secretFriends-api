@@ -67,4 +67,18 @@ public class EntryServiceTests {
         List<EntryDTO.UnsentEntryResponse> dto = entryService.findUnsentEntry(diaryID);
         dto.stream().forEach(i -> log.info(i));
     }
+
+    @Test
+    public void testmodifyTextFiltering() {
+
+        List<EntryDTO.SentEntryResponse> entry = entryService.findSentEntry(1L);
+
+        log.info(entryService.modifyTextFiltering(entry));
+    }
+
+    @Test
+    public void testfindMemberUseFiltering() {
+
+        log.info(entryService.findMemberUseFiltering(101L));
+    }
 }

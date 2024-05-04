@@ -85,4 +85,10 @@ public class MemberServiceImpl implements MemberService{
         member.modifyProfile(request.getNickname(),request.getBirthday());
         memberRepository.save(member);
     }
+
+    @Override
+    public Boolean findMemberUseFiltering (Long memberID){
+        Member member = findMemberById(memberID);
+        return member.isUseFiltering();
+    }
 }
