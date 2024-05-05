@@ -24,11 +24,10 @@ public class Notify {
     @Column(name = "notify_id")
     private Long notifyID;
 
-    @Enumerated(EnumType.STRING)
-    private NotifyType notifyType;
+    @Column(name = "notifyType")
+    private String notifyType;
 
     @Column(name = "updatedAt", columnDefinition = "TIMESTAMP")
-    @LastModifiedDate
     private LocalDateTime updatedAt;
 
     @ManyToOne (fetch = FetchType.LAZY) //여러 개의 알림이 하나의 user에 속할 수 있음
@@ -41,8 +40,6 @@ public class Notify {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Member sender; // 일기 비활성화 시킨 사람, 답장을 보낸 사람.
 
-    public enum NotifyType{
-        NEWDIARY, REPLY, INACTIVATE
-    }
+
 }
 

@@ -18,6 +18,12 @@ import java.util.stream.Collectors;
             return emitters.get(memberID);
         }
         @Override
+        public void findAllID(){
+            for(Map.Entry<Long, SseEmitter> emitterOfOne : emitters.entrySet()){
+                log.info(emitterOfOne.getKey()+ "\n\n");
+            }
+        }
+        @Override
         public SseEmitter save(Long memberID, SseEmitter emitter) {
             emitters.put(memberID, emitter);
             emitter.onCompletion(()-> emitters.remove(memberID, emitter));

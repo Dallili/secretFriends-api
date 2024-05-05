@@ -20,17 +20,17 @@ public class NotifyDTO {
     @NotNull
     private Long notifyID;
 
-    private Enum<Notify.NotifyType> notifyType;
+    private Enum<NotifyDTO.NotifyType> notifyType;
 
     @NotNull
     private Long receiverID; //get, set
 
     private Long senderID; //get, set
 
-    private String receiverNickname;
-
-    private String senderNickname;
-
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updatedAt; // get, set
+
+    public enum NotifyType{
+        NEWDIARY, REPLY, INACTIVATE
+    }
 }

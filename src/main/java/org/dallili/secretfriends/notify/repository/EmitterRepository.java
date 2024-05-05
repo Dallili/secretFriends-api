@@ -10,6 +10,6 @@ public interface EmitterRepository {
     SseEmitter findById(Long memberID);
     SseEmitter save(Long memberID, SseEmitter sseEmitter);
     void deleteById(Long memberID);
-
+    void findAllID();
 
 }
