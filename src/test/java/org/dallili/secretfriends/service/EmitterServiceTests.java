@@ -29,14 +29,15 @@ public class EmitterServiceTests {
         SseEmitter emitter1 = new SseEmitter();
         SseEmitter emitter2 = new SseEmitter();
 
-        emitterRepository.save(receiverID, emitter1);
-        emitterRepository.save(senderID, emitter2);
+        emitterService.addEmitter(receiverID, emitter1);
+        emitterService.addEmitter(senderID, emitter2);
         emitterRepository.findAllID();
 
         emitterService.sendEvents(1L, 2L, NotifyDTO.NotifyType.NEWDIARY);
         emitterService.sendEvents(1L, 2L, NotifyDTO.NotifyType.REPLY);
         emitterService.sendEvents(1L, 2L, NotifyDTO.NotifyType.INACTIVATE);
     }
+
 
 
 }

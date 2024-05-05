@@ -38,10 +38,26 @@ public class EmitterServiceImpl implements EmitterService{
             case REPLY : EventData.put("message", "님으로 부터 답장이 왔어요."); break;
             case INACTIVATE : EventData.put("message", "님과의 일기장이 비활성화 되었어요."); break;
         }
+        EventData.put("type", type);
         EventData.put("timestamp", formattedDateTime);
         EventData.put("opponent", senderNickname); // 상대방
 
+        //log.info(EventData);
+
         return EventData;
+    }
+
+    public void sendDummyEvents(Long receiverID, Object data){
+        SseEmitter emitter = emitterRepository.findById(receiverID);
+        if (emitter != null) {
+            try {
+                emitter.send(SseEmitter.event().id(String.valueOf(receiverID)).name("SSE Initialize").data(data));
+                emitter.send("success");
+            } catch (IOException exception) {
+                emitterRepository.deleteById(receiverID);
+                emitter.completeWithError(exception);
+            }
+        }
     }
 
     public void sendEvents(Long receiverID, Long senderID, NotifyDTO.NotifyType type){
@@ -98,5 +114,12 @@ public class EmitterServiceImpl implements EmitterService{
                 break;
 
         }
+    }
+
+    public SseEmitter addEmitter(Long memberID, SseEmitter emitter){
+        SseEmitter createdEmitter = emitterRepository.save(memberID, emitter);
+        sendDummyEvents(memberID,"EventStream Created. [memberID=" + memberID + "]");
+        return createdEmitter;
+
     }
 }
