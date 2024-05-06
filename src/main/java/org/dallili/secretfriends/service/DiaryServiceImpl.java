@@ -149,9 +149,14 @@ public class DiaryServiceImpl implements DiaryService  {
 
         Diary diary = result.orElseThrow();
 
-        Long receiverID;
-        Long senderID;
+        diary.changeState(false);
 
+        diaryRepository.save(diary);
+
+        Long receiverID = memberID;
+        Long senderID = diary.getPartner().getMemberID();
+
+        /*
         if (diary.getMember().getMemberID().equals(memberID)){
             receiverID = diary.getPartner().getMemberID();
             senderID = memberID;
@@ -159,13 +164,9 @@ public class DiaryServiceImpl implements DiaryService  {
         else {
             receiverID = memberID;
             senderID = diary.getPartner().getMemberID();
-        }
+        }*/
 
         emitterService.sendEvents(receiverID, senderID, NotifyDTO.NotifyType.INACTIVATE);
-
-        diary.changeState(false);
-
-        diaryRepository.save(diary);
 
     }
 
