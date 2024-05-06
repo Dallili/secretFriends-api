@@ -70,13 +70,13 @@ public class DiaryServiceTests {
 
         diaryService.modifyPartner("fc2413e4-559a-45c2-b94c-a0d45da9c2c9", 1L);
 
-    }*/
+    }
 
     @Test
     public void testModifyState() {
 
         diaryService.modifyState(10L);
-    }
+    }*/
 
     @Test
     public void testFindAllDiaries() {

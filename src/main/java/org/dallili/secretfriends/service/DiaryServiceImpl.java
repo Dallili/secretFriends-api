@@ -143,11 +143,25 @@ public class DiaryServiceImpl implements DiaryService  {
     }
 
     @Override
-    public void modifyState(Long diaryID) {
+    public void modifyState(Long memberID, Long diaryID) {
 
         Optional<Diary> result = diaryRepository.findById(diaryID);
 
         Diary diary = result.orElseThrow();
+
+        Long receiverID;
+        Long senderID;
+
+        if (diary.getMember().getMemberID().equals(memberID)){
+            receiverID = diary.getPartner().getMemberID();
+            senderID = memberID;
+        }
+        else {
+            receiverID = memberID;
+            senderID = diary.getPartner().getMemberID();
+        }
+
+        emitterService.sendEvents(receiverID, senderID, NotifyDTO.NotifyType.INACTIVATE);
 
         diary.changeState(false);
 

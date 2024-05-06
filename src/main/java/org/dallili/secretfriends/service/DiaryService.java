@@ -28,7 +28,7 @@ public interface DiaryService {
 
     void modifyPartner(String code, Long memberID, Long partnerID); // 일기장 파트너 결정
 
-    void modifyState(Long diaryID); // 일기장 비활성화
+    void modifyState(Long memberID, Long diaryID); // 일기장 비활성화
 
     UUID findCode(Long diaryID); //일기장 초대코드 조회
 
