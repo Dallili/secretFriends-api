@@ -24,7 +24,7 @@ public class EmitterController {
     @GetMapping(value = "/subscribe", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter emitterAdd(Authentication authentication) { // 오로지 emitter를 등록하는 역할만 하는 메소드
         Long memberID = Long.parseLong(authentication.getName());
-        SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
+        SseEmitter emitter = new SseEmitter(3 * 3600 * 1000);
         return emitterService.addEmitter(memberID, emitter);
         // 따로 sendEvents()를 여기 선언할 필요 없음.
         // 이유: 알림이 발생해야 하는 경우들의 (ex diaryService.modifyState, diaryService.modifyPartner)
