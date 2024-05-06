@@ -62,7 +62,11 @@ public class EmitterServiceImpl implements EmitterService{
 
     public void sendEvents(Long receiverID, Long senderID, NotifyDTO.NotifyType type){
 
+        log.info("sendEvents 실행됨");
+        log.info("receiverID: "+ receiverID + "senderID: "+senderID + "type: " + type);
+
         SseEmitter receiverEmitter = emitterRepository.findById(receiverID);
+        log.info("receiverEmitter 로드됨:" + receiverEmitter);
         String senderNickname = memberService.findMemberById(senderID).getNickname();
 
         switch (type){
