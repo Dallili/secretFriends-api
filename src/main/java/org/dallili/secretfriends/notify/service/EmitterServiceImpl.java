@@ -66,7 +66,7 @@ public class EmitterServiceImpl implements EmitterService{
         log.info("receiverID: "+ receiverID + "senderID: "+senderID + "type: " + type);
 
         SseEmitter receiverEmitter = emitterRepository.findById(receiverID);
-        log.info("receiverEmitter 로드됨:" + receiverEmitter);
+        log.info("receiverEmitter 로드됨:" + (receiverEmitter == null));
         String senderNickname = memberService.findMemberById(senderID).getNickname();
 
         switch (type){
