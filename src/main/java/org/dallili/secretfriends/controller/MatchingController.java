@@ -69,7 +69,7 @@ public class MatchingController {
         if(diaryDTO.getPartnerID() == null){
 
             diaryService.modifyUpdate(diaryID, userID);
-            diaryService.modifyPartner(code, userID);
+            diaryService.modifyPartner(code, diaryDTO.getMemberID(), userID);
             matchingHistoryService.addHistory(diaryDTO.getMemberID(), userID);
 
             result.put("diaryID", diaryID.toString());

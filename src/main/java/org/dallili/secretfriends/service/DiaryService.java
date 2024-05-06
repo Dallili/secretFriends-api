@@ -26,7 +26,7 @@ public interface DiaryService {
 
     List<DiaryDTO> findRepliedDiaries(Long loginMemberID); // 답장 온 일기장 목록 조회
 
-    void modifyPartner(String code, Long partnerID); // 일기장 파트너 결정
+    void modifyPartner(String code, Long memberID, Long partnerID); // 일기장 파트너 결정
 
     void modifyState(Long diaryID); // 일기장 비활성화
 

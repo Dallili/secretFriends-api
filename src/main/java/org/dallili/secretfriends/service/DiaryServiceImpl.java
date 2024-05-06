@@ -6,6 +6,8 @@ import lombok.extern.log4j.Log4j2;
 import org.dallili.secretfriends.domain.Diary;
 import org.dallili.secretfriends.domain.Member;
 import org.dallili.secretfriends.dto.DiaryDTO;
+import org.dallili.secretfriends.notify.dto.NotifyDTO;
+import org.dallili.secretfriends.notify.service.EmitterService;
 import org.dallili.secretfriends.repository.DiaryRepository;
 import org.dallili.secretfriends.repository.MemberRepository;
 import org.modelmapper.ModelMapper;
@@ -20,13 +22,15 @@ import java.util.stream.Collectors;
 @Service
 @Log4j2
 @RequiredArgsConstructor
-public class DiaryServiceImpl implements DiaryService {
+public class DiaryServiceImpl implements DiaryService  {
 
     private final ModelMapper modelMapper;
 
     private final DiaryRepository diaryRepository;
 
     private final MemberService memberService;
+
+    private final EmitterService emitterService;
 
     @Override
     public Long addDiary(DiaryDTO diaryDTO) {
@@ -121,7 +125,7 @@ public class DiaryServiceImpl implements DiaryService {
 
 
     @Override
-    public void modifyPartner(String code, Long partnerID){
+    public void modifyPartner(String code, Long memberID, Long partnerID){
 
         UUID uuidCode = UUID.fromString(code);
 
@@ -134,6 +138,8 @@ public class DiaryServiceImpl implements DiaryService {
         diary.decidePartner(partner);
 
         diaryRepository.save(diary);
+
+        emitterService.sendEvents(memberID, partnerID, NotifyDTO.NotifyType.NEWDIARY);
     }
 
     @Override

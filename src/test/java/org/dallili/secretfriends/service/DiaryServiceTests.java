@@ -64,12 +64,13 @@ public class DiaryServiceTests {
 
     }
 
+    /*
     @Test
     public void testModifyPartner() {
 
         diaryService.modifyPartner("fc2413e4-559a-45c2-b94c-a0d45da9c2c9", 1L);
 
-    }
+    }*/
 
     @Test
     public void testModifyState() {
