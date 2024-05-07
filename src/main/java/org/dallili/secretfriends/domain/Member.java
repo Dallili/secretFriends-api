@@ -60,6 +60,10 @@ public class Member {
         this.password = password;
     }
 
+    public void changeFiltering(boolean useFiltering){
+        this.useFiltering = useFiltering;
+    }
+
     public void addRole(MemberRole memberRole){
         this.role = memberRole;
     }

@@ -41,6 +41,7 @@ public class MemberDTO {
         private String gender;
         @JsonFormat(pattern = "yyyy-MM-dd")
         private LocalDate birthday;
+        private boolean useFiltering;
         //@Range(min = 0, max = 3)
         //private int diaryNum;
     }
@@ -73,6 +74,12 @@ public class MemberDTO {
         private String confirmPassword;
     }
 
+    @Data
+    public static class FilteringUpdateRequest{
+        @NotNull
+        private boolean useFiltering;
+    }
+  
     @Data
     public static class ModifyRequest{
         @NotBlank(message = "닉네임을 입력해주세요.")
