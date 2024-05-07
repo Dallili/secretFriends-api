@@ -43,8 +43,7 @@ public class DiaryController {
 
     @Operation(summary = "Diary Deactivate PATCH", description = "일기장 비활성화")
     @PatchMapping(value = "/{diaryID}/state")
-    public void diaryStateModify (@PathVariable("diaryID") Long diaryID){
-
+    public void diaryStateModify (Authentication authentication, @PathVariable("diaryID") Long diaryID){
         diaryService.modifyState(diaryID);
 
         log.info(diaryService.findOne(diaryID));

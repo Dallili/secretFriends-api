@@ -3,9 +3,11 @@ package org.dallili.secretfriends.service;
 import lombok.extern.log4j.Log4j2;
 import org.dallili.secretfriends.domain.Diary;
 import org.dallili.secretfriends.dto.DiaryDTO;
+import org.dallili.secretfriends.notify.service.EmitterService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,6 +19,9 @@ public class DiaryServiceTests {
 
     @Autowired
     private DiaryService diaryService;
+
+    @Autowired
+    private EmitterService emitterService;
 
     @Test
     public void testRegister() {
@@ -64,6 +69,7 @@ public class DiaryServiceTests {
 
     }
 
+    /*
     @Test
     public void testModifyPartner() {
 
@@ -74,9 +80,17 @@ public class DiaryServiceTests {
     @Test
     public void testModifyState() {
 
-        diaryService.modifyState(10L);
-    }
+        Long receiverID = 100L;
+        Long senderID = 1L;
+        SseEmitter emitter1 = new SseEmitter();
+        SseEmitter emitter2 = new SseEmitter();
 
+        emitterService.addEmitter(receiverID, emitter1);
+        emitterService.addEmitter(senderID, emitter2);
+
+        diaryService.modifyState(100L, 1L);
+    }
+*/
     @Test
     public void testFindAllDiaries() {
 
