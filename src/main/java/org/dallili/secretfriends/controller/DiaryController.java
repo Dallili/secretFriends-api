@@ -6,6 +6,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.dallili.secretfriends.dto.DiaryDTO;
+import org.dallili.secretfriends.notify.dto.NotifyDTO;
+import org.dallili.secretfriends.notify.service.EmitterService;
 import org.dallili.secretfriends.repository.DiaryRepository;
 import org.dallili.secretfriends.service.DiaryService;
 import org.springframework.http.MediaType;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/diaries")
 public class DiaryController {
 
+    private final EmitterService emitterService;
 
     private final DiaryService diaryService;
 
@@ -43,9 +46,11 @@ public class DiaryController {
 
     @Operation(summary = "Diary Deactivate PATCH", description = "일기장 비활성화")
     @PatchMapping(value = "/{diaryID}/state")
-    public void diaryStateModify (Authentication authentication, @PathVariable("diaryID") Long diaryID){
+    public void diaryStateModify (@PathVariable("diaryID") Long diaryID){
         diaryService.modifyState(diaryID);
-
+        Long receiverID = diaryService.findDiaryById(diaryID).getPartner().getMemberID();
+        Long senderID = diaryService.findDiaryById(diaryID).getMember().getMemberID();
+        emitterService.sendEvents(receiverID, senderID, NotifyDTO.NotifyType.INACTIVATE);
         log.info(diaryService.findOne(diaryID));
 
     }
