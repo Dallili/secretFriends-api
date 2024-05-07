@@ -8,6 +8,7 @@ import org.dallili.secretfriends.dto.DiaryDTO;
 import org.dallili.secretfriends.dto.MatchingDTO;
 import org.dallili.secretfriends.notify.dto.NotifyDTO;
 import org.dallili.secretfriends.notify.service.EmitterService;
+import org.dallili.secretfriends.notify.service.NotifyService;
 import org.dallili.secretfriends.repository.DiaryRepository;
 import org.dallili.secretfriends.service.DiaryService;
 import org.dallili.secretfriends.service.MatchingHistoryService;
@@ -36,6 +37,8 @@ public class MatchingController {
     final DiaryService diaryService;
 
     final EmitterService emitterService;
+
+    final NotifyService notifyService;
 
 
     @Operation(summary = "Create Known-Matching Diary POST", description = "지인 매칭을 위한 일기장 생성")
@@ -77,6 +80,9 @@ public class MatchingController {
             diaryService.modifyUpdate(diaryID, partnerID);
             diaryService.modifyPartner(code, partnerID);
             emitterService.sendEvents(receiverID, partnerID, NotifyDTO.NotifyType.NEWDIARY);
+            emitterService.sendEvents(partnerID, receiverID, NotifyDTO.NotifyType.NEWDIARY);
+            notifyService.saveNotifyTable(receiverID, partnerID, NotifyDTO.NotifyType.NEWDIARY);
+            notifyService.saveNotifyTable(partnerID, receiverID, NotifyDTO.NotifyType.NEWDIARY);
             matchingHistoryService.addHistory(receiverID, partnerID);
 
             result.put("diaryID", diaryID.toString());

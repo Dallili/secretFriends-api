@@ -8,6 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.dallili.secretfriends.dto.DiaryDTO;
 import org.dallili.secretfriends.notify.dto.NotifyDTO;
 import org.dallili.secretfriends.notify.service.EmitterService;
+import org.dallili.secretfriends.notify.service.NotifyService;
 import org.dallili.secretfriends.repository.DiaryRepository;
 import org.dallili.secretfriends.service.DiaryService;
 import org.springframework.http.MediaType;
@@ -30,6 +31,8 @@ public class DiaryController {
 
     private final DiaryService diaryService;
 
+    private final NotifyService notifyService;
+
     @Operation(summary = "Diary List GET", description = "활성/비활성 일기장 목록 조회")
     @GetMapping(value = "/")
     public Map<String, Object> diaryDTOList (@RequestParam("state") Boolean state, Authentication authentication) {
@@ -48,9 +51,13 @@ public class DiaryController {
     @PatchMapping(value = "/{diaryID}/state")
     public void diaryStateModify (@PathVariable("diaryID") Long diaryID){
         diaryService.modifyState(diaryID);
-        Long receiverID = diaryService.findDiaryById(diaryID).getPartner().getMemberID();
-        Long senderID = diaryService.findDiaryById(diaryID).getMember().getMemberID();
+        Long receiverID = diaryService.findDiaryById(diaryID).getMember().getMemberID();
+        Long senderID = diaryService.findDiaryById(diaryID).getPartner().getMemberID();
         emitterService.sendEvents(receiverID, senderID, NotifyDTO.NotifyType.INACTIVATE);
+        emitterService.sendEvents(senderID, receiverID, NotifyDTO.NotifyType.INACTIVATE);
+        notifyService.saveNotifyTable(receiverID, senderID, NotifyDTO.NotifyType.INACTIVATE);
+        notifyService.saveNotifyTable(senderID, receiverID, NotifyDTO.NotifyType.INACTIVATE);
+
         log.info(diaryService.findOne(diaryID));
 
     }
