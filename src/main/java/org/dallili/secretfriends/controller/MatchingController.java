@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.dallili.secretfriends.dto.DiaryDTO;
 import org.dallili.secretfriends.dto.MatchingDTO;
+import org.dallili.secretfriends.notify.dto.NotifyDTO;
+import org.dallili.secretfriends.notify.service.EmitterService;
 import org.dallili.secretfriends.repository.DiaryRepository;
 import org.dallili.secretfriends.service.DiaryService;
 import org.dallili.secretfriends.service.MatchingHistoryService;
@@ -32,6 +34,8 @@ public class MatchingController {
     final MatchingService matchingService;
 
     final DiaryService diaryService;
+
+    final EmitterService emitterService;
 
 
     @Operation(summary = "Create Known-Matching Diary POST", description = "지인 매칭을 위한 일기장 생성")
@@ -60,17 +64,20 @@ public class MatchingController {
     @PatchMapping(value = "/")
     public Map<String, String> partnerModify(String code, Authentication authentication){
 
-        Long userID = Long.parseLong(authentication.getName());
+        Long partnerID = Long.parseLong(authentication.getName());
 
         DiaryDTO diaryDTO = diaryService.findDiaryByCode(code);
         Long diaryID = diaryDTO.getDiaryID();
+        Long receiverID = diaryDTO.getMemberID();
+
         Map<String, String> result = new HashMap<>();
 
         if(diaryDTO.getPartnerID() == null){
 
-            diaryService.modifyUpdate(diaryID, userID);
-            diaryService.modifyPartner(code, userID);
-            matchingHistoryService.addHistory(diaryDTO.getMemberID(), userID);
+            diaryService.modifyUpdate(diaryID, partnerID);
+            diaryService.modifyPartner(code, partnerID);
+            emitterService.sendEvents(receiverID, partnerID, NotifyDTO.NotifyType.NEWDIARY);
+            matchingHistoryService.addHistory(receiverID, partnerID);
 
             result.put("diaryID", diaryID.toString());
             result.put("state", "매칭 성공");
