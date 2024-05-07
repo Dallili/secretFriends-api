@@ -7,11 +7,9 @@ import org.dallili.secretfriends.notify.domain.Notify;
 import org.dallili.secretfriends.notify.dto.NotifyDTO;
 import org.dallili.secretfriends.notify.repository.NotifyRepository;
 import org.dallili.secretfriends.service.MemberService;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Service
 @Log4j2
@@ -19,7 +17,6 @@ import java.time.format.DateTimeFormatter;
 public class NotifyServiceImpl implements NotifyService{
 
     private final NotifyRepository notifyRepository;
-    private final ModelMapper modelMapper;
     private final MemberService memberService;
 
     public void saveNotifyTable(Long receiverID, Long senderID, NotifyDTO.NotifyType type){
