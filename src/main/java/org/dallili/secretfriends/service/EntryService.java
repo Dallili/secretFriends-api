@@ -14,5 +14,6 @@ public interface EntryService {
     List<EntryDTO.SentEntryResponse> findSentEntry(Long diaryID);
     List<EntryDTO.UnsentEntryResponse> findUnsentEntry(Long diaryID);
     List<EntryDTO.SentEntryResponse> modifyTextFiltering(List<EntryDTO.SentEntryResponse> entry);
+    Long findOpponent(Long entryID, Long memberID);
 
 }

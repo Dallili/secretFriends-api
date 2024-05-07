@@ -6,6 +6,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.dallili.secretfriends.dto.EntryDTO;
+import org.dallili.secretfriends.notify.dto.NotifyDTO;
+import org.dallili.secretfriends.notify.service.EmitterService;
+import org.dallili.secretfriends.notify.service.NotifyService;
 import org.dallili.secretfriends.service.EntryService;
 import org.dallili.secretfriends.service.MemberService;
 import org.springframework.http.MediaType;
@@ -27,6 +30,10 @@ public class EntryController {
     private final EntryService entryService;
 
     private final MemberService memberService;
+
+    private final EmitterService emitterService;
+
+    private final NotifyService notifyService;
 
     @Operation(summary = "일기 생성", description = "일기 생성 후 임시 저장")
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -67,6 +74,10 @@ public class EntryController {
         Long memberID = Long.parseLong(authentication.getName());
         Boolean result = entryService.modifyState(entryID,memberID);
         if(result){
+            Long receiverID = entryService.findOpponent(entryID, memberID);
+            emitterService.sendEvents(receiverID, memberID, NotifyDTO.NotifyType.REPLY);
+            notifyService.saveNotifyTable(receiverID, memberID, NotifyDTO.NotifyType.REPLY);
+
             return Map.of("entryID",Long.toString(entryID),
                     "result","일기 전달 성공");
         } else 
