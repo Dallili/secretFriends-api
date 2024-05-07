@@ -24,7 +24,7 @@ public class EmitterServiceImpl implements EmitterService{
     private final EmitterRepository emitterRepository;
     private final ObjectMapper objectMapper;
     private final MemberService memberService;
-    private final NotifyService notifyService;
+    //private final NotifyService notifyService;
 
 
     public Map<String, Object> addNewEvents(String senderNickname, NotifyDTO.NotifyType type){
@@ -64,8 +64,8 @@ public class EmitterServiceImpl implements EmitterService{
 
         SseEmitter receiverEmitter = emitterRepository.findById(receiverID);
         String senderNickname = memberService.findMemberById(senderID).getNickname();
-        SseEmitter senderEmitter = emitterRepository.findById(senderID);
-        String receiverNickname = memberService.findMemberById(receiverID).getNickname();
+        //SseEmitter senderEmitter = emitterRepository.findById(senderID);
+        //String receiverNickname = memberService.findMemberById(receiverID).getNickname();
 
         switch (type){
             case NEWDIARY, INACTIVATE : // 알림 수신 대상: 양쪽 다
@@ -81,18 +81,18 @@ public class EmitterServiceImpl implements EmitterService{
 
                     // sender에게 보낼 알림
                     // 1. 데이터 생성 및 JSON으로 변환
-                    String senderJson = objectMapper.writeValueAsString(addNewEvents(receiverNickname, type)); //json으로 변환
-                    log.info(senderJson);
+                    //String senderJson = objectMapper.writeValueAsString(addNewEvents(receiverNickname, type)); //json으로 변환
+                    //log.info(senderJson);
                     // 3. receiver의 emitter로 전송
-                    senderEmitter.send(senderJson, MediaType.APPLICATION_JSON); //JSON 데이터를 emitter로 전달
+                    //senderEmitter.send(senderJson, MediaType.APPLICATION_JSON); //JSON 데이터를 emitter로 전달
                     // 4. notify 테이블에 저장
                     //notifyService.saveNotifyTable(senderID,receiverID, type);
 
                 } catch (IOException e) {
                     receiverEmitter.complete();
                     emitterRepository.deleteById(receiverID);
-                    senderEmitter.complete();
-                    emitterRepository.deleteById(senderID);
+                    //senderEmitter.complete();
+                    //emitterRepository.deleteById(senderID);
                 }
                 break;
 
@@ -105,7 +105,7 @@ public class EmitterServiceImpl implements EmitterService{
                     // 3. receiver의 emitter로 전송
                     receiverEmitter.send(receiverJson, MediaType.APPLICATION_JSON);
                     // 4. notify 테이블에 저장
-                    notifyService.saveNotifyTable(receiverID, senderID, type);
+                    //notifyService.saveNotifyTable(receiverID, senderID, type);
 
                 } catch (IOException e) {
                     receiverEmitter.complete();
