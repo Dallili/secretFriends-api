@@ -77,7 +77,7 @@ public class EmitterServiceImpl implements EmitterService{
                     // 3. receiver의 emitter로 전송
                     receiverEmitter.send(receiverJson, MediaType.APPLICATION_JSON);
                     // 4. notify 테이블에 저장
-                    //notifyService.saveNotifyTable(receiverID, senderID, type);
+                    notifyService.saveNotifyTable(receiverID, senderID, type);
 
                     // sender에게 보낼 알림
                     // 1. 데이터 생성 및 JSON으로 변환
@@ -86,7 +86,7 @@ public class EmitterServiceImpl implements EmitterService{
                     // 3. receiver의 emitter로 전송
                     senderEmitter.send(senderJson, MediaType.APPLICATION_JSON); //JSON 데이터를 emitter로 전달
                     // 4. notify 테이블에 저장
-                    //notifyService.saveNotifyTable(senderID,receiverID, type);
+                    notifyService.saveNotifyTable(senderID,receiverID, type);
 
                 } catch (IOException e) {
                     receiverEmitter.complete();
