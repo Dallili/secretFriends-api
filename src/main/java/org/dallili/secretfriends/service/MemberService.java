@@ -10,6 +10,7 @@ public interface MemberService{
     public String login(MemberDTO.LoginRequest requestDTO);
     public Member findMemberById(Long memberID);
     public void modifyPassword(Long memberID, MemberDTO.PasswordRequest requestDTO);
+    public void modifyFiltering(Long memberID, MemberDTO.FilteringUpdateRequest request);
     public void modifyMember(Long memberID, MemberDTO.ModifyRequest request);
     public Boolean findMemberUseFiltering (Long memberID);
 }
