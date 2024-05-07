@@ -56,7 +56,6 @@ public class DiaryController {
         emitterService.sendEvents(receiverID, senderID, NotifyDTO.NotifyType.INACTIVATE);
         emitterService.sendEvents(senderID, receiverID, NotifyDTO.NotifyType.INACTIVATE);
         notifyService.saveNotifyTable(receiverID, senderID, NotifyDTO.NotifyType.INACTIVATE);
-        notifyService.saveNotifyTable(senderID, receiverID, NotifyDTO.NotifyType.INACTIVATE);
 
         log.info(diaryService.findOne(diaryID));
 

@@ -82,7 +82,6 @@ public class MatchingController {
             emitterService.sendEvents(receiverID, partnerID, NotifyDTO.NotifyType.NEWDIARY);
             emitterService.sendEvents(partnerID, receiverID, NotifyDTO.NotifyType.NEWDIARY);
             notifyService.saveNotifyTable(receiverID, partnerID, NotifyDTO.NotifyType.NEWDIARY);
-            notifyService.saveNotifyTable(partnerID, receiverID, NotifyDTO.NotifyType.NEWDIARY);
             matchingHistoryService.addHistory(receiverID, partnerID);
 
             result.put("diaryID", diaryID.toString());
@@ -100,6 +99,16 @@ public class MatchingController {
     public Map<String, Object> unknownMatchingAdd(@Valid @RequestBody MatchingDTO.newMatching newMatching, Authentication authentication){
 
         Map<String, Object> result = matchingService.saveMatchingSearch(newMatching, Long.parseLong(authentication.getName()));
+
+        if ((boolean) result.get("state")) {
+
+            Long receiverID = (Long)result.get("memberID");
+            Long partnerID = (Long)result.get("partnerID");
+
+            emitterService.sendEvents(receiverID, partnerID, NotifyDTO.NotifyType.NEWDIARY);
+            emitterService.sendEvents(partnerID, receiverID, NotifyDTO.NotifyType.NEWDIARY);
+            notifyService.saveNotifyTable(receiverID, partnerID, NotifyDTO.NotifyType.NEWDIARY);
+        }
 
         return result;
 
