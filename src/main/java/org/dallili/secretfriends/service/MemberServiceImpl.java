@@ -89,4 +89,11 @@ public class MemberServiceImpl implements MemberService{
         member.changePassword(passwordEncoder.encode(requestDTO.getNewPassword()));
         memberRepository.save(member);
     }
+
+    @Override
+    public void modifyFiltering(Long memberID, MemberDTO.FilteringUpdateRequest request) {
+        Member member = findMemberById(memberID);
+        member.changeFiltering(request.isUseFiltering());
+        memberRepository.save(member);
+    }
 }

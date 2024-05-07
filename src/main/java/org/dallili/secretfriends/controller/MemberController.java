@@ -50,4 +50,12 @@ public class MemberController {
         memberService.modifyPassword(memberId, request);
     }
 
+    @Operation(summary = "비속어 필터링 설정 변경")
+    @ResponseStatus(HttpStatus.OK)
+    @PatchMapping("/useFiltering")
+    public void filteringModify(@RequestBody @Valid MemberDTO.FilteringUpdateRequest request, Authentication authentication){
+        Long memberId = Long.parseLong(authentication.getName());
+        memberService.modifyFiltering(memberId, request);
+    }
+
 }

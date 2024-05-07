@@ -73,4 +73,10 @@ public class MemberDTO {
         @NotBlank(message = "'새 비밀번호 확인' 항목을 입력해주세요.")
         private String confirmPassword;
     }
+
+    @Data
+    public static class FilteringUpdateRequest{
+        @NotNull
+        private boolean useFiltering;
+    }
 }
