@@ -19,6 +19,7 @@ public class NotifyServiceImpl implements NotifyService{
     private final ModelMapper modelMapper;
 
     public void saveNotifyTable(Long receiverID, Long senderID, NotifyDTO.NotifyType type){
+
         NotifyDTO receiverNotifyDTO = NotifyDTO.builder()
                 .notifyType(type)
                 .updatedAt(LocalDateTime.now())
@@ -28,6 +29,17 @@ public class NotifyServiceImpl implements NotifyService{
         //log.info(receiverNotifyDTO);
         Notify receiverNotify = modelMapper.map(receiverNotifyDTO, Notify.class);
         notifyRepository.save(receiverNotify);
+
+        if(type == NotifyDTO.NotifyType.NEWDIARY || type == NotifyDTO.NotifyType.INACTIVATE){
+            NotifyDTO senderNotifyDTO = NotifyDTO.builder()
+                    .notifyType(type)
+                    .updatedAt(LocalDateTime.now())
+                    .receiverID(senderID)
+                    .senderID(receiverID)
+                    .build();
+        Notify senderNotify = modelMapper.map(senderNotifyDTO, Notify.class);
+        notifyRepository.save(senderNotify);
+        }
     }
 
     public void removeNotify(Long notifyID){
