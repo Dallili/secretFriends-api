@@ -60,6 +60,8 @@ public class EntryDTO {
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
         private LocalDateTime sendAt;
         private String content;
+
+        public void changeContent(String content){ this.content = content; }
     }
 
 }

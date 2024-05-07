@@ -96,4 +96,15 @@ public class MemberServiceImpl implements MemberService{
         member.changeFiltering(request.isUseFiltering());
         memberRepository.save(member);
     }
+    public void modifyMember(Long memberID, MemberDTO.ModifyRequest request) {
+        Member member = findMemberById(memberID);
+        member.modifyProfile(request.getNickname(),request.getBirthday());
+        memberRepository.save(member);
+    }
+
+    @Override
+    public Boolean findMemberUseFiltering (Long memberID){
+        Member member = findMemberById(memberID);
+        return member.isUseFiltering();
+    }
 }

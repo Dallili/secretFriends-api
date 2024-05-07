@@ -31,6 +31,7 @@ public class Member {
     private String password;
 
     @Column(name = "nickname", nullable = false, length = 20)
+    @Pattern(regexp = "^[가-힣a-zA-Z0-9]{2,20}$" , message = "특수문자를 포함하지 않은 2-20자의 문자만 허용됩니다.")
     private String nickname;
 
     @Column(name = "birthday", columnDefinition = "DATE")
@@ -65,6 +66,12 @@ public class Member {
 
     public void addRole(MemberRole memberRole){
         this.role = memberRole;
+    }
+
+    //회원 정보 수정 (별명, 생일)
+    public void modifyProfile(String nickname, LocalDate birthday){
+        this.nickname = nickname;
+        this.birthday = birthday;
     }
 
 }
