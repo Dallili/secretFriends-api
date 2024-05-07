@@ -2,6 +2,8 @@ package org.dallili.secretfriends.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.dallili.secretfriends.domain.Member;
+import org.dallili.secretfriends.notify.dto.NotifyDTO;
 import org.dallili.secretfriends.notify.service.NotifyService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,11 @@ public class NotifyServiceTests {
 
     @Autowired
     private NotifyService notifyService;
+    @Test
+    public void testSaveNotify() {
+
+        notifyService.saveNotifyTable(1L, 2L, NotifyDTO.NotifyType.NEWDIARY);
+    }
 
     @Test
     public void testRemoveNotify(){
