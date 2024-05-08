@@ -21,9 +21,8 @@ public class NotifyController {
     private final NotifyService notifyService;
     @Operation(summary = "Notify List GET", description = "알림 목록 조회")
     @GetMapping(value = "/")
-    public List<NotifyDTO> notifyDTOList (Authentication authentication){
+    public List<NotifyDTO.notifyResponse> notifyDTOList (Authentication authentication){
         return notifyService.findAllNotify(Long.parseLong(authentication.getName()));
     }
-
 
 }

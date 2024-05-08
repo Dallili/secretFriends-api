@@ -79,9 +79,9 @@ public class MatchingController {
 
             diaryService.modifyUpdate(diaryID, partnerID);
             diaryService.modifyPartner(code, partnerID);
-            emitterService.sendEvents(receiverID, partnerID, NotifyDTO.NotifyType.NEWDIARY);
-            emitterService.sendEvents(partnerID, receiverID, NotifyDTO.NotifyType.NEWDIARY);
-            notifyService.saveNotifyTable(receiverID, partnerID, NotifyDTO.NotifyType.NEWDIARY);
+            emitterService.sendEvents(diaryID, receiverID, partnerID, NotifyDTO.NotifyType.NEWDIARY);
+            emitterService.sendEvents(diaryID, partnerID, receiverID, NotifyDTO.NotifyType.NEWDIARY);
+            notifyService.saveNotifyTable(diaryID, receiverID, partnerID, NotifyDTO.NotifyType.NEWDIARY);
             matchingHistoryService.addHistory(receiverID, partnerID);
 
             result.put("diaryID", diaryID.toString());
@@ -104,10 +104,11 @@ public class MatchingController {
 
             Long receiverID = (Long)result.get("memberID");
             Long partnerID = (Long)result.get("partnerID");
+            Long diaryID = (Long)result.get("diaryID");
 
-            emitterService.sendEvents(receiverID, partnerID, NotifyDTO.NotifyType.NEWDIARY);
-            emitterService.sendEvents(partnerID, receiverID, NotifyDTO.NotifyType.NEWDIARY);
-            notifyService.saveNotifyTable(receiverID, partnerID, NotifyDTO.NotifyType.NEWDIARY);
+            emitterService.sendEvents(diaryID, receiverID, partnerID, NotifyDTO.NotifyType.NEWDIARY);
+            emitterService.sendEvents(diaryID, partnerID, receiverID, NotifyDTO.NotifyType.NEWDIARY);
+            notifyService.saveNotifyTable(diaryID, receiverID, partnerID, NotifyDTO.NotifyType.NEWDIARY);
         }
 
         return result;

@@ -17,14 +17,11 @@ public class NotifyDTO {
 
     @NotNull
     private Long notifyID;
-
-    private Enum<NotifyDTO.NotifyType> notifyType;
-
+    private NotifyDTO.NotifyType notifyType;
     @NotNull
-    private Long receiverID; //get, set
-
-    private Long senderID; //get, set
-
+    private Long receiverID;
+    private Long senderID;
+    private Long diaryID;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updatedAt; // get, set
 
@@ -32,9 +29,22 @@ public class NotifyDTO {
         NEWDIARY, REPLY, INACTIVATE
     }
 
-    //modelmapper 매핑 규칙 정의를 위한 setter
-    //일반 코드 작성 시에는 사용 지양
-    public void setNotifyType(Enum<NotifyType> notifyType) {
-        this.notifyType = notifyType;
+    @Data
+    @Builder
+    public static class notifyResponse{
+        @NotNull
+        private Long notifyID;
+        private NotifyDTO.NotifyType notifyType;
+        @NotNull
+        private String receiverNickname;
+        private String senderNickname;
+        private String diaryColor;
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        private LocalDateTime updatedAt; // get, set
+
+
     }
+
+
+
 }

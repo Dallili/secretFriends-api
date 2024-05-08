@@ -18,7 +18,7 @@ public class NotifyServiceTests {
     @Test
     public void testSaveNotify() {
 
-        notifyService.saveNotifyTable(1L, 2L, NotifyDTO.NotifyType.INACTIVATE);
+        notifyService.saveNotifyTable(1L, 1L, 2L, NotifyDTO.NotifyType.INACTIVATE);
     }
 
     @Test
@@ -29,6 +29,6 @@ public class NotifyServiceTests {
 
     @Test
     public void testFindAllNotify() {
-        log.info(notifyService.findAllNotify(2L));
+        log.info(notifyService.findAllNotify(1L));
     }
 }
