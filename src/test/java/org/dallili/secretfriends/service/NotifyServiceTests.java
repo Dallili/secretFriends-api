@@ -18,12 +18,17 @@ public class NotifyServiceTests {
     @Test
     public void testSaveNotify() {
 
-        notifyService.saveNotifyTable(1L, 2L, NotifyDTO.NotifyType.NEWDIARY);
+        notifyService.saveNotifyTable(1L, 2L, NotifyDTO.NotifyType.INACTIVATE);
     }
 
     @Test
     public void testRemoveNotify(){
-        notifyService.removeNotify(1L);
+        notifyService.removeNotify(3L);
 
+    }
+
+    @Test
+    public void testFindAllNotify() {
+        log.info(notifyService.findAllNotify(2L));
     }
 }
