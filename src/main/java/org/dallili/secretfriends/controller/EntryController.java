@@ -76,7 +76,7 @@ public class EntryController {
         if(result){
             Long receiverID = entryService.findOpponent(entryID, memberID);
             Long diaryID = entryService.findDiaryID(entryID);
-            emitterService.sendEvents(receiverID, memberID, NotifyDTO.NotifyType.REPLY);
+            emitterService.sendEvents(diaryID, receiverID, memberID, NotifyDTO.NotifyType.REPLY);
             notifyService.saveNotifyTable(diaryID, receiverID, memberID, NotifyDTO.NotifyType.REPLY);
 
             return Map.of("entryID",Long.toString(entryID),

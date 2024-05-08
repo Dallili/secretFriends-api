@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.dallili.secretfriends.notify.dto.NotifyDTO;
 import org.dallili.secretfriends.notify.repository.EmitterRepository;
+import org.dallili.secretfriends.service.DiaryService;
 import org.dallili.secretfriends.service.MemberService;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -24,12 +25,15 @@ public class EmitterServiceImpl implements EmitterService{
     private final EmitterRepository emitterRepository;
     private final ObjectMapper objectMapper;
     private final MemberService memberService;
+    private final DiaryService diaryService;
 
 
-    public Map<String, Object> addNewEvents(String senderNickname, NotifyDTO.NotifyType type){
+    public Map<String, Object> addNewEvents(Long diaryID, String senderNickname, NotifyDTO.NotifyType type){
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDateTime = now.format(formatter);
+
+        String color = diaryService.findDiaryById(diaryID).getColor();
 
         Map<String, Object> EventData = new HashMap<>();
         switch (type){
@@ -40,6 +44,7 @@ public class EmitterServiceImpl implements EmitterService{
         EventData.put("type", type);
         EventData.put("timestamp", formattedDateTime);
         EventData.put("opponent", senderNickname); // 상대방
+        EventData.put("color", color);
 
         //log.info(EventData);
 
@@ -59,14 +64,14 @@ public class EmitterServiceImpl implements EmitterService{
         }
     }
 
-    public void sendEvents(Long receiverID, Long senderID, NotifyDTO.NotifyType type){
+    public void sendEvents(Long diaryID, Long receiverID, Long senderID, NotifyDTO.NotifyType type){
 
         SseEmitter receiverEmitter = emitterRepository.findById(receiverID);
         String senderNickname = memberService.findMemberById(senderID).getNickname();
                 try {
                     // receiver에게 보낼 알림
                     // 1. 데이터 생성 및 JSON으로 변환
-                    String receiverJson = objectMapper.writeValueAsString(addNewEvents(senderNickname, type));
+                    String receiverJson = objectMapper.writeValueAsString(addNewEvents(diaryID, senderNickname, type));
                     log.info(receiverJson);
                     // 2. receiver의 emitter로 전송
                     receiverEmitter.send(receiverJson, MediaType.APPLICATION_JSON);

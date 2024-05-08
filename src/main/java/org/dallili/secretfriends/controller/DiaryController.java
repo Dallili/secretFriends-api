@@ -53,8 +53,8 @@ public class DiaryController {
         diaryService.modifyState(diaryID);
         Long receiverID = diaryService.findDiaryById(diaryID).getMember().getMemberID();
         Long senderID = diaryService.findDiaryById(diaryID).getPartner().getMemberID();
-        emitterService.sendEvents(receiverID, senderID, NotifyDTO.NotifyType.INACTIVATE);
-        emitterService.sendEvents(senderID, receiverID, NotifyDTO.NotifyType.INACTIVATE);
+        emitterService.sendEvents(diaryID, receiverID, senderID, NotifyDTO.NotifyType.INACTIVATE);
+        emitterService.sendEvents(diaryID, senderID, receiverID, NotifyDTO.NotifyType.INACTIVATE);
         notifyService.saveNotifyTable(diaryID, receiverID, senderID, NotifyDTO.NotifyType.INACTIVATE);
 
         log.info(diaryService.findOne(diaryID));

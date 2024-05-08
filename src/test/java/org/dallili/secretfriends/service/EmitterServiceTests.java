@@ -33,9 +33,9 @@ public class EmitterServiceTests {
         emitterService.addEmitter(senderID, emitter2);
         emitterRepository.findAllID();
 
-        emitterService.sendEvents(1L, 2L, NotifyDTO.NotifyType.NEWDIARY);
-        emitterService.sendEvents(1L, 2L, NotifyDTO.NotifyType.REPLY);
-        emitterService.sendEvents(1L, 2L, NotifyDTO.NotifyType.INACTIVATE);
+        emitterService.sendEvents(1L,1L, 2L, NotifyDTO.NotifyType.NEWDIARY);
+        emitterService.sendEvents(1L,1L, 2L, NotifyDTO.NotifyType.REPLY);
+        emitterService.sendEvents(1L,1L, 2L, NotifyDTO.NotifyType.INACTIVATE);
     }
 
 
