@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -228,5 +229,23 @@ public class DiaryServiceImpl implements DiaryService {
             return new EntityNotFoundException(id + ": 존재하지 않는 일기장입니다.");
         });
         return diary;
+    }
+
+    @Override
+    public void modifyDiaryTakeBack(Long diaryID, Long memberID){
+
+        Optional<Diary> result = diaryRepository.findById(diaryID);
+
+        Diary diary = result.orElseThrow();
+
+        LocalDateTime lastUpdated = diary.getUpdatedAt();
+        LocalDateTime now = LocalDateTime.now();
+
+        if (ChronoUnit.DAYS.between(lastUpdated, now) >= 14) {
+            modifyUpdate(diaryID, memberID);
+        } else {
+            throw new IllegalStateException("아직 회수할 수 없습니다.");
+        }
+
     }
 }

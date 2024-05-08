@@ -126,4 +126,10 @@ public class DiaryServiceTests {
         log.info(diaryService.addKnownMatchingDiary(diaryDTO));
     }
 
+    @Test
+    public void testTakeBack(){
+        diaryService.modifyDiaryTakeBack(152L, 101L);
+
+    }
+
 }
