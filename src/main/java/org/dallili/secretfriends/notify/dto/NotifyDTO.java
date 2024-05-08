@@ -2,16 +2,14 @@ package org.dallili.secretfriends.notify.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.dallili.secretfriends.notify.domain.Notify;
 
 import java.time.LocalDateTime;
 
 @Data
 @Builder
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 
@@ -32,5 +30,11 @@ public class NotifyDTO {
 
     public enum NotifyType{
         NEWDIARY, REPLY, INACTIVATE
+    }
+
+    //modelmapper 매핑 규칙 정의를 위한 setter
+    //일반 코드 작성 시에는 사용 지양
+    public void setNotifyType(Enum<NotifyType> notifyType) {
+        this.notifyType = notifyType;
     }
 }

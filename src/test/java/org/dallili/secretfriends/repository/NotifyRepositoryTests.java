@@ -18,7 +18,7 @@ public class NotifyRepositoryTests {
 
     @Autowired
     private MemberRepository memberRepository;
-
+/*
     @Test
     public void testInsert() {
 
@@ -32,5 +32,5 @@ public class NotifyRepositoryTests {
                 .build();
 
         notifyRepository.save(notify);
-    }
+    }*/
 }

@@ -9,6 +9,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Log4j2
@@ -26,8 +28,9 @@ public class NotifyServiceImpl implements NotifyService{
                 .receiverID(receiverID)
                 .senderID(senderID)
                 .build();
-        //log.info(receiverNotifyDTO);
+        log.info(receiverNotifyDTO);
         Notify receiverNotify = modelMapper.map(receiverNotifyDTO, Notify.class);
+        log.info(receiverNotify);
         notifyRepository.save(receiverNotify);
 
         if(type == NotifyDTO.NotifyType.NEWDIARY || type == NotifyDTO.NotifyType.INACTIVATE){
@@ -44,5 +47,20 @@ public class NotifyServiceImpl implements NotifyService{
 
     public void removeNotify(Long notifyID){
         notifyRepository.deleteById(notifyID);
+    }
+
+    public List<NotifyDTO> findAllNotify(Long receiverID){
+        List<Notify> notifyList = notifyRepository.findAllByReceiver_MemberID(receiverID);
+
+        List<NotifyDTO> notifyDTOList = notifyList.stream()
+                .map(notify -> {
+                    NotifyDTO notifyDTO = modelMapper.map(notify, NotifyDTO.class);
+                    // notificationType 가공하여 NotifyDTO에 추가
+                    notifyDTO.setNotifyType(NotifyDTO.NotifyType.valueOf(notify.getNotifyType()));
+                    return notifyDTO;
+                })
+                .collect(Collectors.toList());
+
+        return notifyDTOList;
     }
 }
