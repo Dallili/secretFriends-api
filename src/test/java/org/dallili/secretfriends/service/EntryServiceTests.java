@@ -84,4 +84,9 @@ public class EntryServiceTests {
 
     }
 
+    @Test
+    public void testFindDiary() {
+        log.info(entryService.findDiaryID(3L));
+    }
+
 }

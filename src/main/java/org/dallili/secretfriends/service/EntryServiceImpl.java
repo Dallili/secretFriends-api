@@ -119,4 +119,9 @@ public class EntryServiceImpl implements EntryService {
         }
          else throw new RuntimeException("존재하지 않는 사용자입니다");
     }
+
+    @Override
+    public Long findDiaryID(Long entryID){
+        return entryRepository.findById(entryID).get().getDiary().getDiaryID();
+    }
 }
