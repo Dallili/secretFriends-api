@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @Log4j2
 @RequiredArgsConstructor
-@RequestMapping("/notify2")
+@RequestMapping("/notify")
 public class NotifyController {
 
     private final NotifyService notifyService;

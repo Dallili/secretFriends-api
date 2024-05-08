@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 @RestController
 @Log4j2
 @RequiredArgsConstructor
-@RequestMapping("/notify")
+@RequestMapping("/emitter")
 public class EmitterController {
 
     private final EmitterService emitterService;
