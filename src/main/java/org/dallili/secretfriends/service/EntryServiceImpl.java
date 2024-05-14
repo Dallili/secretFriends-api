@@ -106,4 +106,22 @@ public class EntryServiceImpl implements EntryService {
         }
         return entry;
     }
+
+    @Override
+    public Long findOpponent(Long entryID, Long memberID){
+         Long diaryID = entryRepository.findById(entryID).get().getDiary().getDiaryID();
+         Diary diary = diaryService.findDiaryById(diaryID);
+         if(diary.getMember().getMemberID().equals(memberID)) {
+             return diary.getPartner().getMemberID();
+         }
+         else if (diary.getPartner().getMemberID().equals(memberID)) {
+            return diary.getMember().getMemberID();
+        }
+         else throw new RuntimeException("존재하지 않는 사용자입니다");
+    }
+
+    @Override
+    public Long findDiaryID(Long entryID){
+        return entryRepository.findById(entryID).get().getDiary().getDiaryID();
+    }
 }

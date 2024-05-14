@@ -2,6 +2,8 @@ package org.dallili.secretfriends.config;
 
 import org.dallili.secretfriends.domain.Diary;
 import org.dallili.secretfriends.dto.DiaryDTO;
+import org.dallili.secretfriends.notify.domain.Notify;
+import org.dallili.secretfriends.notify.dto.NotifyDTO;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.modelmapper.convention.MatchingStrategies;

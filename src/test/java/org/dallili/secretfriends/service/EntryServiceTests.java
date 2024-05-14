@@ -76,5 +76,17 @@ public class EntryServiceTests {
         log.info(entryService.modifyTextFiltering(entry));
     }
 
+    @Test
+    public void testFindOpponent() {
+        //log.info(entryService.findOpponent(1L, 5L));
+        log.info(entryService.findOpponent(8L, 1L));
+        log.info(entryService.findOpponent(1L, 100L));
+
+    }
+
+    @Test
+    public void testFindDiary() {
+        log.info(entryService.findDiaryID(3L));
+    }
 
 }

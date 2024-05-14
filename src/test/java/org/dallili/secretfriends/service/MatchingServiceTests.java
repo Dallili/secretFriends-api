@@ -51,8 +51,8 @@ public class MatchingServiceTests {
 
         MatchingDTO.newMatching matchingDTO = MatchingDTO.newMatching.builder()
                 .createdAt(LocalDateTime.now())
-                .firstInterest(6L)
-                .secondInterest(7L)
+                .firstInterest(9L)
+                .secondInterest(4L)
                 .thirdInterest(8L)
                 .build();
 
