@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -36,6 +37,25 @@ public class MatchingServiceImpl implements MatchingService{
     private final MatchingHistoryService matchingHistoryService;
 
     private final ModelMapper modelMapper;
+
+
+    @Override
+    public List<DiaryDTO> modifyMatchingToDiary(Long memberID) {
+        List<Matching> matchings = matchingRepository.findAllByMemberID(memberID);
+        List<DiaryDTO> diaryDTOs = new ArrayList<>();
+
+        for (Matching matching : matchings) {
+            Long matchingMemberID = matching.getMemberID();
+            DiaryDTO diaryDTO = DiaryDTO.builder()
+                    .memberID(matchingMemberID)
+                    .color("#000000")
+                    .state(true)
+                    .build();
+            diaryDTOs.add(diaryDTO);
+        }
+
+        return diaryDTOs;
+    }
 
     @Override
     public Long addMatching(MatchingDTO matchingDTO){
