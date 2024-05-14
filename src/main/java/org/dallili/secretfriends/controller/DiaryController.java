@@ -72,4 +72,12 @@ public class DiaryController {
 
     }
 
+    @Operation(summary = "Diary Take Back PATCH", description = "일기장 회수")
+    @PatchMapping(value = "/{diaryID}/takeBack")
+    public void diaryTakeBackModify (@PathVariable("diaryID") Long diaryID, Authentication authentication){
+
+        diaryService.modifyDiaryTakeBack(diaryID, Long.parseLong(authentication.getName()));
+
+    }
+
 }
