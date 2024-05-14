@@ -65,6 +65,6 @@ public class MatchingServiceTests {
     @Test
     public void testModifyMatchingToDiary() {
 
-        log.info(matchingService.modifyMatchingToDiary(1L));
+        log.info(matchingService.findUnknownDiary(101L));
     }
 }

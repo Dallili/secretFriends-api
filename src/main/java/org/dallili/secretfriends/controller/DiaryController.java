@@ -38,7 +38,7 @@ public class DiaryController {
         Long memberID = Long.parseLong(authentication.getName());
 
         List<DiaryDTO> diaries = diaryService.findStateDiaries(memberID, state);
-        List<DiaryDTO> unknownMatchingDiary = matchingService.modifyMatchingToDiary(memberID);
+        List<DiaryDTO> unknownMatchingDiary = matchingService.findUnknownDiary(memberID);
 
         List<DiaryDTO> allDiaries = new ArrayList<>();
         allDiaries.addAll(diaries);
