@@ -53,11 +53,13 @@ public class MatchingServiceImpl implements MatchingService{
     @Override
     public Long removeMatching(Long matchingID){
 
-        Long deletedMatchingID = matchingRepository.findById(matchingID).get().getMatchingID();
+        Matching matching = matchingRepository.findById(matchingID).get();
 
-        matchingRepository.deleteById(matchingID);
+        Long memberID = matching.getMemberID();
 
-        return deletedMatchingID;
+        matchingRepository.deleteById(matching.getMatchingID());
+
+        return memberID;
 
     }
 
