@@ -1,10 +1,14 @@
 package org.dallili.secretfriends.service;
 
+import org.dallili.secretfriends.dto.DiaryDTO;
 import org.dallili.secretfriends.dto.MatchingDTO;
 
+import java.util.List;
 import java.util.Map;
 
 public interface MatchingService {
+
+    List<DiaryDTO> findUnknownDiary(Long memberID);
 
     Long addMatching(MatchingDTO matchingDTO);
 

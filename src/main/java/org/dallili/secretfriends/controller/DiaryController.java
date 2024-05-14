@@ -2,25 +2,21 @@ package org.dallili.secretfriends.controller;
 
 
 import io.swagger.v3.oas.annotations.Operation;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.dallili.secretfriends.dto.DiaryDTO;
 import org.dallili.secretfriends.notify.dto.NotifyDTO;
 import org.dallili.secretfriends.notify.service.EmitterService;
 import org.dallili.secretfriends.notify.service.NotifyService;
-import org.dallili.secretfriends.repository.DiaryRepository;
 import org.dallili.secretfriends.service.DiaryService;
 import org.dallili.secretfriends.service.MatchingService;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @Log4j2
@@ -38,17 +34,24 @@ public class DiaryController {
 
     @Operation(summary = "Diary List GET", description = "활성/비활성 일기장 목록 조회")
     @GetMapping(value = "/")
-    public Map<String, Object> diaryDTOList (@RequestParam("state") Boolean state, Authentication authentication) {
+    public Map<String, Object> diaryDTOList(@RequestParam("state") Boolean state, Authentication authentication) {
 
-        List<DiaryDTO> diaries = diaryService.findStateDiaries(Long.parseLong(authentication.getName()), state);
+        Long memberID = Long.parseLong(authentication.getName());
+
+        List<DiaryDTO> diaries = diaryService.findStateDiaries(memberID, state);
+        List<DiaryDTO> unknownMatchingDiary = matchingService.findUnknownDiary(memberID);
+
+        List<DiaryDTO> allDiaries = new ArrayList<>();
+        allDiaries.addAll(diaries);
+        allDiaries.addAll(unknownMatchingDiary);
 
         Map<String, Object> result = new HashMap<>();
-        result.put("total", diaries.size());
-        result.put("diaries", diaries);
-
+        result.put("total", allDiaries.size());
+        result.put("diaries", allDiaries);
 
         return result;
     }
+
 
     @Operation(summary = "Diary Deactivate PATCH", description = "일기장 비활성화")
     @PatchMapping(value = "/{diaryID}/state")
@@ -82,6 +85,14 @@ public class DiaryController {
     public void diaryRemove(@PathVariable("diaryID") Long diaryID) {
 
         diaryService.removeDiary(diaryID);
+
+    }
+
+    @Operation(summary = "Diary Take Back PATCH", description = "일기장 회수")
+    @PatchMapping(value = "/{diaryID}/takeBack")
+    public void diaryTakeBackModify (@PathVariable("diaryID") Long diaryID, Authentication authentication){
+
+        diaryService.modifyDiaryTakeBack(diaryID, Long.parseLong(authentication.getName()));
 
     }
 
