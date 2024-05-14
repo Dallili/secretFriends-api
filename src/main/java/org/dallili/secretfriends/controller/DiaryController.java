@@ -11,6 +11,7 @@ import org.dallili.secretfriends.notify.service.EmitterService;
 import org.dallili.secretfriends.notify.service.NotifyService;
 import org.dallili.secretfriends.repository.DiaryRepository;
 import org.dallili.secretfriends.service.DiaryService;
+import org.dallili.secretfriends.service.MatchingService;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,8 @@ public class DiaryController {
     private final DiaryService diaryService;
 
     private final NotifyService notifyService;
+
+    private final MatchingService matchingService;
 
     @Operation(summary = "Diary List GET", description = "활성/비활성 일기장 목록 조회")
     @GetMapping(value = "/")
