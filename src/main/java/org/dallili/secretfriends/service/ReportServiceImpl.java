@@ -27,7 +27,7 @@ public class ReportServiceImpl implements ReportService{
 
     private final ReportRepository reportRepository;
     @Override
-    public ReportDTO.Details addReport(Entry entry) {
+    public void addReport(Entry entry) {
 
         String content = entry.getContent();
 
@@ -59,7 +59,5 @@ public class ReportServiceImpl implements ReportService{
         Report report = response.toEntity(entry);
 
         reportRepository.save(report);
-
-        return response;
     }
 }
