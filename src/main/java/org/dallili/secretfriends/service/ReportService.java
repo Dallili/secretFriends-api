@@ -6,5 +6,6 @@ import org.dallili.secretfriends.dto.ReportDTO;
 public interface ReportService {
 
     void addReport(Entry entry);
+    ReportDTO.Details findReport(Long entryID);
 
 }

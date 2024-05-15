@@ -60,4 +60,13 @@ public class ReportServiceImpl implements ReportService{
 
         reportRepository.save(report);
     }
+
+    @Override
+    public ReportDTO.Details findReport(Long entryID) {
+        Report report = reportRepository.findReportByEntry_EntryID(entryID).orElseThrow(()->{
+            throw new IllegalArgumentException(entryID + ": 해당 일기에 대한 레포트가 존재하지 않습니다.");
+        });
+        ReportDTO.Details response = report.toDto();
+        return response;
+    }
 }

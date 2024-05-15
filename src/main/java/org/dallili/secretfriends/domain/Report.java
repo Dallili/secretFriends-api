@@ -2,6 +2,7 @@ package org.dallili.secretfriends.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.dallili.secretfriends.dto.ReportDTO;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -38,5 +39,12 @@ public class Report {
     @Column(name = "color", length = 7)
     private String color;   //hex code
 
+    public ReportDTO.Details toDto(){
+        return ReportDTO.Details.builder()
+                .sentiment(this.sentiment)
+                .summary(this.summary)
+                .color(this.color)
+                .build();
+    }
 
 }
