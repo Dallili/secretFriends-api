@@ -27,9 +27,9 @@ import java.util.stream.Collectors;
 public class EntryServiceImpl implements EntryService {
 
     private final EntryRepository entryRepository;
-    private final ModelMapper modelMapper;
     private final DiaryService diaryService;
     private final MemberService memberService;
+    private final ReportService reportService;
 
     @Override
     public Long addEntry(EntryDTO.CreateRequest entryDTO) {
@@ -61,6 +61,7 @@ public class EntryServiceImpl implements EntryService {
             entryRepository.updateState(entryID);
             entryRepository.updateSendAt(entryID, LocalDateTime.now());
             diaryService.modifyUpdate(entry.getDiary().getDiaryID(),memberID);
+            reportService.addReport(entry);
             return true;
         } else
             return false;
@@ -97,6 +98,15 @@ public class EntryServiceImpl implements EntryService {
 
         return dto;
     }
+
+    @Override
+    public Entry findEntryById(Long entryID) {
+        Entry entry = entryRepository.findById(entryID).orElseThrow(()->{
+            throw new IllegalArgumentException(entryID + ": 존재하지 않는 일기입니다.");
+        });
+        return entry;
+    }
+
     public List<EntryDTO.SentEntryResponse> modifyTextFiltering(List<EntryDTO.SentEntryResponse> entry){
 
         BadWordFiltering badWordFiltering = new BadWordFiltering();
