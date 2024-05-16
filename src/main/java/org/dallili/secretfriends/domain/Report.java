@@ -6,7 +6,11 @@ import org.dallili.secretfriends.dto.ReportDTO;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -38,6 +42,10 @@ public class Report {
 
     @Column(name = "color", length = 7)
     private String color;   //hex code
+
+    @Column(name = "created_at",columnDefinition = "DATE")
+    @CreatedDate
+    private LocalDate createdAt;
 
     public ReportDTO.Details toDto(){
         return ReportDTO.Details.builder()

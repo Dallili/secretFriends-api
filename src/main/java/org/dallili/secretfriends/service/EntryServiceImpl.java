@@ -10,14 +10,10 @@ import org.dallili.secretfriends.domain.Entry;
 import org.dallili.secretfriends.domain.Member;
 import org.dallili.secretfriends.dto.EntryDTO;
 import org.dallili.secretfriends.repository.EntryRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -99,13 +95,6 @@ public class EntryServiceImpl implements EntryService {
         return dto;
     }
 
-    @Override
-    public Entry findEntryById(Long entryID) {
-        Entry entry = entryRepository.findById(entryID).orElseThrow(()->{
-            throw new IllegalArgumentException(entryID + ": 존재하지 않는 일기입니다.");
-        });
-        return entry;
-    }
 
     public List<EntryDTO.SentEntryResponse> modifyTextFiltering(List<EntryDTO.SentEntryResponse> entry){
 

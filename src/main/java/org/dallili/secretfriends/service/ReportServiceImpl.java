@@ -69,4 +69,23 @@ public class ReportServiceImpl implements ReportService{
         ReportDTO.Details response = report.toDto();
         return response;
     }
+
+    @Override
+    public List<ReportDTO.List> findReportList(Long memberID, Long diaryID) {
+        List<Report> reports = reportRepository.findReportsByMemberAndDiary(memberID,diaryID);
+        List<ReportDTO.List> reportList = new ArrayList<>();
+        int index = 0;
+        for(Report report:reports){
+            reportList.add(ReportDTO.List.builder()
+                            .index(index)
+                            .entryID(report.getEntry().getEntryID())
+                            .sentiment(report.getSentiment())
+                            .summary(report.getSummary())
+                            .color(report.getColor())
+                            .date(report.getCreatedAt())
+                    .build());
+            index++;
+        }
+        return reportList;
+    }
 }
