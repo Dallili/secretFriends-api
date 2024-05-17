@@ -22,3 +22,13 @@ logging:
 
 jwt:
   secret: ${JWT_SECRET_KEY}
+
+openai:
+  organization: 
+    id: ${OPENAI_ORGANIZATION_ID}
+  project: 
+    id: ${OPENAI_PROJECT_ID}
+  api: 
+    key: ${OPENAI_API_KEY}
+    url: ${OPENAI_API_URL}
+  model: ${OPENAI_MODEL}
