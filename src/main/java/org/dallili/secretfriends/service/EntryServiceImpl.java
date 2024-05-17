@@ -10,14 +10,10 @@ import org.dallili.secretfriends.domain.Entry;
 import org.dallili.secretfriends.domain.Member;
 import org.dallili.secretfriends.dto.EntryDTO;
 import org.dallili.secretfriends.repository.EntryRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,9 +23,9 @@ import java.util.stream.Collectors;
 public class EntryServiceImpl implements EntryService {
 
     private final EntryRepository entryRepository;
-    private final ModelMapper modelMapper;
     private final DiaryService diaryService;
     private final MemberService memberService;
+    private final ReportService reportService;
 
     @Override
     public Long addEntry(EntryDTO.CreateRequest entryDTO) {
@@ -61,6 +57,7 @@ public class EntryServiceImpl implements EntryService {
             entryRepository.updateState(entryID);
             entryRepository.updateSendAt(entryID, LocalDateTime.now());
             diaryService.modifyUpdate(entry.getDiary().getDiaryID(),memberID);
+            reportService.addReport(entry);
             return true;
         } else
             return false;
@@ -97,6 +94,8 @@ public class EntryServiceImpl implements EntryService {
 
         return dto;
     }
+
+
     public List<EntryDTO.SentEntryResponse> modifyTextFiltering(List<EntryDTO.SentEntryResponse> entry){
 
         BadWordFiltering badWordFiltering = new BadWordFiltering();
