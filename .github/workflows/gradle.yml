@@ -52,7 +52,7 @@ jobs:
         openai.project.id: ${{secrets.OPENAI_PROJECT_ID}}
         openai.api.key: ${{secrets.OPENAI_API_KEY}}
         openai.api.url: ${{secrets.OPENAI_API_URL}}
-        openai.model: ${{secrets.OPENAI_MODEL}
+        openai.model: ${{secrets.OPENAI_MODEL}}
 
     # Configure Gradle for optimal use in GiHub Actions, including caching of downloaded dependencies.
     # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
