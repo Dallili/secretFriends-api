@@ -39,15 +39,12 @@ public class DiaryController {
         Long memberID = Long.parseLong(authentication.getName());
 
         List<DiaryDTO> diaries = diaryService.findStateDiaries(memberID, state);
-        List<DiaryDTO> unknownMatchingDiary = matchingService.findUnknownDiary(memberID);
-
-        List<DiaryDTO> allDiaries = new ArrayList<>();
-        allDiaries.addAll(diaries);
-        allDiaries.addAll(unknownMatchingDiary);
+        List<DiaryDTO.unKnownMatchingDiary> unknownMatchingDiary = matchingService.findUnknownDiary(memberID);
 
         Map<String, Object> result = new HashMap<>();
-        result.put("total", allDiaries.size());
-        result.put("diaries", allDiaries);
+        result.put("total", diaries.size()+ unknownMatchingDiary.size());
+        result.put("diaries", diaries);
+        result.put("unmatchedDiaries", unknownMatchingDiary);
 
         return result;
     }

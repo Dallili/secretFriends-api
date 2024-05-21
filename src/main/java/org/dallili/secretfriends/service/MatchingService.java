@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface MatchingService {
 
-    List<DiaryDTO> findUnknownDiary(Long memberID);
+    List<DiaryDTO.unKnownMatchingDiary> findUnknownDiary(Long memberID);
 
     Long addMatching(MatchingDTO matchingDTO);
 
