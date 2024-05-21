@@ -51,5 +51,22 @@ public class DiaryDTO {
         private String color;
     }
 
+    @Data
+    @Builder
+    public static class unKnownMatchingDiary{
+        @NotNull
+        private Long diaryID; //get
+
+        @NotNull
+        private Long memberID; //get, set
+
+        private boolean state; //get, set
+
+        private String color; //get
+
+        private Long matchingID;
+
+    }
+
 
 }

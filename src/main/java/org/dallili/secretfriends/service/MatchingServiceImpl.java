@@ -40,17 +40,20 @@ public class MatchingServiceImpl implements MatchingService{
 
 
     @Override
-    public List<DiaryDTO> findUnknownDiary(Long memberID) {
-        int matchingCount = matchingRepository.findAllByMemberID(memberID).size();
-        List<DiaryDTO> diaryDTOs = new ArrayList<>();
+    public List<DiaryDTO.unKnownMatchingDiary> findUnknownDiary(Long memberID) {
+
+        List<Matching> matchingList = matchingRepository.findAllByMemberID(memberID);
+        int matchingCount = matchingList.size();
+        List<DiaryDTO.unKnownMatchingDiary> diaryDTOs = new ArrayList<>();
 
         if(matchingCount > 0){
-            DiaryDTO diaryDTO = DiaryDTO.builder()
-                    .memberID(memberID)
-                    .color("#000000")
-                    .state(true)
-                    .build();
             for (int i=0; i<matchingCount; i++) {
+                DiaryDTO.unKnownMatchingDiary diaryDTO = DiaryDTO.unKnownMatchingDiary.builder()
+                        .memberID(memberID)
+                        .color("#000000")
+                        .state(true)
+                        .matchingID(matchingList.get(i).getMatchingID())
+                        .build();
                 diaryDTOs.add(diaryDTO);
             }
         }
