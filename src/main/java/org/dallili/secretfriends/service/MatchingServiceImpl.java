@@ -48,9 +48,13 @@ public class MatchingServiceImpl implements MatchingService{
 
         if(matchingCount > 0){
             for (int i=0; i<matchingCount; i++) {
+                Random random = new Random();
+                int nextInt = random.nextInt(0xffffff + 1);
+                String randomColor = String.format("#%06x", nextInt);
+
                 DiaryDTO.unKnownMatchingDiary diaryDTO = DiaryDTO.unKnownMatchingDiary.builder()
                         .memberID(memberID)
-                        .color("#000000")
+                        .color(randomColor)
                         .state(true)
                         .matchingID(matchingList.get(i).getMatchingID())
                         .build();
@@ -161,6 +165,10 @@ public class MatchingServiceImpl implements MatchingService{
                 String oldMemberName = memberService.findMemberById(oldMemberID).getNickname();
                 String newMemberName = memberService.findMemberById(newMemberID).getNickname();
 
+                Random random = new Random();
+                int nextInt = random.nextInt(0xffffff + 1);
+                String randomColor = String.format("#%06x", nextInt);
+
                 DiaryDTO diaryDTO = DiaryDTO.builder()
                         .memberID(oldMemberID)
                         .partnerID(newMemberID)
@@ -168,7 +176,7 @@ public class MatchingServiceImpl implements MatchingService{
                         .partnerName(newMemberName)
                         .updatedAt(LocalDateTime.now())
                         .updatedBy(newMemberID)
-                        .color("#000000")
+                        .color(randomColor)
                         .build();
 
                 Long diaryID = diaryService.addDiary(diaryDTO); // 다이어리 생성

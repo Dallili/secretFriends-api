@@ -4,6 +4,7 @@ import org.dallili.secretfriends.domain.Diary;
 import org.dallili.secretfriends.dto.DiaryDTO;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public interface DiaryService {
@@ -22,7 +23,7 @@ public interface DiaryService {
 
     List<DiaryDTO> findAllDiaries(); //모든 일기장 목록 조회
 
-    List<DiaryDTO> findStateDiaries(Long memberID, Boolean state); // 활성화 or 비활성화된 상태의 일기장 목록 조회
+    Map<String,Object> findStateDiaries(Long memberID, Boolean state); // 활성화 or 비활성화된 상태의 일기장 목록 조회
 
     List<DiaryDTO> findRepliedDiaries(Long loginMemberID); // 답장 온 일기장 목록 조회
 
