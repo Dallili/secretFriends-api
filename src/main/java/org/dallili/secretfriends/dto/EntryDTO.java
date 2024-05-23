@@ -47,7 +47,7 @@ public class EntryDTO {
     public static class UnsentEntryResponse{
         private Long entryID;
         private String writerName;
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
         private LocalDateTime updatedAt;
         private String content;
     }
@@ -57,7 +57,7 @@ public class EntryDTO {
     public static class SentEntryResponse{
         private Long entryID;
         private String writerName;
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
         private LocalDateTime sendAt;
         private String content;
 
