@@ -1,5 +1,6 @@
 package org.dallili.secretfriends.email.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,12 +17,14 @@ public class EmailController {
     private final EmailService emailService;
 
     @PostMapping("/members/signup/email")
+    @Operation(summary = "회원가입 이메일 인증 코드 발송", description = "이메일을 받아 해당 메일로 인증 코드 발송")
     public void sendVerificationEmail(@RequestBody @Valid EmailDTO.SendRequest request) throws MessagingException {
         emailService.sendVerificationEmail(request.getEmail());
     }
 
-    @DeleteMapping("/members/signup/email")
+    @PostMapping("/members/signup/email/verification")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "회원가입 이메일 인증 코드 발송", description = "이메일을 받아 해당 메일로 인증 코드 발송")
     public void verifyEmailByCode(@RequestBody @Valid EmailDTO.VerifyRequest request){
         LocalDateTime now = LocalDateTime.now();
         emailService.verifyCode(request.getCode(), now);
