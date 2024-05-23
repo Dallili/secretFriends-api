@@ -9,6 +9,9 @@ import org.dallili.secretfriends.repository.MatchingHistoryRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 @Log4j2
@@ -32,5 +35,20 @@ public class MatchingHistoryServiceImpl implements MatchingHistoryService{
         matchingHistoryRepository.save(matchingHistory);
 
         return matchingHistory.getHistoryID();
+    }
+
+    @Override
+    public Boolean findHistory(Long memberID, Long partnerID){
+
+        List<MatchingHistory> matchingHistories = matchingHistoryRepository.findAllByMemberID(String.valueOf(memberID)).stream()
+                .filter(matchingHistory -> Integer.parseInt(matchingHistory.getPartnerID()) == partnerID)
+                .collect(Collectors.toList());
+
+        List<MatchingHistory> matchingHistories2 = matchingHistoryRepository.findAllByMemberID(String.valueOf(partnerID)).stream()
+                .filter(matchingHistory -> Integer.parseInt(matchingHistory.getPartnerID()) == memberID)
+                .collect(Collectors.toList());
+
+        if (matchingHistories.isEmpty() && matchingHistories2.isEmpty()) return false;
+        else return true;
     }
 }

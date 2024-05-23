@@ -67,4 +67,10 @@ public class MatchingServiceTests {
 
         log.info(matchingService.findUnknownDiary(101L));
     }
+
+    @Test
+    public void testFindHistory(){
+
+        log.info(matchingHistoryService.findHistory(102L, 1L));
+    }
 }
