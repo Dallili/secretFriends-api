@@ -28,6 +28,7 @@ public class CustomRestAdvice {
         return HttpErrorResponse.builder()
                 .status(e.getErrorCode().getStatus())
                 .message(e.getErrorCode().getMessage())
+                .error(e.getClass().getName())
                 .path(request.getRequestURI())
                 .build();
     }
