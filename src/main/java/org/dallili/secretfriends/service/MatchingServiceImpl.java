@@ -48,9 +48,17 @@ public class MatchingServiceImpl implements MatchingService{
 
         if(matchingCount > 0){
             for (int i=0; i<matchingCount; i++) {
-                Random random = new Random();
-                int nextInt = random.nextInt(0xffffff + 1);
-                String randomColor = String.format("#%06x", nextInt);
+
+                LocalDateTime dateTime = matchingList.get(i).getCreatedAt();
+                int sum = dateTime.getHour() + dateTime.getMinute() + dateTime.getSecond();
+
+                String hexString = String.format("%04x", sum);
+                if (hexString.length() > 4) {
+                    hexString = hexString.substring(hexString.length() - 4);
+                }
+
+                hexString = hexString.toUpperCase();
+                String randomColor = "#FF" + hexString;
 
                 DiaryDTO.unKnownMatchingDiary diaryDTO = DiaryDTO.unKnownMatchingDiary.builder()
                         .memberID(memberID)
