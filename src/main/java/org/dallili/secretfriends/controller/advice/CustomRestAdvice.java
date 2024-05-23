@@ -2,6 +2,7 @@ package org.dallili.secretfriends.controller.advice;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.dallili.secretfriends.dto.HttpErrorResponse;
+import org.dallili.secretfriends.exception.CustomException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -20,6 +21,14 @@ public class CustomRestAdvice {
                 .message(ex.getMessage())
                 .path(request.getRequestURI())
                 .build();
+    }
 
+    @ExceptionHandler(CustomException.class)
+    public HttpErrorResponse exceptionHandler(CustomException e, HttpServletRequest request){
+        return HttpErrorResponse.builder()
+                .status(e.getErrorCode().getStatus())
+                .message(e.getErrorCode().getMessage())
+                .path(request.getRequestURI())
+                .build();
     }
 }

@@ -16,7 +16,7 @@ public class MemberDTO {
     public static class SignUpRequest{
 
         @NotBlank(message = "비밀번호를 입력해주세요.")
-        @Size(min=5, message = "비밀번호가 너무 짧습니다. (최소 5글자)")
+        @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[!@#$%^*])(?=.*[0-9]).{8,24}$" , message = "영어 대/소문자, 숫자, 특수문자(!@#$%^*) 를 혼합한 8자 이상 25자 미만의 비밀번호만 허용됩니다.")
         private String password;
 
         @NotBlank(message = "닉네임을 입력해주세요.")
@@ -68,7 +68,7 @@ public class MemberDTO {
         @NotBlank(message = "'현재 비밀번호' 항목을 입력해주세요.")
         private String oldPassword;
         @NotBlank(message = "'새 비밀번호' 항목을 입력해주세요.")
-        @Size(min=5, message = "비밀번호가 너무 짧습니다. (최소 5글자)")
+        @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[!@#$%^*])(?=.*[0-9]).{8,24}$" , message = "영어 대/소문자, 숫자, 특수문자(!@#$%^*) 를 혼합한 8자 이상 25자 미만의 비밀번호만 허용됩니다.")
         private String newPassword;
         @NotBlank(message = "'새 비밀번호 확인' 항목을 입력해주세요.")
         private String confirmPassword;

@@ -32,3 +32,22 @@ openai:
     key: ${OPENAI_API_KEY}
     url: ${OPENAI_API_URL}
   model: ${OPENAI_MODEL}
+
+mail:
+  host: smtp.gmail.com
+  port: 587
+  username: ${MAIL_USERNAME}
+  password: ${MAIL_PASSWORD}
+  properties:
+    mail:
+      smtp:
+        starttls:
+          enable: true
+        auth: true
+      debug: true
+  templates:
+    path: ${MAIL_TEMPLATE_PATH}
+    img:
+      logo: ${MAIL_LOGO_PATH}
+      title: ${MAIL_TITLE_PATH}
+      text: ${MAIL_TEXT_PATH}
