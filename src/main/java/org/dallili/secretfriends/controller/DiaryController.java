@@ -13,7 +13,6 @@ import org.dallili.secretfriends.service.MatchingService;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,14 +36,14 @@ public class DiaryController {
     public Map<String, Object> diaryDTOList(@RequestParam("state") Boolean state, Authentication authentication) {
 
         Long memberID = Long.parseLong(authentication.getName());
+        Map<String, Object> result = diaryService.findStateDiaries(memberID, state);
 
-        List<DiaryDTO> diaries = diaryService.findStateDiaries(memberID, state);
-        List<DiaryDTO.unKnownMatchingDiary> unknownMatchingDiary = matchingService.findUnknownDiary(memberID);
-
-        Map<String, Object> result = new HashMap<>();
-        result.put("total", diaries.size()+ unknownMatchingDiary.size());
-        result.put("diaries", diaries);
-        result.put("unmatchedDiaries", unknownMatchingDiary);
+        if(state){ //활성 목록
+            List<DiaryDTO.unKnownMatchingDiary> unmatchedUnknownDiaries = matchingService.findUnknownDiary(memberID);
+            result.put("unmatchedUnknownDiaries", unmatchedUnknownDiaries);
+            int total = (Integer)result.get("total");
+            result.put("total", total+ unmatchedUnknownDiaries.size());
+        }
 
         return result;
     }

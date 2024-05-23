@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @SpringBootTest
@@ -101,7 +102,7 @@ public class DiaryServiceTests {
     @Test
     public void testFindStateDiaries(){
 
-        List<DiaryDTO> diaries = diaryService.findStateDiaries(2L, true);
+        Map<String, Object> diaries = diaryService.findStateDiaries(2L, true);
 
         log.info(diaries);
     }
@@ -109,7 +110,7 @@ public class DiaryServiceTests {
     @Test
     public void testFindRepliedDiaries() {
 
-        List<DiaryDTO> diaries = diaryService.findRepliedDiaries(100L);
+        List<DiaryDTO> diaries = diaryService.findRepliedDiaries(101L);
 
         log.info(diaries);
     }

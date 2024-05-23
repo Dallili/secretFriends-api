@@ -1,6 +1,7 @@
 package org.dallili.secretfriends.service;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.dallili.secretfriends.domain.Diary;
@@ -13,9 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +27,7 @@ public class DiaryServiceImpl implements DiaryService {
     private final DiaryRepository diaryRepository;
 
     private final MemberService memberService;
+
 
     @Override
     public Long addDiary(DiaryDTO diaryDTO) {
@@ -161,11 +161,12 @@ public class DiaryServiceImpl implements DiaryService {
 
     }
 
+    @Transactional
     @Override
-    public List<DiaryDTO> findStateDiaries(Long memberID, Boolean state) {
+    public Map<String,Object> findStateDiaries(Long memberID, Boolean state) {
         List<Diary> diaries = diaryRepository.findAll();
 
-        return diaries.stream()
+        List<DiaryDTO> stateDiary = diaries.stream()
                 .filter(diary -> diary.isState() == state)
                 .filter(diary -> {
                     if (diary.getPartner() != null) {
@@ -177,6 +178,28 @@ public class DiaryServiceImpl implements DiaryService {
                 })
                 .map(diary -> modelMapper.map(diary, DiaryDTO.class))
                 .collect(Collectors.toList());
+
+        Map<String, Object> result = new HashMap<>();
+
+        if (state == true){ // 활성 목록 (실제 완성 일기장 + 지인 매칭 중 미완성 일기장)
+            List<DiaryDTO> completeDiaries = stateDiary.stream()
+                    .filter(diaryDTO -> diaryDTO.getPartnerID() != null)
+                    .collect(Collectors.toList());
+
+            List<DiaryDTO> incompleteDiaries = stateDiary.stream()
+                    .filter(diaryDTO -> diaryDTO.getPartnerID() == null)
+                    .collect(Collectors.toList());
+
+            result.put("total", completeDiaries.size()+incompleteDiaries.size());
+            result.put("diaries", completeDiaries);
+            result.put("unmatchedKnownDiaries", incompleteDiaries);
+        }
+        else { // 비활성 목록
+            result.put("total", stateDiary.size());
+            result.put("diaries", stateDiary);
+        }
+
+        return result;
     }
 
   
