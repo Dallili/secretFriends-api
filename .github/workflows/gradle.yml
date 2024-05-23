@@ -56,7 +56,7 @@ jobs:
         mail.username: ${{secrets.MAIL_USERNAME}}
         mail.password: ${{secrets.MAIL_PASSWORD}}
         mail.templates.path: ${{secrets.MAIL_TEMPLATE_PATH}}
-        mail.templats.img.logo: ${{secrets.MAIL_LOGO_PATH}}
+        mail.templates.img.logo: ${{secrets.MAIL_LOGO_PATH}}
         mail.templates.img.title: ${{secrets.MAIL_TITLE_PATH}}
         mail.templates.img.text: ${{secrets.MAIL_TEXT_PATH}}
 
