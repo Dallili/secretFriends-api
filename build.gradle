@@ -74,6 +74,9 @@ dependencies {
     //회원가입 이메일 인증
     implementation 'org.springframework.boot:spring-boot-starter-mail:3.2.2'
 
+    //thymeleaf
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:3.1.2'
+
 }
 
 tasks.named('test') {

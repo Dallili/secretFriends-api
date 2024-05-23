@@ -5,6 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.thymeleaf.spring6.SpringTemplateEngine;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import javax.swing.*;
 import java.util.Properties;
@@ -19,6 +22,9 @@ public class MailConfig {
     private String mailServerUsername;
     @Value("${mail.password}")
     private String mailServerPassword;
+    @Value("${mail.templates.path}")
+    private String mailTemplatesPath;
+
 
     //이메일 발송에 사용되는 JavaMailSender 빈으로 등록
     @Bean
@@ -35,7 +41,23 @@ public class MailConfig {
         properties.put("mail.smtp.starttls.enable","true");
 
         return javaMailSender;
+    }
 
+    @Bean
+    public ITemplateResolver thymeleafTemplateResolver(){
+        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+        templateResolver.setPrefix(mailTemplatesPath);
+        templateResolver.setSuffix(".html");
+        templateResolver.setTemplateMode("HTML");
+        templateResolver.setCharacterEncoding("UTF-8");
+        return templateResolver;
+    }
+
+    @Bean
+    public SpringTemplateEngine thymeleafTemplateEngine(){
+        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+        templateEngine.setTemplateResolver(thymeleafTemplateResolver());
+        return templateEngine;
     }
 
 }

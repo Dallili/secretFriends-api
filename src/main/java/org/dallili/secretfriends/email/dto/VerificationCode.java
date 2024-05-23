@@ -20,18 +20,11 @@ public class VerificationCode {
         return now.isAfter(expiredAt);
     }
 
-    public String getMessage(){
+    public String getExpirationTime(){
         String expiredAt = this.createdAt
                 .plusMinutes(this.expirationTimeMinutes)
                 .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-        return String.format(
-                """
-                        [Verification Code]
-                        %s
-                        만료 시간: %s
-                        """,
-                this.code, expiredAt
-        );
+        return expiredAt;
     }
 }

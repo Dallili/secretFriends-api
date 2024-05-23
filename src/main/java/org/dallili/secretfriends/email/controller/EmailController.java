@@ -1,5 +1,6 @@
 package org.dallili.secretfriends.email.controller;
 
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.dallili.secretfriends.email.dto.EmailDTO;
@@ -15,7 +16,7 @@ public class EmailController {
     private final EmailService emailService;
 
     @PostMapping("/members/signup/email")
-    public void sendVerificationEmail(@RequestBody @Valid EmailDTO.SendRequest request){
+    public void sendVerificationEmail(@RequestBody @Valid EmailDTO.SendRequest request) throws MessagingException {
         emailService.sendVerificationEmail(request.getEmail());
     }
 
