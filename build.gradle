@@ -57,11 +57,34 @@ dependencies {
     //swagger ui
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 
+    //Gson 라이브러리
+    implementation 'com.google.code.gson:gson:2.8.9'
+
+    //스프링 시큐리티 관련 라이브러리
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    //jjwt
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5',
+            'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+    //욕설 필터링 라이브러리
+    implementation 'io.github.vaneproject:badwordfiltering:1.0.0'
+
+    //회원가입 이메일 인증
+    implementation 'org.springframework.boot:spring-boot-starter-mail:3.2.2'
+
+    //thymeleaf
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:3.1.2'
 
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+jar {
+    enabled = false
 }
 
 sourceSets {
