@@ -9,4 +9,6 @@ public interface MatchingHistoryService {
 
     Long addHistory(Long memberID, Long partnerID);
 
+    Boolean findHistory(Long memberID, Long partnerID);
+
 }

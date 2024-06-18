@@ -122,10 +122,18 @@ public class MatchingServiceImpl implements MatchingService{
         List<Float> scoreList = new ArrayList<>();
 
         if (!matchingQueue.isEmpty()) {
-
+            // 매칭 점수 계산 (scoreList 완성)
             for (int i = 0; i < matchingQueue.size(); i++) {
 
                 Matching oldMatching = matchingQueue.get(i);
+                Long memberID = matchingQueue.get(i).getMemberID();
+
+                // 자기 자신의 매칭 요청이면 패스
+                // 이미 랜덤 매칭된 적 있는 상대면 패스
+                if(matchingHistoryService.findHistory(memberID, newUserID) || (memberID.equals(newUserID)))
+                {
+                    continue;
+                }
 
                 // 1. 웨이팅 타임 점수
                 LocalDateTime createdAt1 = oldMatching.getCreatedAt();
@@ -159,19 +167,24 @@ public class MatchingServiceImpl implements MatchingService{
                 scoreList.add(score);
             }
 
-            // 궁합 최대값
-            maxScore = Collections.max(scoreList);
-            log.info("최종 최댓값: " + maxScore);
+            // 매칭 시작
+            while(!scoreList.isEmpty()){
+                maxScore = Collections.max(scoreList);
 
-            // 매칭 성공 (일정 점수 이상 이어야 한다는 조건 통과)
-            if(maxScore > scoreThreshold){
+                // 매칭 실패
+                if(maxScore < scoreThreshold){
+                    break;
+                }
+
+                // 매칭 성공 (일정 점수 이상 이어야 한다는 조건 통과)
+                log.info("최종 최댓값: " + maxScore);
                 maxIndex = scoreList.indexOf(maxScore);
                 Long maxMatchingID = matchingQueue.get(maxIndex).getMatchingID();
+                Long oldMemberID = matchingQueue.get(maxIndex).getMemberID();
 
-                Long oldMemberID = removeMatching(maxMatchingID); // 매칭 큐에서 삭제
-                Long newMemberID = newMatching.getMemberID();
+                removeMatching(maxMatchingID); // 매칭 큐에서 삭제
                 String oldMemberName = memberService.findMemberById(oldMemberID).getNickname();
-                String newMemberName = memberService.findMemberById(newMemberID).getNickname();
+                String newMemberName = memberService.findMemberById(newUserID).getNickname();
 
                 Random random = new Random();
                 int nextInt = random.nextInt(0xffffff + 1);
@@ -179,40 +192,36 @@ public class MatchingServiceImpl implements MatchingService{
 
                 DiaryDTO diaryDTO = DiaryDTO.builder()
                         .memberID(oldMemberID)
-                        .partnerID(newMemberID)
+                        .partnerID(newUserID)
                         .memberName(oldMemberName)
                         .partnerName(newMemberName)
                         .updatedAt(LocalDateTime.now())
-                        .updatedBy(newMemberID)
+                        .updatedBy(newUserID)
                         .color(randomColor)
                         .build();
 
                 Long diaryID = diaryService.addDiary(diaryDTO); // 다이어리 생성
-                Long historyID = matchingHistoryService.addHistory(oldMemberID, newMemberID); // 매칭히스토리 생성
+                Long historyID = matchingHistoryService.addHistory(oldMemberID, newUserID); // 매칭히스토리 생성
 
                 result.put("state", true);
                 result.put("memberID", oldMemberID);
                 result.put("memberName", oldMemberName);
-                result.put("partnerID", newMemberID);
+                result.put("partnerID", newUserID);
                 result.put("partnerName", newMemberName);
                 result.put("diaryID", diaryID);
                 return result;
-
-            } else { // 매칭 실패 (점수 조건 통과 못함. 매칭큐에 추가해서 대기)
-
-                Long newMatchingID = addMatching(newMatching);
-                result.put("state", false);
-                result.put("matchingID", newMatchingID);
-
-                return result;
             }
 
-        } else { // 매칭 실패 (매칭 큐가 비어있음. 매칭큐에 추가해서 대기)
-
+            // 매칭 실패 (점수 조건 통과 못함. 매칭큐에 추가해서 대기)
             Long newMatchingID = addMatching(newMatching);
             result.put("state", false);
             result.put("matchingID", newMatchingID);
+            return result;
 
+        } else { // 매칭 실패 (매칭 큐가 비어있음. 매칭큐에 추가해서 대기)
+            Long newMatchingID = addMatching(newMatching);
+            result.put("state", false);
+            result.put("matchingID", newMatchingID);
             return result;
 
         }
